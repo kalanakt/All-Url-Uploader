@@ -21,7 +21,7 @@ async def cd_handler(client, query):
         )
 
         await query.message.edit_text(
-            translation.START_TEXT.format(query.update.from_user.mention),
+            translation.START_TEXT.format(update.from_user.mention),
             reply_markup=keyboard,
             disable_web_page_preview=True
         )
@@ -70,14 +70,6 @@ async def cd_handler(client, query):
     
     elif query.data == "close_data":
         await query.message.delete()
-       
-    
-    
-    
-            
-    
-    
-    
             
                 
 
