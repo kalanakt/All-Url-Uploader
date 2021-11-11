@@ -10,6 +10,7 @@ logger = logging.getLogger(__name__)
 
 import os
 import sqlite3
+from database.users_chats_db import db
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
