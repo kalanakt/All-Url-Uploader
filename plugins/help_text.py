@@ -47,8 +47,8 @@ async def start(bot, message):
     
   else:     # :) i did't have any option ::::)
     await bot.send_message(
-        chat_id=update.chat.id,
-        text=Translation.START_TEXT.format(update.from_user.mention),
+        chat_id=message.chat.id,
+        text=Translation.START_TEXT.format(message.from_user.mention),
         reply_markup=InlineKeyboardMarkup(
             [
                 [
@@ -57,5 +57,5 @@ async def start(bot, message):
                 ]
             ]
         ),
-        reply_to_message_id=update.message_id
+        reply_to_message_id=message.message_id
     )
