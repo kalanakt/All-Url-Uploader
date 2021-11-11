@@ -9,8 +9,8 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger(__name__)
 
 import os
+import asyncio
 import sqlite3
-from database.users_chats_db import db
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
@@ -21,9 +21,11 @@ else:
 # the Strings used for this "thing"
 from translation import Translation
 
-from pyrogram import filters
 from database.adduser import AddUser
 from pyrogram import Client as Clinton
+from pyrogram import filters
+from database.users_chats_db import db
+from config import LOG_CHANNEL
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -44,8 +46,11 @@ async def help_user(bot, update):
 
 @Clinton.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
-  if 5 > 4:     # :) i did't have any option ::::)
-    await AddUser(bot, update)
+  if not await db.is_user_exist(message.from_user.id):
+    await db.add_user(message.from_user.id, message.from_user.first_name)
+    await client.send_message(LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
+    
+  else:     # :) i did't have any option ::::)
     await bot.send_message(
         chat_id=update.chat.id,
         text=Translation.START_TEXT.format(update.from_user.mention),
@@ -59,7 +64,3 @@ async def start(bot, update):
         ),
         reply_to_message_id=update.message_id
     )
-   
-  if not await db.is_user_exist(update.message.message_id):
-    await AddUser(bot, update)
-    await Clinton.send_message(LOG_CHANNEL, Translation.NEW_USER.format(update.message.message_id, update.from_user.mention))
