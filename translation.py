@@ -16,6 +16,15 @@ URL | filename | username | password"""
     DEL_ETED_CUSTOM_THUMB_NAIL = "✅ Custom thumbnail cleared succesfully."
     CUSTOM_CAPTION_UL_FILE = "{}"
     NO_VOID_FORMAT_FOUND = "ERROR...\n<b>YouTubeDL</b> said: {}"
+    ABOUT_MSG = """ Something About Me :
+    
+    ☞My Name : All Url Uploader Bot
+
+    ☞Updates : @TMWAD    
+
+    ☞Language : Python3
+
+    ☞Library : Pyrogram 1.0.7 (https://docs.pyrogram.org/)"""
     HELP_USER = """Please Follow These steps!
     
 1. Send url (example.domain/File.mp4 | New Filename.mp4).
