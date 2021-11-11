@@ -1,0 +1,77 @@
+{
+  "name": "All-Url-Uploader",
+  "description": "Telegram Bot to Upload URLs to Telegram as File and Video.",
+  "keywords": [
+    "telegram",
+    "best",
+    "youtube",
+    "downloader",
+    "open",
+    "source",
+    "multi",
+    "purpose",
+    "ffmpeg",
+    "remote",
+    "uploader"
+  ],
+  "success_url": "https://t.me/All_URL_Uploader_Bot",
+  "website": "https://github.com/kalanakt",
+  "repository": "https://github.com/kalanakt/All-Url-Uploader",
+  "env": {
+    "WEBHOOK": {
+      "description": "Setting this to ANYTHING will enable webhooks when in env mode",
+      "value": "ANYTHING"
+    },
+    "TG_BOT_TOKEN": {
+      "description": "Your bot token, as a string.",
+      "value": ""
+    },
+    "APP_ID": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "API_HASH": {
+      "description": "Get this value from https://my.telegram.org",
+      "value": ""
+    },
+    "OWNER_ID": {
+      "description": "Your Telegram ID",
+      "value": ""
+    },
+    "DATABASE_URL": {
+      "description": "Your MongoDB URI",
+      "value": ""
+    },
+    "SESSION_NAME": {
+      "description": "Your Session Name",
+      "value": "URL-UPLOADER"
+    },
+    "BANNED_USERS": {
+      "description": "Banned Unwanted members..",
+      "value": "",
+      "required": false
+    },
+    "CHUNK_SIZE": {
+      "description": "chunk size that should be used with requests",
+      "value": "128"
+    },
+    "HTTP_PROXY": {
+      "description": "proxy for accessing youtube-dl in GeoRestricted Areas. Get your own proxy from https://github.com/rg3/youtube-dl/issues/1091#issuecomment-230163061",
+      "value": "",
+      "required": false
+    }
+  },
+  "addons": [
+  ],
+  "buildpacks": [{
+    "url": "https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest"
+  }, {
+    "url": "heroku/python"
+  }],
+  "formation": {
+    "worker": {
+      "quantity": 1,
+      "size": "free"
+    }
+  }
+}
