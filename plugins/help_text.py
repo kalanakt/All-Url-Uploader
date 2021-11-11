@@ -24,6 +24,7 @@ from translation import Translation
 from database.adduser import AddUser
 from pyrogram import Client as Clinton
 from pyrogram import filters
+from pyrogram.types import Message
 from database.users_chats_db import db
 from config import LOG_CHANNEL
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
