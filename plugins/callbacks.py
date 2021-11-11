@@ -8,7 +8,7 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, CallbackQ
 from translation import Translation
 
 @kinu.on_callback_query()
-async def cb_handler(client: Client, query: CallbackQuery):
+async def cb_handler(client: kinu, query: CallbackQuery):
     if query.data == "help_user":
         buttons = [[
             InlineKeyboardButton('Updates', url="https://t.me/TMWAD"),
