@@ -24,7 +24,7 @@ URL | filename | username | password"""
 
    ☞Language : Python3
 
-   ☞Library  : <a href="https://docs.pyrogram.org/">Pyrogram 1.0.7</a>
+   ☞Library  : <a href="https://docs.pyrogram.org/">Pyrogram 1.0.7</a>"""
     HELP_USER = """Please Follow These steps!
     
 1. Send url (example.domain/File.mp4 | New Filename.mp4).
