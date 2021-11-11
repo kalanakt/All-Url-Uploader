@@ -43,7 +43,7 @@ async def help_user(bot, update):
 
 @Clinton.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
-    # logger.info(update)
+  if message.chat.type in ['private']:
     await AddUser(bot, update)
     await bot.send_message(
         chat_id=update.chat.id,
