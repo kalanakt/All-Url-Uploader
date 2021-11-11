@@ -15,7 +15,7 @@ async def cd_handler(client, query):
             [
                 [
                     InlineKeyboardButton(
-                        "Command Help", callback_data="HELP_USER")
+                        "Command Help", callback_data="help_user")
                 ]
             ]
         )
@@ -34,7 +34,7 @@ async def cd_handler(client, query):
                 InlineKeyboardButton(
                         "🤖 Updates", url="https://t.me/TMWAD"),
                 InlineKeyboardButton(
-                        "😊 About Me", callback_data="ABOUT_MSG")
+                        "😊 About Me", callback_data="about_msg")
             ]
         )
         
@@ -55,7 +55,7 @@ async def cd_handler(client, query):
                         "🦸 Deverlpoer", url="https://github.com/kalanakt")
                 ],
                 [
-                    InlineKeyboardButton("BACK", callback_data="HELP_USER"),
+                    InlineKeyboardButton("BACK", callback_data="help_user"),
                     InlineKeyboardButton("CLOSE", callback_data="close_data"),
                 ]
             ]
