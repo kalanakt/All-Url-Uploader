@@ -9,7 +9,7 @@ from translation import translation
 @kinu.on_callback_query()
 async def cd_handler(client, query):
     
-    if query.data == "start_data":
+    if query.data == "START_TEXT":
         await query.answer()
         keyboard = InlineKeyboardMarkup(
             [
