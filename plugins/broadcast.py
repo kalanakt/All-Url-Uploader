@@ -14,7 +14,7 @@ from pyrogram.errors import (
     PeerIdInvalid,
 )
 
-from database import Database
+from database.database import Database
 if bool(os.environ.get("WEBHOOK", False)):
     from sample_config import Config
 else:
