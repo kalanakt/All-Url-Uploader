@@ -1,6 +1,9 @@
 
 import motor.motor_asyncio
-from sample_config import SESSION_NAME, DATABASE_URL
+if bool(os.environ.get("WEBHOOK", False)):
+    from sample_config import Config
+else:
+    from config import Config
 
 
 class Database:
@@ -128,4 +131,4 @@ class Database:
         return (await self.db.command("dbstats"))['dataSize']
 
 
-db = Database(DATABASE_URI, DATABASE_NAME)
+db = Database(Config.DATABASE_URI, Config.DATABASE_NAME)
