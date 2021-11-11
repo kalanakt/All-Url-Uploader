@@ -46,7 +46,7 @@ async def cd_handler(client, query):
         )
         
         await query.message.edit_text(
-            Translation.ABOUT_MSG,
+            text=Translation.ABOUT_MSG,
             reply_markup=keyboard,
             disable_web_page_preview=True
         )
