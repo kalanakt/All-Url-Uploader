@@ -23,8 +23,8 @@ async def _(c, m):
     await foo(c, m)
     
 async def foo(c, m, cb=False):
-    chat_id = m.from_user.id
+    chat_id=update.message.chat.id,
     
     if not await db.is_user_exist(chat_id):
         await db.add_user(chat_id)
-        await c.send_message(Config.LOG_CHANNEL, f"New User {m.from_user.mention}.")
+        await c.send_message(Config.LOG_CHANNEL, f"#New User \n {m.from_user.mention}.")
