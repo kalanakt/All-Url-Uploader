@@ -49,10 +49,12 @@ async def start(bot, update):
         chat_id=update.chat.id,
         text=Translation.START_TEXT.format(update.from_user.mention),
         reply_markup=InlineKeyboardMarkup(
-          (
             [
-              InlineKeyboardButton("Updates Channel 🔰", url="https://t.me/TMWAD")
+                [
+                    InlineKeyboardButton("Help", callback_data="help_user"),
+                    InlineKeyboardButton("🤖 Updates", url="https://t.me/TMWAD")
+                ]
             ]
-          ),
-          reply_to_message_id=update.message_id
-        )
+        ),
+        reply_to_message_id=message.message_id
+    )
