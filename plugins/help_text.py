@@ -20,8 +20,6 @@ else:
 
 # the Strings used for this "thing"
 from translation import Translation
-
-from database.adduser import AddUser
 from pyrogram import Client as Clinton
 from pyrogram import filters
 from pyrogram.types import Message
