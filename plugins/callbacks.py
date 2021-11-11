@@ -23,6 +23,7 @@ async def cb_handler(client: kinu, query: CallbackQuery):
         await query.message.edit_text(
             text=Translation.HELP_USER.format(query.from_user.mention),
             reply_markup=reply_markup,
+            disable_web_page_preview=True,
             parse_mode='html'
         )
     
@@ -39,6 +40,7 @@ async def cb_handler(client: kinu, query: CallbackQuery):
         await query.message.edit_text(
             text=Translation.START_TEXT.format(query.from_user.mention),
             reply_markup=reply_markup,
+            disable_web_page_preview=True,
             parse_mode='html'
         )
         
@@ -54,12 +56,6 @@ async def cb_handler(client: kinu, query: CallbackQuery):
         await query.message.edit_text(
             text=Translation.ABOUT_MSG.format(query.from_user.mention),
             reply_markup=reply_markup,
+            disable_web_page_preview=True,
             parse_mode='html'
         )
-            
-                
-
-    
-    
-    
-
