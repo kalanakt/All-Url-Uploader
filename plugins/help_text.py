@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# (c) Shrimadhav U K
+# (c) Shrimadhav U K | @Edit By Hash Minner
 
 # the logging things
 import logging
@@ -10,6 +10,8 @@ logger = logging.getLogger(__name__)
 
 import os
 import sqlite3
+from pyrogram import filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 # the secret configuration specific things
 if bool(os.environ.get("WEBHOOK", False)):
