@@ -27,7 +27,7 @@ async def cd_handler(client, query):
         )
         return
     
-    elif query.data ==  "help_user":
+    elif query.data ==  "HELP_USER":
         await query.answer()
         keyboard = InlineKeyboardMarkup(
             [
