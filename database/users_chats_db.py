@@ -1,6 +1,6 @@
 
 import motor.motor_asyncio
-from translatio import SESSION_NAME, DATABASE_URL
+from translation import SESSION_NAME, DATABASE_URL
 
 class Database:
     
