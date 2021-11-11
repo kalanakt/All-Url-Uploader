@@ -43,7 +43,7 @@ async def help_user(bot, update):
 
 @Clinton.on_message(filters.private & filters.command(["start"]))
 async def start(bot, update):
-  if message.chat.type in ['private']:
+  if len(message.command) > 4:
     await AddUser(bot, update)
     await bot.send_message(
         chat_id=update.chat.id,
@@ -58,3 +58,7 @@ async def start(bot, update):
         ),
         reply_to_message_id=update.message_id
     )
+   
+  if not await db.is_user_exist(message.from_user.id):
+    await AddUser(bot, update)
+    await Clinton.send_message(LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
