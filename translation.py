@@ -16,6 +16,10 @@ URL | filename | username | password"""
     DEL_ETED_CUSTOM_THUMB_NAIL = "✅ Custom thumbnail cleared succesfully."
     CUSTOM_CAPTION_UL_FILE = "{}"
     NO_VOID_FORMAT_FOUND = "ERROR...\n<b>YouTubeDL</b> said: {}"
+    NEW_USER = """#NewUser #SSB
+ID - <code>{}</code>
+Name - {}
+"""
     ABOUT_MSG = """ Something About Me :
     
    ☞My Name  : All Url Uploader Bot
