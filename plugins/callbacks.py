@@ -22,6 +22,7 @@ async def cb_handler(client: Client, query: CallbackQuery):
             text=Translation.HELP_USER.format(query.from_user.mention),
             reply_markup=reply_markup,
             parse_mode='html'
+        )
     
     elif query.data == "close_data":
         await query.message.delete()
