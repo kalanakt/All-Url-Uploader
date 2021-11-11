@@ -24,7 +24,6 @@ from pyrogram import Client as Clinton
 from pyrogram import filters
 from pyrogram.types import Message
 from database.users_chats_db import db
-from config import LOG_CHANNEL
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -47,7 +46,7 @@ async def help_user(bot, update):
 async def start(bot, update):
   if not await db.is_user_exist(message.from_user.id):
     await db.add_user(message.from_user.id, message.from_user.first_name)
-    await client.send_message(LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
+    await client.send_message(config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
     
   else:     # :) i did't have any option ::::)
     await bot.send_message(
