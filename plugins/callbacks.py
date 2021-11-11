@@ -4,7 +4,8 @@ import ast
 from pyrogram import Client as kinu
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from translation import translation
+# that's kind of shit, :) stuck here so long
+from translation import Translation
 
 @kinu.on_callback_query()
 async def cd_handler(client, query):
