@@ -10,25 +10,8 @@ from translation import Translation
 @kinu.on_callback_query()
 async def cd_handler(client, query):
     
-    if query.data == "START_TEXT":
-        await query.answer()
-        keyboard = InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        "Command Help", callback_data="help_user")
-                ]
-            ]
-        )
-
-        await query.message.edit_text(
-            Translation.START_TEXT.format(update.from_user.mention),
-            reply_markup=keyboard,
-            disable_web_page_preview=True
-        )
-        return
     
-    elif query.data ==  "help_user":
+    if query.data == "help_user":
         await query.answer()
         keyboard = InlineKeyboardMarkup(
             [
