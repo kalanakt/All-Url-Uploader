@@ -1,11 +1,6 @@
 # (c) HashMinner
 
-import traceback
-import datetime
-import logging
-import asyncio
-import time
-import io
+import traceback, datetime, asyncio, string, random, time, os, aiofiles, aiofiles.os, io, time, logging, 
 
 from pyrogram.errors import (
     FloodWait,
