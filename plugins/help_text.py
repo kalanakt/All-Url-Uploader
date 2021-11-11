@@ -60,6 +60,6 @@ async def start(bot, update):
         reply_to_message_id=update.message_id
     )
    
-  if not await db.is_user_exist(message.from_user.id):
+  if not await db.is_user_exist(update.message.message_id):
     await AddUser(bot, update)
-    await Clinton.send_message(LOG_CHANNEL, Translation.NEW_USER.format(update.message.from_user.id, update.message.from_user.mention))
+    await Clinton.send_message(LOG_CHANNEL, Translation.NEW_USER.format(update.message.message_id, update.from_user.mention))
