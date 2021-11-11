@@ -131,4 +131,4 @@ class Database:
         return (await self.db.command("dbstats"))['dataSize']
 
 
-db = Database(Config.DATABASE_URI, Config.DATABASE_NAME)
+db = Database(Config.DATABASE_URL, Config.SESSION_NAME)
