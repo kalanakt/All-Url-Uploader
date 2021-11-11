@@ -15,13 +15,13 @@ async def cd_handler(client, query):
             [
                 [
                     InlineKeyboardButton(
-                        "Command Help", callback_data="help_data")
+                        "Command Help", callback_data="HELP_USER")
                 ]
             ]
         )
 
         await query.message.edit_text(
-            Script.START_MSG.format(query.from_user.mention),
+            translation.START_TEXT.format(query.from_user.mention),
             reply_markup=keyboard,
             disable_web_page_preview=True
         )
@@ -34,18 +34,18 @@ async def cd_handler(client, query):
                 InlineKeyboardButton(
                         "🤖 Updates", url="https://t.me/TMWAD"),
                 InlineKeyboardButton(
-                        "😊 About Me", callback_data="about_data")
+                        "😊 About Me", callback_data="ABOUT_MSG")
             ]
         )
         
         await query.message.edit_text(
-            translation.help_user,
+            translation.HELP_USER,
             reply_markup=keyboard,
             disable_web_page_preview=True
         )
         return
     
-    elif query.data == "about_data":
+    elif query.data == "ABOUT_MSG":
         await query.answer()
         keyboard = InlineKeyboardMarkup(
             [
@@ -55,14 +55,14 @@ async def cd_handler(client, query):
                         "🦸 Deverlpoer", url="https://github.com/kalanakt")
                 ],
                 [
-                    InlineKeyboardButton("BACK", callback_data="help_data"),
+                    InlineKeyboardButton("BACK", callback_data="HELP_USER"),
                     InlineKeyboardButton("CLOSE", callback_data="close_data"),
                 ]
             ]
         )
         
         await query.message.edit_text(
-            translation.about_msg,
+            translation.ABOUT_MSG,
             reply_markup=keyboard,
             disable_web_page_preview=True
         )
