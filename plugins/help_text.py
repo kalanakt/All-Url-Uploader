@@ -45,7 +45,7 @@ async def start(bot, message):
     await db.add_user(message.from_user.id, message.from_user.first_name)
     await bot.send_message(Config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
     
-  else:     # :) i did't have any option ::::)
+  if True:
     await bot.send_message(
         chat_id=message.chat.id,
         text=Translation.START_TEXT.format(message.from_user.mention),
