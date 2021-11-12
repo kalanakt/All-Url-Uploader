@@ -19,6 +19,7 @@ from sample_config import Config
 from translation import Translation
 from pyrogram import Client as Clinton
 from pyrogram import filters
+from database.adduser import AddUser
 from pyrogram.types import Message
 from database.users_chats_db import db
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
@@ -28,7 +29,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 @Clinton.on_message(filters.private & filters.command(["help"]))
 async def help_user(bot, update):
-    # logger.info(update)
+    await AddUser(bot, update)
     await bot.send_message(
         chat_id=update.chat.id,
         text=Translation.HELP_USER,
@@ -45,6 +46,7 @@ async def start(bot, message):
     await bot.send_message(Config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
     
   if True:
+    await AddUser(bot, update)
     await bot.send_message(
         chat_id=message.chat.id,
         text=Translation.START_TEXT.format(message.from_user.mention),
