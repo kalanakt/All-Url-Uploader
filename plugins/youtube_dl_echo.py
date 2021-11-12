@@ -26,6 +26,7 @@ from pyrogram import filters
 from translation import Translation
 from PIL import Image
 import logging
+from database.adduser import AddUser
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -40,6 +41,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 @Clinton.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
+    await AddUser(bot, update)
     imog = await update.reply_text("Processing...⚡", reply_to_message_id=update.message_id)
     youtube_dl_username = None
     youtube_dl_password = None
