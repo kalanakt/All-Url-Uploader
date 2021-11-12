@@ -31,8 +31,7 @@ from pyrogram.errors import UserNotParticipant
 
 @pyrogram.Client.on_message(pyrogram.filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
-    if update.from_user.id in Config.AUTH_USERS:
-        logger.info(update.from_user)
+  logger.info(update.from_user)
         url = update.text
         youtube_dl_username = None
         youtube_dl_password = None
