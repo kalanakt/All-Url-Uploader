@@ -41,16 +41,10 @@ async def help_user(bot, update):
 
 @Clinton.on_message(filters.private & filters.command(["start"]))
 async def start(bot, message):
-  chat_type = message.chat.type
-  if not await db.is_user_exist(message.from_user.id):
-    await db.add_user(message.from_user.id, message.from_user.first_name)
-    await bot.send_message(Config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
-    
-  if chat_type == "private":
-    await bot.send_message(
-        chat_id=message.chat.id,
-        text=Translation.START_TEXT.format(message.from_user.mention),
-        reply_markup=InlineKeyboardMarkup(
+  await bot.send_message(
+    chat_id=message.chat.id,
+    text=Translation.START_TEXT.format(message.from_user.mention),
+    reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton("Help", callback_data="help_user"),
@@ -58,5 +52,5 @@ async def start(bot, message):
                 ]
             ]
         ),
-        reply_to_message_id=message.message_id
-    )
+    reply_to_message_id=message.message_id
+  )
