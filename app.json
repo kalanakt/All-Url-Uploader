@@ -34,6 +34,14 @@
       "description": "Get this value from https://my.telegram.org",
       "value": ""
     },
+    "REDIS_URI": {
+      "description": "Redis Endpoint, Get This Value from http://redislabs.com/try-free (If you don't know how to obtain these values a complete video tutorial is available here:- https://t.me/botzupdate/5)",
+      "value": ""
+    },
+    "REDIS_PASS": {
+      "description": "Redis Password, Get This Value from http://redislabs.com/try-free (If you don't know how to obtain these values a complete video tutorial is available here:- https://t.me/botzupdate/5)",
+      "value": ""
+    },
     "LOG_CHANNEL": {
       "description": "id of log channel/group leave this if you don't want to",
       "value": "-1001718967421",
