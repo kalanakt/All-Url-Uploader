@@ -29,7 +29,6 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @Clinton.on_message(filters.private & filters.command(["help"]))
 async def help_user(bot, update):
     # logger.info(update)
-    await AddUser(bot, update)
     await bot.send_message(
         chat_id=update.chat.id,
         text=Translation.HELP_USER,
