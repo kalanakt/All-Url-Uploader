@@ -46,7 +46,7 @@ async def start(bot, message):
     reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("Help", callback_data="help_kt"),
+                    InlineKeyboardButton("Comment", url="https://t.me/TMWAD/17"),
                     InlineKeyboardButton("🤖 Updates", url="https://t.me/TMWAD")
                 ]
             ]
