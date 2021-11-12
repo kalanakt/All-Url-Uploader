@@ -41,11 +41,12 @@ async def help_user(bot, update):
 
 @Clinton.on_message(filters.private & filters.command(["start"]))
 async def start(bot, message):
+  chat_type = message.chat.type
   if not await db.is_user_exist(message.from_user.id):
     await db.add_user(message.from_user.id, message.from_user.first_name)
     await bot.send_message(Config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
     
-  if True:
+  if chat_type == "private":
     await bot.send_message(
         chat_id=message.chat.id,
         text=Translation.START_TEXT.format(message.from_user.mention),
