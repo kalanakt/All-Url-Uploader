@@ -28,8 +28,10 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
-    
-    
+
+@Clinton.on_message(filters.private & filters.regex(pattern=".*http.*"))
+async def echo(bot, update):
+    await AddUser(bot, update)
     imog = await update.reply_text("Processing...⚡", reply_to_message_id=update.message_id)
     youtube_dl_username = None
     youtube_dl_password = None
