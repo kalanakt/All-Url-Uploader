@@ -46,10 +46,9 @@ async def start(bot, message):
     await bot.send_message(Config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
     
   if True:
-    await AddUser(bot, update)
     await bot.send_message(
-        chat_id=update.chat.id,
-        text=Translation.START_TEXT.format(update.from_user.mention),
+        chat_id=message.chat.id,
+        text=Translation.START_TEXT.format(message.from_user.mention),
         reply_markup=InlineKeyboardMarkup(
             [
                 [
