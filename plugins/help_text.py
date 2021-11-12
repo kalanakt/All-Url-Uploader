@@ -43,7 +43,7 @@ async def help_user(bot, update):
 async def start(bot, message):
   if not await db.is_user_exist(message.from_user.id):
     await db.add_user(message.from_user.id, message.from_user.first_name)
-    await bot.send_message(config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
+    await bot.send_message(Config.LOG_CHANNEL, Translation.NEW_USER.format(message.from_user.id, message.from_user.mention))
     
   else:     # :) i did't have any option ::::)
     await bot.send_message(
