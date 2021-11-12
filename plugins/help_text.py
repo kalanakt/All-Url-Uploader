@@ -21,7 +21,6 @@ from pyrogram import Client as Clinton
 from pyrogram import filters
 from database.adduser import AddUser
 from pyrogram.types import Message
-from database.users_chats_db import db
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
