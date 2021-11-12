@@ -47,46 +47,4 @@ class Database:
     
 
 
-    async def add_chat(self, chat, title):
-        chat = self.new_group(chat, title)
-        await self.grp.insert_one(chat)
-    
-
-    async def get_chat(self, chat):
-        chat = await self.grp.find_one({'id':int(chat)})
-        if not chat:
-            return False
-        else:
-            return chat.get('chat_status')
-    
-
-    async def re_enable_chat(self, id):
-        chat_status=dict(
-            is_disabled=False,
-            reason="",
-            )
-        await self.grp.update_one({'id': int(id)}, {'$set': {'chat_status': chat_status}})
-    
-
-    async def disable_chat(self, chat, reason="No Reason"):
-        chat_status=dict(
-            is_disabled=True,
-            reason=reason,
-            )
-        await self.grp.update_one({'id': int(chat)}, {'$set': {'chat_status': chat_status}})
-    
-
-    async def total_chat_count(self):
-        count = await self.grp.count_documents({})
-        return count
-    
-
-    async def get_all_chats(self):
-        return self.grp.find({})
-
-
-    async def get_db_size(self):
-        return (await self.db.command("dbstats"))['dataSize']
-
-
 db = Database(Config.DATABASE_URL, Config.SESSION_NAME)
