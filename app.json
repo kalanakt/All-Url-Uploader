@@ -43,7 +43,7 @@
       "value": ""
     },
     "LOG_CHANNEL": {
-      "description": "id of log channel/group leave this if you don't want to",
+      "description": "id of log channel/group. leave this if you don't want to",
       "value": "-1001718967421",
       "required": false
     },
