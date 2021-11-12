@@ -11,13 +11,13 @@ from translation import Translation
 
 @kinu.on_callback_query()
 async def cb_handler(client: kinu, query: CallbackQuery):
-    if query.data == "help_user_kt":
+    if query.data == "help_kt":
         buttons = [[
             InlineKeyboardButton('Updates', url="https://t.me/TMWAD"),
             InlineKeyboardButton('About', callback_data='about_kt')
             ],[
             InlineKeyboardButton('🏠 Home', callback_data='start_kt'),
-            InlineKeyboardButton('🔐 Close', callback_data='close_data_kt')
+            InlineKeyboardButton('🔐 Close', callback_data='close_kt')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
@@ -27,13 +27,13 @@ async def cb_handler(client: kinu, query: CallbackQuery):
             parse_mode='html'
         )
     
-    elif query.data == "close_data_kt":
+    elif query.data == "close_kt":
         await query.message.delete()
         
        
     elif query.data == "start_kt":
         buttons = [[
-            InlineKeyboardButton('Help', callback_data='help_user_kt'),
+            InlineKeyboardButton('Help', callback_data='help_kt'),
             InlineKeyboardButton('🤖 Updates', url="https://t.me/TMWAD")
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
@@ -50,7 +50,7 @@ async def cb_handler(client: kinu, query: CallbackQuery):
             InlineKeyboardButton('🦸 Deverloper', url='https://github.com/kalanakt')
             ],[
             InlineKeyboardButton('🏠 Home', callback_data='start_kt'),
-            InlineKeyboardButton('🔐 Close', callback_data='close_data_kt')
+            InlineKeyboardButton('🔐 Close', callback_data='close_kt')
         ]]
         reply_markup = InlineKeyboardMarkup(buttons)
         await query.message.edit_text(
