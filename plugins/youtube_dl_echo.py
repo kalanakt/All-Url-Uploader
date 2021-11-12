@@ -24,9 +24,9 @@ from database.access import clinton
 from pyrogram import Client as Clinton
 from pyrogram import filters
 from translation import Translation
+from database.adduser import AddUser
 from PIL import Image
 import logging
-from database.adduser import AddUser
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
