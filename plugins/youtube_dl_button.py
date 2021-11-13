@@ -91,7 +91,6 @@ async def youtube_dl_call_back(bot, update):
     await bot.edit_message_text(
         text=Translation.DOWNLOAD_START,
         chat_id=update.message.chat.id,
-        progress=progress_for_pyrogram,
         message_id=update.message.message_id
     )
     user = await bot.get_me()
