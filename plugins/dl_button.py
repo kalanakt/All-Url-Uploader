@@ -268,9 +268,8 @@ File Size: {}""".format(url, humanbytes(total_length))
                             text=current_message
                           )
                           display_message = current_message
-                          
-                        except Exception as e:
-                          logger.info(str(e))
-                          pass
-                        
-                 return await response.release()
+                          except Exception as e:
+                            logger.info(str(e))
+                            pass
+                         
+                        return await response.release()
