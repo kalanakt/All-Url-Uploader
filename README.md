@@ -2,21 +2,27 @@
 
 Modifird Version Of [Url-Uploader-TG](https://github.com/kalanakt/Url-Uploader-TG)
 
-**Features**:
+## Features
 
-👉 Upload [YouTube-dl Supported Links](https://ytdl-org.github.io/youtube-dl/supportedsites.html) to Telegram.
+* Upload [YouTube-dl Supported Links](https://ytdl-org.github.io/youtube-dl/supportedsites.html) to Telegram.
 
-👉 Upload HTTP/HTTPS as File/Video to Telegram.
+* Upload HTTP/HTTPS as File/Video to Telegram.
 
-👉 Upload zee5, sony.live, voot and much more 😋
+* Upload zee5, sony.live, voot and much more 😋
 
-👉 Broadcast message, check total users
+* Broadcast message, check total users
 
-👉 Permanent thumbnail Support
+* Permanent thumbnail Support
 
-**Deploy To Heroku**
+## Deploy To Heroku
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/kalanakt/All-Url-Uploader)
+
+## Succsus Url
+   **[All Url Uploader Bot](https://t.me/All_Url_Uploader_Bot)**
+   
+## TG Bots Updates
+   **[Bot Universe](https://t.me/TMWAD)**
 
 ## Credits, and Thanks to
 
