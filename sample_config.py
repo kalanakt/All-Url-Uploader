@@ -37,3 +37,19 @@ class Config(object):
     SESSION_NAME = os.environ.get("SESSION_NAME", "")
     # database uri (mongodb)
     DATABASE_URL = os.environ.get("DATABASE_URL", "")
+    PROCESS_TEXT = """
+    Process: {}
+    """
+    LOGGED_AS_USER = """
+    Successfully Logged Into Mega.nz User Account
+    """
+    LOGIN_ERROR_TEXT = """
+    Can't Get Mega Email and Password Login as an Anonymouse User
+    """
+    
+    ERROR_TEXT = """ 
+    Log: {}
+    Save the Log file and Send it to @Nexa_bots for Help :)
+    """
+
+    
