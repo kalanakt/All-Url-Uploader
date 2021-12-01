@@ -26,6 +26,14 @@
       "description": "Your bot token, as a string.",
       "value": ""
     },
+    "MEGA_EMAIL": {
+    "description": "Fill this if you want to use your own Mega Account. This is your Mega account Email!",
+    "required": false
+    },
+    "MEGA_PASSWORD": {
+    "description": "Fill this if you want to use your own Mega Account. This is your Mega account Password!",
+    "required": false
+    },
     "APP_ID": {
       "description": "Get this value from https://my.telegram.org",
       "value": ""
