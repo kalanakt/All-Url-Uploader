@@ -12,7 +12,10 @@ class Config(object):
     BANNED_USERS = set(int(x) for x in os.environ.get("BANNED_USERS", "").split())
     # the download location, where the HTTP Server runs
     DOWNLOAD_LOCATION = "./DOWNLOADS"
-    # The download location for auth users. 
+    # The download location for auth users.
+    MEGA_EMAIL = os.environ.get("MEGA_EMAIL", "")
+    MEGA_PASSWORD = os.environ.get("MEGA_PASSWORD", "")
+    #Mega Details
   
     # Telegram maximum file upload size
     MAX_FILE_SIZE = 50000000
