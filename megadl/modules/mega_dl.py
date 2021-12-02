@@ -16,7 +16,10 @@ from posixpath import join
 
 from megadl.helpers_nexa.account import m
 from megadl.helpers_nexa.mega_help import progress_for_pyrogram, humanbytes, send_errors, send_logs
-from config import Config
+if bool(os.environ.get("WEBHOOK", False)):
+    from sample_config import Config
+else:
+    from config import Config
 
 # path we gonna give the download
 basedir = Config.DOWNLOAD_LOCATION
