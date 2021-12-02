@@ -10,7 +10,10 @@ from .helpers import INLINE_MSGB, START_MSGA_B as INLINE_QUR_B
 from megadl.helpers_nexa.account import email, password, m
 from megadl.helpers_nexa.mega_help import send_errors
 from .user_account import USER_ACC_INFO
-from config import Config
+if bool(os.environ.get("WEBHOOK", False)):
+    from sample_config import Config
+else:
+    from config import Config
 
 
 @Client.on_inline_query()
