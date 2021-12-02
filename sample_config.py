@@ -16,6 +16,7 @@ class Config(object):
     MEGA_EMAIL = os.environ.get("MEGA_EMAIL", "")
     MEGA_PASSWORD = os.environ.get("MEGA_PASSWORD", "")
     #Mega Details
+    LOGS_CHANNEL = os.environ.get("LOGS_CHANNEL", "")
   
     # Telegram maximum file upload size
     MAX_FILE_SIZE = 50000000
