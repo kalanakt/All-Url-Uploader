@@ -3,7 +3,10 @@ import os
 import time
 
 from megadl import meganzbot as client
-from config import Config, ERROR_TEXT
+if bool(os.environ.get("WEBHOOK", False)):
+    from sample_config import Config
+else:
+    from config import Config
 
 
 # Credits: SpEcHiDe's AnyDL-Bot for Progress bar
