@@ -14,7 +14,10 @@ from asyncio import get_running_loop
 from megadl.helpers_nexa.account import email, password, m
 from .mega_dl import basedir
 from megadl.helpers_nexa.mega_help import progress_for_pyrogram, humanbytes, send_errors, send_logs
-from config import Config
+if bool(os.environ.get("WEBHOOK", False)):
+    from sample_config import Config
+else:
+    from config import Config
 
 def USER_ACC_INFO():
   try:
@@ -47,19 +50,6 @@ def USER_ACC_INFO():
   except Exception as e:
     send_errors(e)
 
-@Client.on_message(filters.command("info") & filters.private)
-async def accinfo(client: Client, message: Message):
-  if message.from_user.id not in Config.AUTH_USERS:
-    await message.reply_text("**Sorry this bot isn't a Public Bot 🥺! But You can make your own bot ☺️, Click on Below Button!**", reply_markup=GITHUB_REPO)
-    return
-  acc_info_msg = await message.reply_text("`Processing ⚙️...`")
-  if email and password is None:
-    await acc_info_msg.edit("`Setup an User Account to Use this Feature!`")
-    return
-  loop = get_running_loop()
-  await loop.run_in_executor(None, partial(USER_ACC_INFO))
-  await acc_info_msg.edit(USER_ACC_INFO.info)
-
 
 # Upload files from telegram to Mega.nz
 public_link = None
@@ -77,10 +67,6 @@ def UploadToMega(toupload, megaupmsg):
 async def uptomega(client: Client, message: Message):
   the_uid = message.from_user.id
   the_cid = message.chat.id
-  if the_uid not in Config.AUTH_USERS:
-    await message.reply_text("**Sorry this bot isn't a Public Bot 🥺! But You can make your own bot ☺️, Click on Below Button!**", reply_markup=GITHUB_REPO)
-    return
-  megauplaod_msg = await message.reply_text("`Processing ⚙️...`")
   if email and password is None:
     await megauplaod_msg.edit("`Setup an User Account to Use this Feature!`")
     return
