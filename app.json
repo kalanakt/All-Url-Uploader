@@ -42,7 +42,7 @@
       "description": "Get this value from https://my.telegram.org",
       "value": ""
     },
-    "LOG_CHANNEL": {
+    "LOGS_CHANNEL": {
       "description": "id of log channel/group. leave this if you don't want to",
       "value": "-1001718967421",
       "required": false
