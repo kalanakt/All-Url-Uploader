@@ -5,15 +5,13 @@
 ## Features 🦠
 
 ```
-* Upload [YouTube-dl Supported Links](https://ytdl-org.github.io/youtube-dl/supportedsites.html) to Telegram.
+• Upload HTTP/HTTPS as File/Video to Telegram.
 
-* Upload HTTP/HTTPS as File/Video to Telegram.
+• Upload zee5, sony.live, voot and much more 😋
 
-* Upload zee5, sony.live, voot and much more 😋
+• Broadcast message, check total users
 
-* Broadcast message, check total users
-
-* Permanent thumbnail Support
+• Permanent thumbnail Support
 ```
 
 ## Deploy 🚀
@@ -40,7 +38,11 @@ python3 main.py
 
 ## Succsus Url 🤖
    **[All Url Uploader Bot](https://t.me/All_Url_Uploader_Bot)**
-   
+
+
+## Support Sites 🐙
+   **[YouTube-dl Supported Links](https://ytdl-org.github.io/youtube-dl/supportedsites.html)**
+
 ## TG Bots Updates 🦄
    **[Bot Universe](https://t.me/TMWAD)**
 
