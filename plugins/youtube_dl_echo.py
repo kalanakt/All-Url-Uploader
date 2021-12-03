@@ -5,6 +5,7 @@
 # the logging things
 import logging
 import megadl
+from megadl.helpers_nexa.account import m
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
