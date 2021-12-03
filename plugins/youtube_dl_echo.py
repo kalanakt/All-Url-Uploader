@@ -29,6 +29,7 @@ from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import UserNotParticipant
+basedir = Config.DOWNLOAD_LOCATION
 
 MEGA_REGEX = (r"^((?:https?:)?\/\/)"
               r"?((?:www)\.)"
