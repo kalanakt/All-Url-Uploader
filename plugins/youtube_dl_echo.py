@@ -4,7 +4,6 @@
 
 # the logging things
 import logging
-import json
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -43,7 +42,7 @@ def DownloadMegaLink(url, alreadylol, download_msg):
         send_errors(e=e)
         
 @Clinton.on_message(filters.regex(MEGA_REGEX) & filters.private)
-async def megadl(megabot: Client, message: Message):
+async def megadl(megabot: Clinton, message: Message):
     url = message.text
     userpath = str(message.from_user.id)
     the_chat_id = str(message.chat.id)
