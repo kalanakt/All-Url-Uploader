@@ -42,7 +42,7 @@ def DownloadMegaLink(url, alreadylol, download_msg):
     except Exception as e:
         send_errors(e=e)
         
-@Client.on_message(filters.regex(MEGA_REGEX) & filters.private)
+@Clinton.on_message(filters.regex(MEGA_REGEX) & filters.private)
 async def megadl(megabot: Client, message: Message):
     url = message.text
     userpath = str(message.from_user.id)
