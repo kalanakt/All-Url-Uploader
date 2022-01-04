@@ -125,6 +125,8 @@ async def echo(bot, update):
             disable_web_page_preview=True
         )
         return False
+    # logger.info(response_json)
+    inline_keyboard = []
     if t_response:
         # logger.info(t_response)
         x_reponse = t_response
@@ -135,11 +137,7 @@ async def echo(bot, update):
             "/" + str(update.from_user.id) + ".json"
         with open(save_ytdl_json_path, "w", encoding="utf8") as outfile:
             json.dump(response_json, outfile, ensure_ascii=False)
-        # logger.info(response_json)
-        inline_keyboard = []
-        duration = None
-        if "duration" in response_json:
-            duration = response_json["duration"]
+        duration = response_json["duration"] if "duration" in response_json else None
         if "formats" in response_json:
             for formats in response_json["formats"]:
                 format_id = formats.get("format_id")
@@ -154,7 +152,10 @@ async def echo(bot, update):
                     "video", format_id, format_ext)
                 cb_string_file = "{}|{}|{}".format(
                     "file", format_id, format_ext)
-                if format_string is not None and not "audio only" in format_string:
+                if (
+                    format_string is not None
+                    and "audio only" not in format_string
+                ):
                     ikeyboard = [
                         InlineKeyboardButton(
                             "S " + format_string + " video " + approx_file_size + " ",
@@ -247,8 +248,6 @@ async def echo(bot, update):
             reply_to_message_id=update.message_id
         )
     else:
-        # fallback for nonnumeric port a.k.a seedbox.io
-        inline_keyboard = []
         cb_string_file = "{}={}={}".format(
             "file", "LFO", "NONE")
         cb_string_video = "{}={}={}".format(
