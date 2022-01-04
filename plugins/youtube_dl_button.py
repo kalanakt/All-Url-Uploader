@@ -97,8 +97,8 @@ async def youtube_dl_call_back(bot, update):
     mention = user["mention"]
     description = Translation.CUSTOM_CAPTION_UL_FILE.format(mention)
     if "fulltitle" in response_json:
-        description = response_json["fulltitle"][0:1021]
-        # escape Markdown and special characters
+        description = response_json["fulltitle"][:1021]
+            # escape Markdown and special characters
     tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id)
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)

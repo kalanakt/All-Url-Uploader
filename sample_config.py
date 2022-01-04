@@ -1,7 +1,9 @@
 import os
 
 
-class Config(object):
+
+
+class Config((object)):
     # get a token from @BotFather
     TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
     # The Telegram API things
@@ -9,11 +11,11 @@ class Config(object):
     API_HASH = os.environ.get("API_HASH")
     # Get these values from my.telegram.org
     # Banned Unwanted Members..
-    BANNED_USERS = set(int(x) for x in os.environ.get("BANNED_USERS", "").split())
+    BANNED_USERS = {int(x) for x in os.environ.get("BANNED_USERS", "").split()}
     # the download location, where the HTTP Server runs
     DOWNLOAD_LOCATION = "./DOWNLOADS"
     # The download location for auth users.
-  
+
     # Telegram maximum file upload size
     MAX_FILE_SIZE = 50000000
     TG_MAX_FILE_SIZE = 2097152000
@@ -46,7 +48,7 @@ class Config(object):
     LOGIN_ERROR_TEXT = """
     Can't Get Mega Email and Password Login as an Anonymouse User
     """
-    
+
     ERROR_TEXT = """ 
     Log: {}
     Save the Log file and Send it to @Nexa_bots for Help :)
