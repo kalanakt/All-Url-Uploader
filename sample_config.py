@@ -51,7 +51,7 @@ class Config((object)):
 
     ERROR_TEXT = """ 
     Log: {}
-    Save the Log file and Send it to @Nexa_bots for Help :)
+    Save the Log file and Send it to @disneyteamchat for Help :)
     """
 
     

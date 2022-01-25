@@ -46,8 +46,9 @@ async def start(bot, message):
     reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("Comment", url="https://t.me/TMWAD/18"),
-                    InlineKeyboardButton("🤖 Updates", url="https://t.me/TMWAD")
+                    InlineKeyboardButton("💁‍♂️support💁‍♂️", url="https://t.me/disneyteamchat"),
+                    InlineKeyboardButton("🤖Update Channel🤖", url="https://t.me/ibomma1947") ,
+                    InlineKeyboardButton("🧑‍💻Developer🧑‍💻" , url="https://t.me/unknown1947m")
                 ]
             ]
         ),
