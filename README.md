@@ -20,7 +20,7 @@
 
 <p align="">
     <a href="https://heroku.com/deploy?template=https://github.com/The-Mayans/All-Url-Uploader"> <!--- replace your forked link -->
-    <img src="https://github.com/nikhileashy/justfor_testing/blob/main/herokudeploy-01-cropped.svg" alt="herokudeploy-01" border="0" height="90" width="285"></a>
+    <img src="https://www.herokucdn.com/deploy/button.svg" alt="herokudeploy-01" border="0" height="60" width="200"></a>
 </p>
 
 ### Host Locally 🤕
