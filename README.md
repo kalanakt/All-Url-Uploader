@@ -1,9 +1,12 @@
 ## All Uploader Bot ❤️
 
+![GitHub stars](https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?style=social)
+![GitHub forks](https://img.shields.io/github/forks/kalanakt/All-Url-Uploader?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/kalanakt/All-Url-Uploader?style=social)<br><br>
 ![GitHub repo size](https://img.shields.io/github/repo-size/kalanakt/All-Url-Uploader?style=plastic)
 ![GitHub language count](https://img.shields.io/github/languages/count/kalanakt/All-Url-Uploader?style=plastic)
 ![GitHub top language](https://img.shields.io/github/languages/top/kalanakt/All-Url-Uploader?style=plastic)
-![GitHub last commit](https://img.shields.io/github/last-commit/kalanakt/All-Url-Uploader?color=red&style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/kalanakt/All-Url-Uploader?color=red&style=plastic) <br>
 
 ## Features 🦠
 
