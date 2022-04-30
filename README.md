@@ -1,6 +1,9 @@
 ## All Uploader Bot ❤️
 
-[![Readme Card](https://github-readme-stats.vercel.app/api/pin/?username=kalanakt&repo=All-Url-Uploader&theme=tokyonight)](https://github.com/kalanakt/All-Url-Uploader&bg_color=#24292F)
+![GitHub repo size](https://img.shields.io/github/repo-size/kalanakt/All-Url-Uploader?style=plastic)
+![GitHub language count](https://img.shields.io/github/languages/count/kalanakt/All-Url-Uploader?style=plastic)
+![GitHub top language](https://img.shields.io/github/languages/top/kalanakt/All-Url-Uploader?style=plastic)
+![GitHub last commit](https://img.shields.io/github/last-commit/kalanakt/All-Url-Uploader?color=red&style=plastic)
 
 ## Features 🦠
 
