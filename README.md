@@ -19,6 +19,7 @@
 
 • Permanent thumbnail Support
 ```
+Star the repo And Follow [Me](https://github.com/kalanakt)
 
 ## Deploy 🚀
 
