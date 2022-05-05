@@ -1,5 +1,8 @@
 ## All Uploader Bot ❤️
 
+[![Sparkline](https://stars.medv.io/kalanakt/All-Url-Uploader.svg)](https://stars.medv.io/kalanakt/All-Url-Uploader)
+
+
 ![GitHub stars](https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?style=social)
 ![GitHub forks](https://img.shields.io/github/forks/kalanakt/All-Url-Uploader?style=social)
 ![GitHub watchers](https://img.shields.io/github/watchers/kalanakt/All-Url-Uploader?style=social)<br><br>
