@@ -35,7 +35,10 @@ async def youtube_dl_call_back(bot, update):
     cb_data = update.data
     # youtube_dl extractors
     tg_send_type, youtube_dl_format, youtube_dl_ext = cb_data.split("|")
-    save_ytdl_json_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".json"
+    save_ytdl_json_path = (
+        f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}.json"
+    )
+
     try:
         with open(save_ytdl_json_path, "r", encoding="utf8") as f:
             response_json = json.load(f)
@@ -99,10 +102,13 @@ async def youtube_dl_call_back(bot, update):
     if "fulltitle" in response_json:
         description = response_json["fulltitle"][:1021]
             # escape Markdown and special characters
-    tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id)
+    tmp_directory_for_each_user = (
+        f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}"
+    )
+
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
-    download_directory = tmp_directory_for_each_user + "/" + custom_file_name
+    download_directory = f"{tmp_directory_for_each_user}/{custom_file_name}"
     command_to_exec = []
     if tg_send_type == "audio":
         command_to_exec = [
@@ -120,7 +126,7 @@ async def youtube_dl_call_back(bot, update):
         # command_to_exec = ["yt-dlp", "-f", youtube_dl_format, "--hls-prefer-ffmpeg", "--recode-video", "mp4", "-k", youtube_dl_url, "-o", download_directory]
         minus_f_format = youtube_dl_format
         if "youtu" in youtube_dl_url:
-            minus_f_format = youtube_dl_format + "+bestaudio"
+            minus_f_format = f"{youtube_dl_format}+bestaudio"
         command_to_exec = [
             "yt-dlp",
             "-c",
@@ -173,7 +179,7 @@ async def youtube_dl_call_back(bot, update):
         try:
             file_size = os.stat(download_directory).st_size
         except FileNotFoundError as exc:
-            download_directory = os.path.splitext(download_directory)[0] + "." + "mkv"
+            download_directory = f"{os.path.splitext(download_directory)[0]}.mkv"
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
         if file_size > Config.TG_MAX_FILE_SIZE:

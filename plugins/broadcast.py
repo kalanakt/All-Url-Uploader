@@ -41,7 +41,7 @@ async def broadcast_(c, m):
     broadcast_msg = m.reply_to_message
 
     while True:
-        broadcast_id = ''.join([random.choice(string.ascii_letters) for i in range(3)])
+        broadcast_id = ''.join([random.choice(string.ascii_letters) for _ in range(3)])
         if not broadcast_ids.get(broadcast_id):
             break
 
