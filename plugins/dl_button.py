@@ -77,10 +77,13 @@ async def ddl_call_back(bot, update):
         chat_id=update.message.chat.id,
         message_id=update.message.message_id
     )
-    tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id)
+    tmp_directory_for_each_user = (
+        f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}"
+    )
+
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
-    download_directory = tmp_directory_for_each_user + "/" + custom_file_name
+    download_directory = f"{tmp_directory_for_each_user}/{custom_file_name}"
     command_to_exec = []
     async with aiohttp.ClientSession() as session:
         c_time = time.time()
@@ -112,7 +115,7 @@ async def ddl_call_back(bot, update):
         try:
             file_size = os.stat(download_directory).st_size
         except FileNotFoundError as exc:
-            download_directory = os.path.splitext(download_directory)[0] + "." + "mkv"
+            download_directory = f"{os.path.splitext(download_directory)[0]}.mkv"
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
         if file_size > Config.TG_MAX_FILE_SIZE:

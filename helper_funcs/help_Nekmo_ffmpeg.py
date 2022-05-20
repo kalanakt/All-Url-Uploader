@@ -15,18 +15,20 @@ logger = logging.getLogger(__name__)
 
 
 async def place_water_mark(input_file, output_file, water_mark_file):
-    watermarked_file = output_file + ".watermark.png"
+    watermarked_file = f"{output_file}.watermark.png"
     metadata = extractMetadata(createParser(input_file))
     width = metadata.get("width")
     # https://stackoverflow.com/a/34547184/4723940
     shrink_watermark_file_genertor_command = [
         "ffmpeg",
-        "-i", water_mark_file,
+        "-i",
+        water_mark_file,
         "-y -v quiet",
         "-vf",
-        "scale={}*0.5:-1".format(width),
-        watermarked_file
+        f"scale={width}*0.5:-1",
+        watermarked_file,
     ]
+
     # print(shrink_watermark_file_genertor_command)
     process = await asyncio.create_subprocess_exec(
         *shrink_watermark_file_genertor_command,
@@ -89,10 +91,7 @@ async def take_screen_shot(video_file, output_directory, ttl):
     stdout, stderr = await process.communicate()
     e_response = stderr.decode().strip()
     t_response = stdout.decode().strip()
-    if os.path.lexists(out_put_file_name):
-        return out_put_file_name
-    else:
-        return None
+    return out_put_file_name if os.path.lexists(out_put_file_name) else None
 
 # https://github.com/Nekmo/telegram-upload/blob/master/telegram_upload/video.py#L26
 
@@ -125,10 +124,7 @@ async def cult_small_video(video_file, output_directory, start_time, end_time):
     stdout, stderr = await process.communicate()
     e_response = stderr.decode().strip()
     t_response = stdout.decode().strip()
-    if os.path.lexists(out_put_file_name):
-        return out_put_file_name
-    else:
-        return None
+    return out_put_file_name if os.path.lexists(out_put_file_name) else None
 
 
 async def generate_screen_shots(
@@ -143,16 +139,18 @@ async def generate_screen_shots(
     duration = 0
     if metadata is not None and metadata.has("duration"):
         duration = metadata.get('duration').seconds
-    if duration > min_duration:
-        images = []
-        ttl_step = duration // no_of_photos
-        current_ttl = ttl_step
-        for _ in range(no_of_photos):
-            ss_img = await take_screen_shot(video_file, output_directory, current_ttl)
-            current_ttl = current_ttl + ttl_step
-            if is_watermarkable:
-                ss_img = await place_water_mark(ss_img, output_directory + "/" + str(time.time()) + ".jpg", wf)
-            images.append(ss_img)
-        return images
-    else:
+    if duration <= min_duration:
         return None
+    images = []
+    ttl_step = duration // no_of_photos
+    current_ttl = ttl_step
+    for _ in range(no_of_photos):
+        ss_img = await take_screen_shot(video_file, output_directory, current_ttl)
+        current_ttl = current_ttl + ttl_step
+        if is_watermarkable:
+            ss_img = await place_water_mark(
+                ss_img, f"{output_directory}/{str(time.time())}.jpg", wf
+            )
+
+        images.append(ss_img)
+    return images
