@@ -1,9 +1,8 @@
 import os
 
-
-
-
 class Config((object)):
+    # set as False , leave it like this
+    WEBHOOK = bool(os.environ.get('WEBHOOK', False))
     # get a token from @BotFather
     TG_BOT_TOKEN = os.environ.get("TG_BOT_TOKEN", "")
     # The Telegram API things
