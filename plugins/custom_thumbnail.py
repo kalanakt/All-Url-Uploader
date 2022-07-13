@@ -57,7 +57,7 @@ async def viewthumbnail(bot, update):
         await update.reply_text(text='No Thumbnail found 🤒')
 
 async def Gthumb01(bot, update):
-    thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
+    thumb_image_path = f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}.jpg"
     db_thumbnail = await clinton.get_thumbnail(update.from_user.id)
     if db_thumbnail is not None:
         thumbnail = await bot.download_media(message=db_thumbnail, file_name=thumb_image_path)
@@ -71,7 +71,7 @@ async def Gthumb01(bot, update):
     return thumbnail
 
 async def Gthumb02(bot, update, duration, download_directory):
-    thumb_image_path = Config.DOWNLOAD_LOCATION + "/" + str(update.from_user.id) + ".jpg"
+    thumb_image_path = f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}.jpg"
     db_thumbnail = await clinton.get_thumbnail(update.from_user.id)
     return (
         await bot.download_media(
@@ -116,9 +116,9 @@ async def Mdata02(download_directory):
 
 async def Mdata03(download_directory):
 
-    duration = 0
     metadata = extractMetadata(createParser(download_directory))
-    if metadata is not None and metadata.has("duration"):
-        duration = metadata.get('duration').seconds
-
-    return duration
+    return (
+        metadata.get('duration').seconds
+        if metadata is not None and metadata.has("duration")
+        else 0
+    )
