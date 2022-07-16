@@ -39,7 +39,7 @@ replace your repo link here . readme.md -> line 41
 ```
 
 <p align="">
-    <a href="https://heroku.com/deploy?template=https://github.com/The-Mayans/All-Url-Uploader"> <!--- replace your forked link -->
+    <a href="https://heroku.com/deploy?template=YOUR_REPO_LINK"> <!--- replace your forked link : ex:- https://github.com/The-Mayans/All-Url-Uploader -->
     <img src="https://www.herokucdn.com/deploy/button.svg" alt="herokudeploy-01" border="0" height="60" width="200"></a>
 </p>
 
