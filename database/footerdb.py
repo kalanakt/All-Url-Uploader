@@ -18,6 +18,12 @@ async def add_footer(userid, footer):
         x = mycol.insert_one(mydict)
     except:
         logger.exception('Some error occured!', exc_info=True)
+  
+async def update_footer(userid, footer):
+    mycol = mydb["quickdb"]
+    filter = { 'userid': str(userid) }
+    newvalues = { "$set": { "footer": str(footer) } }
+    mycol.update_one(filter, newvalues)
                 
 async def remove_footer(userid):
     mycol = mydb["quickdb"]
