@@ -21,3 +21,4 @@ filetype
 ffmpeg
 moviepy
 wget
+pymongo
