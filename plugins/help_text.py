@@ -63,7 +63,7 @@ async def footer(bot, cmd):
 	if (" " in cmd.text) and (cmd.text is not None):
 		cmdtxt, footer = cmd.text.split(" ", 1)
 		await add_footer(chat_id, footer)
-    footer = await get_footer(chat_id)
+		footer = await get_footer(chat_id)
 		await cmd.reply_text(f"your footer saved ✔. \nuse /updatefooter NEW FOOTER for update your api. \nEg:- /updatefooter Join @TMWAD For More Updates \nUse /removefooter For delete footer. \nNew Footer is \n\n{footer}")
         
 	else:
@@ -78,7 +78,7 @@ async def updatefooter(bot, cmd):
 	if (" " in cmd.text) and (cmd.text is not None):
 		cmdtxt, footer = cmd.text.split(" ", 1)
 		await update_footer(chat_id, footer)
-    footer = await get_footer(chat_id)
+		footer = await get_footer(chat_id)
 		await cmd.reply_text(f"your footer updated ✔. Use /removefooter For delete footer \nNew Footer is \n\n{footer}")
         
 	else:
