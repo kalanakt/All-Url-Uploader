@@ -1,4 +1,4 @@
-<p align="center"><a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer"><img width="250" src="https://github.com/kalanakt/All-Url-Uploader/blob/main/asset/tmwad.png" alt="@TMWAD logo"></a></p>
+<p align="center"><a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer"><img width="450" src="https://github.com/kalanakt/All-Url-Uploader/blob/main/asset/tmwad.png" alt="@TMWAD logo"></a></p>
 
 <p align='center'>
   <img alt="GitHub Sparkline" src="https://stars.medv.io/kalanakt/All-Url-Uploader.svg">
