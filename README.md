@@ -74,4 +74,4 @@
 [MIT](https://opensource.org/licenses/MIT)
 
 <br>
-<em align='center'>Copyright (c) 2022-present <strong>code xo</strong></em>
+<em align='center'>Copyright (c) 2022-present <strong>Hash Minner</strong></em>
