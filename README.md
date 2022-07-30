@@ -1,10 +1,8 @@
 <p align="center"><a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer"><img width="450" src="https://github.com/kalanakt/All-Url-Uploader/blob/main/asset/tmwad.png" alt="@TMWAD logo"></a></p>
-
 <p align='center'>
   <img alt="GitHub Sparkline" src="https://stars.medv.io/kalanakt/All-Url-Uploader.svg">
 </p>
-
-
+<br>
 <p align="center">
   <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/kalanakt/All-Url-Uploader?logo=files&logoColor=f72585&style=social">
   <img alt="GitHub release (by tag)" src="https://img.shields.io/github/downloads/kalanakt/All-Url-Uploader/v1.0.0/total?color=90dbf4&logo=arlo&style=social">
