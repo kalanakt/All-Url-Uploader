@@ -1,3 +1,5 @@
+# Version 2.0.0 will release soon ¡¡¡
+
 ## All Uploader Bot ❤️
 
 [![Sparkline](https://stars.medv.io/kalanakt/All-Url-Uploader.svg)](https://stars.medv.io/kalanakt/All-Url-Uploader)
