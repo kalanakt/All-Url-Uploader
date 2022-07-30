@@ -20,36 +20,51 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-from pyrogram import Client, idle
-from Uploader.config import Config
-import os
-
 import logging
+
+from hachoir.parser import createParser
+from hachoir.metadata import extractMetadata
+
+
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-if __name__ == "__main__":
 
-    if not os.path.isdir(Config.DOWNLOAD_LOCATION):
-        os.makedirs(Config.DOWNLOAD_LOCATION)
-        logger.info("download location created for users") 
+async def Mdata01(download_directory):
+    width = 0
+    height = 0
+    duration = 0
+    metadata = extractMetadata(createParser(download_directory))
+    if metadata is not None:
+        if metadata.has("duration"):
+            duration = metadata.get('duration').seconds
+        if metadata.has("width"):
+            width = metadata.get("width")
+        if metadata.has("height"):
+            height = metadata.get("height")
 
-    if not os.path.isdir(Config.ADMIN_LOCATION):
-        os.makedirs(Config.ADMIN_LOCATION)
-        logger.info("download location created for admin")
-        
-    if not os.path.isdir(Config.CREDENTIALS_LOCATION):
-        os.makedirs(Config.CREDENTIALS_LOCATION)
-        logger.info("Asset download location created")
+    return width, height, duration
 
-    plugins = dict(root="Uploader")
-    Uploadbot = Client("All-Url-Uploader",
-                       bot_token=Config.BOT_TOKEN,
-                       api_id=Config.API_ID,
-                       api_hash=Config.API_HASH,
-                       plugins=plugins)
-    Uploadbot.run()
-    idle()
+
+async def Mdata02(download_directory):
+    width = 0
+    duration = 0
+    metadata = extractMetadata(createParser(download_directory))
+    if metadata is not None:
+        if metadata.has("duration"):
+            duration = metadata.get('duration').seconds
+        if metadata.has("width"):
+            width = metadata.get("width")
+
+    return width, duration
+
+
+async def Mdata03(download_directory):
+    metadata = extractMetadata(createParser(download_directory))
+    return (
+        metadata.get('duration').seconds
+        if metadata is not None and metadata.has("duration")
+        else 0
+    )

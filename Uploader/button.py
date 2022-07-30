@@ -1,53 +1,61 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-# (c) Shrimadhav U K | Modified By > @DC4_WARRIOR
+# MIT License
 
-# the logging things
+# Copyright (c) 2022 Hash Minner
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE
+
+import os
+import json
+import time
+import shutil
+import asyncio
 import logging
+
+from pyrogram.types import *
+from datetime import datetime
+
+from Uploader.utitles import *
+from Uploader.config import Config
+from Uploader.script import Translation
+from Uploader.functions.ran_text import random_char
+from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes
+
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
-
-import asyncio
-import json
-import math
-import os
-import shutil
-import time
-from datetime import datetime
-# the secret configuration specific things
-if bool(os.environ.get("WEBHOOK", False)):
-    from sample_config import Config
-else:
-    from config import Config
-# the Strings used for this "thing"
-from translation import Translation
-from plugins.custom_thumbnail import *
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-from pyrogram.types import InputMediaPhoto
-from helper_funcs.display_progress import progress_for_pyrogram, humanbytes
-# https://stackoverflow.com/a/37631799/4723940
-from database.access import clinton
-from PIL import Image
 
 
 async def youtube_dl_call_back(bot, update):
     cb_data = update.data
     # youtube_dl extractors
-    tg_send_type, youtube_dl_format, youtube_dl_ext = cb_data.split("|")
-    save_ytdl_json_path = (
-        f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}.json"
-    )
+    tg_send_type, youtube_dl_format, youtube_dl_ext, ranom = cb_data.split("|")
+    print(cb_data)
+    random1 = random_char(5)
 
+    save_ytdl_json_path = Config.DOWNLOAD_LOCATION + \
+        "/" + str(update.from_user.id) + f'{ranom}' + ".json"
     try:
         with open(save_ytdl_json_path, "r", encoding="utf8") as f:
             response_json = json.load(f)
     except (FileNotFoundError) as e:
-        await bot.delete_messages(
-            chat_id=update.message.chat.id,
-            message_ids=update.message.message_id,
-            revoke=True
-        )
+        await update.message.delete()
         return False
     youtube_dl_url = update.message.reply_to_message.text
     custom_file_name = str(response_json.get("title")) + \
@@ -91,31 +99,27 @@ async def youtube_dl_call_back(bot, update):
                 o = entity.offset
                 l = entity.length
                 youtube_dl_url = youtube_dl_url[o:o + l]
-    await bot.edit_message_text(
-        text=Translation.DOWNLOAD_START,
-        chat_id=update.message.chat.id,
-        message_id=update.message.message_id
-    )
-    user = await bot.get_me()
-    mention = user["mention"]
-    description = Translation.CUSTOM_CAPTION_UL_FILE.format(mention)
-    if "fulltitle" in response_json:
-        description = response_json["fulltitle"][:1021]
-            # escape Markdown and special characters
-    tmp_directory_for_each_user = (
-        f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}"
-    )
+    await update.message.edit_caption(
+        caption=Translation.DOWNLOAD_START.format(custom_file_name)
 
+    )
+    description = Translation.CUSTOM_CAPTION_UL_FILE
+    if "fulltitle" in response_json:
+        description = response_json["fulltitle"][0:1021]
+        # escape Markdown and special characters
+    tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + \
+        "/" + str(update.from_user.id) + f'{random1}'
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
-    download_directory = f"{tmp_directory_for_each_user}/{custom_file_name}"
+    download_directory = tmp_directory_for_each_user + "/" + custom_file_name
+
     command_to_exec = []
     if tg_send_type == "audio":
         command_to_exec = [
             "yt-dlp",
             "-c",
             "--max-filesize", str(Config.TG_MAX_FILE_SIZE),
-            "--prefer-ffmpeg",
+            "--audio-multistreams",
             "--extract-audio",
             "--audio-format", youtube_dl_ext,
             "--audio-quality", youtube_dl_format,
@@ -133,9 +137,11 @@ async def youtube_dl_call_back(bot, update):
             "--max-filesize", str(Config.TG_MAX_FILE_SIZE),
             "--embed-subs",
             "-f", minus_f_format,
-            "--hls-prefer-ffmpeg", youtube_dl_url,
+            "--audio-multistreams", "--video-multistreams",
+            youtube_dl_url,
             "-o", download_directory
         ]
+
     if Config.HTTP_PROXY != "":
         command_to_exec.append("--proxy")
         command_to_exec.append(Config.HTTP_PROXY)
@@ -164,50 +170,66 @@ async def youtube_dl_call_back(bot, update):
     ad_string_to_replace = "please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output."
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
-        await bot.edit_message_text(
-            chat_id=update.message.chat.id,
-            message_id=update.message.message_id,
+        await update.message.edit_caption(
+
             text=error_message
         )
         return False
+
     if t_response:
-        # logger.info(t_response)
-        os.remove(save_ytdl_json_path)
+        logger.info(t_response)
+        try:
+            os.remove(save_ytdl_json_path)
+        except FileNotFoundError as exc:
+            pass
+
         end_one = datetime.now()
-        time_taken_for_download = (end_one -start).seconds
+        time_taken_for_download = (end_one - start).seconds
         file_size = Config.TG_MAX_FILE_SIZE + 1
         try:
             file_size = os.stat(download_directory).st_size
         except FileNotFoundError as exc:
-            download_directory = f"{os.path.splitext(download_directory)[0]}.mkv"
+            download_directory = os.path.splitext(
+                download_directory)[0] + "." + "mkv"
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
-        if file_size > Config.TG_MAX_FILE_SIZE:
-            await bot.edit_message_text(
-                chat_id=update.message.chat.id,
-                text=Translation.RCHD_TG_API_LIMIT.format(time_taken_for_download, humanbytes(file_size)),
-                message_id=update.message.message_id
+        if ((file_size > Config.TG_MAX_FILE_SIZE)):
+            await update.message.edit_caption(
+
+                caption=Translation.RCHD_TG_API_LIMIT.format(
+                    time_taken_for_download, humanbytes(file_size))
+
             )
         else:
-            await bot.edit_message_text(
-                text=Translation.UPLOAD_START,
-                chat_id=update.message.chat.id,
-                message_id=update.message.message_id
+
+            is_w_f = False
+            '''images = await generate_screen_shots(
+                download_directory,
+                tmp_directory_for_each_user,
+                is_w_f,
+                Config.DEF_WATER_MARK_FILE,
+                300,
+                9
             )
+            logger.info(images)'''
+            await update.message.edit_caption(
+                caption=Translation.UPLOAD_START.format(custom_file_name)
+
+            )
+
             # ref: message from @Sources_codes
             start_time = time.time()
-            # try to upload file
-            if tg_send_type == "audio":
-                duration = await Mdata03(download_directory)
-                thumbnail = await Gthumb01(bot, update)
-                await bot.send_audio(
-                    chat_id=update.message.chat.id,
-                    audio=download_directory,
+            if tg_send_type == "video":
+                width, height, duration = await Mdata01(download_directory)
+                await update.message.reply_video(
+                    # chat_id=update.message.chat.id,
+                    video=download_directory,
                     caption=description,
-                    parse_mode="HTML",
                     duration=duration,
-                    thumb=thumbnail,
-                    reply_to_message_id=update.message.reply_to_message.message_id,
+                    width=width,
+                    height=height,
+                    supports_streaming=True,
+                    # reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
@@ -215,15 +237,31 @@ async def youtube_dl_call_back(bot, update):
                         start_time
                     )
                 )
-            elif tg_send_type == "file":
-                thumbnail = await Gthumb01(bot, update)
-                await bot.send_document(
-                    chat_id=update.message.chat.id,
+
+            else:
+                await update.message.reply_document(
+                    # chat_id=update.message.chat.id,
                     document=download_directory,
-                    thumb=thumbnail,
                     caption=description,
-                    parse_mode="HTML",
-                    reply_to_message_id=update.message.reply_to_message.message_id,
+                    # parse_mode=enums.ParseMode.HTML,
+                    # reply_to_message_id=update.id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        Translation.UPLOAD_START,
+                        update.message,
+                        start_time
+                    )
+                )
+
+            if tg_send_type == "audio":
+                duration = await Mdata03(download_directory)
+                await update.message.reply_audio(
+                    # chat_id=update.message.chat.id,
+                    audio=download_directory,
+                    caption=description,
+
+                    duration=duration,
+                    # reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
@@ -233,35 +271,12 @@ async def youtube_dl_call_back(bot, update):
                 )
             elif tg_send_type == "vm":
                 width, duration = await Mdata02(download_directory)
-                thumbnail = await Gthumb02(bot, update, duration, download_directory)
-                await bot.send_video_note(
-                    chat_id=update.message.chat.id,
+                await update.message.reply_video_note(
+                    # chat_id=update.message.chat.id,
                     video_note=download_directory,
                     duration=duration,
                     length=width,
-                    thumb=thumb_image_path,
-                    reply_to_message_id=update.message.reply_to_message.message_id,
-                    progress=progress_for_pyrogram,
-                    progress_args=(
-                        Translation.UPLOAD_START,
-                        update.message,
-                        start_time
-                    )
-                )
-            elif tg_send_type == "video":
-                 width, height, duration = await Mdata01(download_directory)
-                 thumbnail = await Gthumb02(bot, update, duration, download_directory)
-                 await bot.send_video(
-                    chat_id=update.message.chat.id,
-                    video=download_directory,
-                    caption=description,
-                    parse_mode="HTML",
-                    duration=duration,
-                    width=width,
-                    height=height,
-                    thumb=thumbnail,
-                    supports_streaming=True,
-                    reply_to_message_id=update.message.reply_to_message.message_id,
+                    # reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
@@ -270,17 +285,18 @@ async def youtube_dl_call_back(bot, update):
                     )
                 )
             else:
-                logger.info("Did this happen? :\\")
+                logger.info("✅ " + custom_file_name)
             end_two = datetime.now()
             time_taken_for_upload = (end_two - end_one).seconds
             try:
                 shutil.rmtree(tmp_directory_for_each_user)
-                os.remove(thumbnail)
             except:
                 pass
-            await bot.edit_message_text(
-                text=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(time_taken_for_download, time_taken_for_upload),
-                chat_id=update.message.chat.id,
-                message_id=update.message.message_id,
-                disable_web_page_preview=True
+            await update.message.edit_caption(
+                caption=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(
+                    time_taken_for_download, time_taken_for_upload)
+
             )
+
+            logger.info("✅ Downloaded in: " + str(time_taken_for_download))
+            logger.info("✅ Uploaded in: " + str(time_taken_for_upload))

@@ -1,78 +1,77 @@
-# Version 2.0.0 will release soon ¡¡¡
+<p align="center"><a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer"><img width="250" src="https://github.com/kalanakt/All-Url-Uploader/blob/main/pic/tmwad.png" alt="@TMWAD logo"></a></p>
 
-## All Uploader Bot ❤️
-
-[![Sparkline](https://stars.medv.io/kalanakt/All-Url-Uploader.svg)](https://stars.medv.io/kalanakt/All-Url-Uploader)
-
-
-![GitHub stars](https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?style=social)
-![GitHub forks](https://img.shields.io/github/forks/kalanakt/All-Url-Uploader?style=social)
-![GitHub watchers](https://img.shields.io/github/watchers/kalanakt/All-Url-Uploader?style=social)<br><br>
-![GitHub repo size](https://img.shields.io/github/repo-size/kalanakt/All-Url-Uploader?style=plastic)
-![GitHub language count](https://img.shields.io/github/languages/count/kalanakt/All-Url-Uploader?style=plastic)
-![GitHub top language](https://img.shields.io/github/languages/top/kalanakt/All-Url-Uploader?style=plastic)
-![GitHub last commit](https://img.shields.io/github/last-commit/kalanakt/All-Url-Uploader?color=red&style=plastic) <br>
-
-## Features 🦠
-
-```
-• Upload HTTP/HTTPS as File/Video to Telegram.
-
-• Upload zee5, sony.live, voot and much more 😋
-
-• Broadcast message, check total users
-
-• Permanent thumbnail Support
-```
-Star the repo And Follow [Me](https://github.com/kalanakt)
-
-<a href="https://www.buymeacoffee.com/kalanakt" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a>
-
-## Deploy 🚀
-
-### Easiest Heroku Deploy 🤭
-```
-replace your repo link here . readme.md -> line 41
-
-<p align="">
-    <a href="https://heroku.com/deploy?template=YOUR_REPO_LINK">
-    <img src="https://www.herokucdn.com/deploy/button.svg" alt="herokudeploy-01" border="0" height="60" width="200"></a>
-</p>
-```
-
-<p align="">
-    <a href="https://heroku.com/deploy?template=YOUR_REPO_LINK">  <!--- replace your forked link : ex:- https://github.com/The-Mayans/All-Url-Uploader -->
-    <img src="https://www.herokucdn.com/deploy/button.svg" alt="herokudeploy-01" border="0" height="60" width="200"></a>
+<p align='center'>
+  <img alt="GitHub Sparkline" src="https://stars.medv.io/kalanakt/All-Url-Uploader.svg">
 </p>
 
-### Host Locally 🤕
 
-```shell
-git clone https://github.com/kalanakt/All-Url-Uploader
-cd All-Url-Uploader
-pip3 install -r requirements.txt
-# EDIT sample_config.py values appropriately
-python3 main.py
-```
-## Found a Bug 🐛
+<p align="center">
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/kalanakt/All-Url-Uploader?logo=files&logoColor=f72585&style=social">
+  <img alt="GitHub release (by tag)" src="https://img.shields.io/github/downloads/kalanakt/All-Url-Uploader/v1.0.0/total?color=90dbf4&logo=arlo&style=social">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/kalanakt/All-Url-Uploader?color=8eecf5&logo=anaconda&logoColor=06d6a0&style=social">
+  <img alt="GitHub" src="https://img.shields.io/github/license/kalanakt/All-Url-Uploader?logo=adguard&logoColor=390099&style=social">
+  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?color=90e0ef&logoColor=ff4d6d&style=social">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kalanakt/All-Url-Uploader?logo=electron&logoColor=89fc00&style=social">
+</p>
+<br><br>
 
-```Feel free to create a pull or create a issue now and describe your issue freely.```
+<a href="https://github.com/kalanakt/All-Url-Uploader/archive/refs/tags/v1.0.0.zip"><img alt="Download Zip file" src="https://img.shields.io/github/downloads/kalanakt/All-Url-Uploader/v1.0.0/total?color=caf0f8&label=Download%20As%20Zip%20v1.0.0&logo=Files&logoColor=caf0f8&style=for-the-badge"></a>
 
-## Succsus Url 🤖
-   **[All Url Uploader Bot](https://t.me/All_Url_Uploader_Bot)**
+<h3>This is telegram url uploader bot using pyrogram libray</h3>
+<p>This is <a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer">Bot Universe</a> project for develop telegram url uploader bot using pyrogram</p>
 
+<h3>Introduction</h3>
+<p>This is complete url uploader bot. for host use <a href="https://dashboard.heroku.com/" target="_blank" rel="noopener noreferrer">heroku</a>. and <a href="https://docs.pyrogram.org" target="_blank" rel="noopener noreferrer">Pyrogram Documentation</a> for develop your bot.</p>
 
-## Support Sites 🐙
-   **[YouTube-dl Supported Links](https://ytdl-org.github.io/youtube-dl/supportedsites.html)**
+<h3>Ecosystem</h3>
 
-## TG Bots Updates 🦄
-   **[Bot Universe](https://t.me/TMWAD)**
+| Version              | Status                | Description                                                                    | 
+| -------------------- | --------------------- | ------------------------------------------------------------------------------ |
+| v 1.0.0              | Stable                | Upload all ytdl links, direct links                                            |
+| v 2.0.0              | Stable                | Upload all ytdl links, direct links, google drive etc. (Speed is much higher than version 1) |
+|           -          |           -           |                                    -                                           |
 
-## Credits, and Thanks to 👀
+<h3>To do</h3>
 
-- [@SpEcHlDe](https://t.me/ThankTelegram) for his [AnyDLBot](https://telegram.dog/AnyDLBot)
-- [Dan Tès](https://t.me/haskell) for his [Pyrogram Library](https://github.com/pyrogram/pyrogram)
-- [Yoily](https://t.me/YoilyL) for his [UploaditBot](https://telegram.dog/UploaditBot)
-- [@AbirHasan2005](https://t.me/AbirHasan2005) for his [database.py](https://github.com/AbirHasan2005/VideoCompress/blob/main/bot/database/database.py)
-- [@DC4_WARRIOR](https://t.me/Space_X_bots)
-- [@xgorn](https://t.me/xgorn)
+ * [ ] deploy to vps setup
+ * [ ] brodcast message to users
+ * [ ] users counter
+ * [ ] custom thumbunali support
+ * [ ] custom caption support
+ 
+<h3>Deploy</h3>
+
+<p>browse bellow link with your forked link</p>
+
+`https://heroku.com/deploy?template=YOUR_REPO_LINK`
+
+<h3>Questions</h3>
+
+<p>For questions and support please use <a href="https://github.com/kalanakt/All-Url-Uploader/discussions" target="_blank" rel="noopener noreferrer">Discussions</a>. The issue list of this repo is <strong>exclusively</strong> for bug reports and feature requests.</p>
+
+<h3>Issues</h3>
+
+<p>Please make sure to read the <a href="https://github.com/kalanakt/All-Url-Uploader/discussions/categories/issue-reporting-checklist" target="_blank" rel="noopener noreferrer">Issue Reporting Checklist</a>. before opening an <a href="https://github.com/kalanakt/All-Url-Uploader/issues" target="_blank" rel="noopener noreferrer">issue</a>. Issues not conforming to the guidelines may be closed immediately.</p>
+
+<h3>Changelog</h3>
+
+<p>Detailed changes for each release are documented in the <a href="https://github.com/kalanakt/All-Url-Uploader/commits/main" target="_blank" rel="noopener noreferrer">main commits</a></p> 
+
+<h3>Stay In Touch</h3>
+
+- [Telegram](https://t.me/TMWAD)
+
+<h3>Contribution</h3>
+
+<p>If you have a pyrogram-related project/component/tool/idea, add it with a <a href="https://github.com/kalanakt/All-Url-Uploader/pulls" target="_blank" rel="noopener noreferrer">pull request</a> Thank you to all the people who contributed to this project!</p>
+
+<h3>Thanks To</h3>
+
+<p>This Bot is developed by using many github open source projects. credit goes to first devs</p>
+
+<h3>License</h3>
+
+[MIT](https://opensource.org/licenses/MIT)
+
+<br>
+<em align='center'>Copyright (c) 2022-present <strong>code xo</strong></em>
