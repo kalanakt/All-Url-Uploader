@@ -68,7 +68,7 @@
 <table>
   <tr>
     <td align="center"><a href="https://github.com/kalanakt"><img src="https://avatars.githubusercontent.com/u/86665964?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hash Minner</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Code">💻</a> <a href="#ideas-kalanakt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-kalanakt" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-kalanakt" title="Maintenance">🚧</a> <a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://dev.to/gr2m"><img src="https://avatars.githubusercontent.com/u/39992?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gregor Martynus</b></sub></a><br /><a href="#ideas-gr2m" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="http://www.tamilvip007.me"><img src="https://avatars.githubusercontent.com/u/79161058?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TAMILVIP007</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=TAMILVIP007" title="Code">💻</a></td>
   </tr>
 </table>
 
