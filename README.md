@@ -62,6 +62,15 @@
 
 <h3>Contribution</h3>
 
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
 <p>If you have a pyrogram-related project/component/tool/idea, add it with a <a href="https://github.com/kalanakt/All-Url-Uploader/pulls" target="_blank" rel="noopener noreferrer">pull request</a> Thank you to all the people who contributed to this project!</p>
 
 <h3>Thanks To</h3>
