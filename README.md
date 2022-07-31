@@ -65,6 +65,12 @@
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/kalanakt"><img src="https://avatars.githubusercontent.com/u/86665964?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hash Minner</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Code">💻</a> <a href="#ideas-kalanakt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-kalanakt" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-kalanakt" title="Maintenance">🚧</a> <a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://dev.to/gr2m"><img src="https://avatars.githubusercontent.com/u/39992?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Gregor Martynus</b></sub></a><br /><a href="#ideas-gr2m" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
