@@ -22,6 +22,15 @@
         "maintenance",
         "test"
       ]
+    },
+    {
+      "login": "TAMILVIP007",
+      "name": "TAMILVIP007",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79161058?v=4",
+      "profile": "http://www.tamilvip007.me",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
