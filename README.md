@@ -78,7 +78,7 @@
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-<p>If you have a pyrogram-related project/component/tool/idea, add it with a <a href="https://github.com/kalanakt/All-Url-Uploader/pulls" target="_blank" rel="noopener noreferrer">pull request</a> Thank you to all the people who contributed to this project!</p>
+<p>If you have a this bot-related bug fix/component/tool/idea, add it with a <a href="https://github.com/kalanakt/All-Url-Uploader/pulls" target="_blank" rel="noopener noreferrer">pull request.</a> Thank you to all the people who contributed to this project!</p>
 
 <h3>Thanks To</h3>
 
