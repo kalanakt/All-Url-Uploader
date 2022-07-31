@@ -13,8 +13,9 @@
 </p>
 <br><br>
 
+<!--
 <a href="https://github.com/kalanakt/All-Url-Uploader/archive/refs/tags/v1.0.0.zip"><img alt="Download Zip file" src="https://img.shields.io/github/downloads/kalanakt/All-Url-Uploader/v1.0.0/total?color=caf0f8&label=Download%20As%20Zip%20v1.0.0&logo=Files&logoColor=caf0f8&style=for-the-badge"></a>
-
+-->
 <h3>This is telegram url uploader bot using pyrogram libray</h3>
 <p>This is <a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer">Bot Universe</a> project for develop telegram url uploader bot using pyrogram</p>
 
