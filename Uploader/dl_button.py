@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-from pyrogram import enums
+
 from PIL import Image
 from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from Uploader.utitles import *
