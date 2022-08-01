@@ -62,7 +62,6 @@ async def echo(bot, update):
     if not update.from_user:
         return await update.reply_text("I don't know about you sir :(")
 
-    logger.info(update.from_user)
     url = update.text
     youtube_dl_username = None
     youtube_dl_password = None
