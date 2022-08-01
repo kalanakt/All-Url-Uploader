@@ -70,6 +70,7 @@
     <td align="center"><a href="https://github.com/kalanakt"><img src="https://avatars.githubusercontent.com/u/86665964?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hash Minner</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Code">💻</a> <a href="#ideas-kalanakt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-kalanakt" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-kalanakt" title="Maintenance">🚧</a> <a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Tests">⚠️</a></td>
     <td align="center"><a href="http://www.tamilvip007.me"><img src="https://avatars.githubusercontent.com/u/79161058?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TAMILVIP007</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=TAMILVIP007" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/ananth-28"><img src="https://avatars.githubusercontent.com/u/106482929?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ananth-28</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=ananth-28" title="Code">💻</a></td>
+    <td align="center"><a href="https://t.me/Divarion_D"><img src="https://avatars.githubusercontent.com/u/42798043?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Danil</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=Divarion-D" title="Code">💻</a></td>
   </tr>
 </table>
 
