@@ -133,11 +133,12 @@ async def echo(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
+
     chk = await bot.send_message(
         chat_id=update.chat.id,
         text=f'ᴘʀᴏᴄᴇssɪɴɢ ʏᴏᴜʀ ʟɪɴᴋ ⌛',
         disable_web_page_preview=True,
-        reply_to_message_id=update.id
+        reply_to_message_id=update.message_id
 
     )
     if update.from_user.id not in Config.AUTH_USERS:
@@ -180,7 +181,7 @@ async def echo(bot, update):
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.NO_VOID_FORMAT_FOUND.format(str(error_message)),
-            reply_to_message_id=update.id,
+            reply_to_message_id=update.message_id,
 
             disable_web_page_preview=True
         )
@@ -305,7 +306,7 @@ async def echo(bot, update):
                 Thumbnail) + "\n" + Translation.SET_CUSTOM_USERNAME_PASSWORD,
             reply_markup=reply_markup,
 
-            reply_to_message_id=update.id
+            reply_to_message_id=update.message_id
         )
     else:
         # fallback for nonnumeric port a.k.a seedbox.io
@@ -328,5 +329,5 @@ async def echo(bot, update):
             text=Translation.FORMAT_SELECTION,
             reply_markup=reply_markup,
 
-            reply_to_message_id=update.id
+            reply_to_message_id=update.message_id
         )
