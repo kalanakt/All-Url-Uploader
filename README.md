@@ -55,6 +55,8 @@
 # Edit Uploader/config.py with variables
 
 git clone <YOUR_REPO_LINK>
+cd <YOUR_REPO_NAME> 
+# defecult cd All-Url-Uploader
 pip3 install -U -r requirements.txt
 python bot.py
 </pre>
