@@ -3,7 +3,7 @@ beautifulsoup4
 hachoir
 numpy
 Pillow
-pyrogram
+pyrogram==1.4.15
 requests
 tgcrypto
 olefile
