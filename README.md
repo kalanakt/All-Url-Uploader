@@ -32,7 +32,7 @@
 
 <h3>To do</h3>
 
- * [ ] deploy to vps setup
+ * [x] deploy to vps setup
  * [ ] brodcast message to users
  * [ ] users counter
  * [ ] custom thumbunali support
@@ -40,9 +40,37 @@
  
 <h3>Deploy</h3>
 
+<details><summary>Deploy To Heroku</summary>
+<p>
 <p>browse bellow link with your forked link</p>
 
-`https://heroku.com/deploy?template=YOUR_REPO_LINK`
+`https://heroku.com/deploy?template=<YOUR_REPO_LINK>`
+</p>
+</details>
+
+<details><summary>Deploy Locally</summary>
+<p>
+<pre>
+# Fork Repo
+# Edit Uploader/config.py with variables
+
+git clone <YOUR_REPO_LINK>
+pip3 install -U -r requirements.txt
+python bot.py
+</pre>
+</p>
+</details>
+
+<details><summary>Deploy To VPS</summary>
+<p>
+<pre>
+git clone https://github.com/kalanakt/All-Url-Uploader
+pip3 install -U -r requirements.txt
+# Edit info.py with variables.
+python bot.py
+</pre>
+</p>
+</details>
 
 <h3>Questions</h3>
 
