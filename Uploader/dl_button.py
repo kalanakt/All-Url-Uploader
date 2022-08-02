@@ -218,7 +218,7 @@ async def ddl_call_back(bot, update):
                 )
 
             else:
-                logger.info(f"✅ {custom_file_name}")
+                logger.info(f"[OK] {custom_file_name}")
             end_two = datetime.now()
             try:
                 os.remove(download_directory)
@@ -235,8 +235,8 @@ async def ddl_call_back(bot, update):
                 disable_web_page_preview=True
             )
 
-            logger.info(f"✅ Downloaded in: {str(time_taken_for_download)}")
-            logger.info(f"✅ Uploaded in: {str(time_taken_for_upload)}")
+            logger.info(f"[OK] Downloaded in: {str(time_taken_for_download)}")
+            logger.info(f"[OK] Uploaded in: {str(time_taken_for_upload)}")
     else:
         await bot.edit_message_text(
             text=Translation.NO_VOID_FORMAT_FOUND.format("Incorrect Link"),

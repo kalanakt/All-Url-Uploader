@@ -105,13 +105,13 @@ async def youtube_dl_call_back(bot, update):
     )
     description = Translation.CUSTOM_CAPTION_UL_FILE
     if "fulltitle" in response_json:
-        description = response_json["fulltitle"][0:1021]
-        # escape Markdown and special characters
+        description = response_json["fulltitle"][:1021]
+            # escape Markdown and special characters
     tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + \
         "/" + str(update.from_user.id) + f'{random1}'
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
-    download_directory = tmp_directory_for_each_user + "/" + custom_file_name
+    download_directory = f"{tmp_directory_for_each_user}/{custom_file_name}"
 
     command_to_exec = []
     if tg_send_type == "audio":
@@ -285,7 +285,7 @@ async def youtube_dl_call_back(bot, update):
                     )
                 )
             else:
-                logger.info("✅ " + custom_file_name)
+                logger.info(f"[OK] {custom_file_name}")
             end_two = datetime.now()
             time_taken_for_upload = (end_two - end_one).seconds
             try:
@@ -298,5 +298,5 @@ async def youtube_dl_call_back(bot, update):
 
             )
 
-            logger.info("✅ Downloaded in: " + str(time_taken_for_download))
-            logger.info("✅ Uploaded in: " + str(time_taken_for_upload))
+            logger.info(f"[OK] Downloaded in: {str(time_taken_for_download)}")
+            logger.info(f"[OK] Uploaded in: {str(time_taken_for_upload)}")
