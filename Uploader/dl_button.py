@@ -78,8 +78,8 @@ async def ddl_call_back(bot, update):
                 youtube_dl_url = youtube_dl_url[o:o + l]
 
     description = custom_file_name
-    if f".{youtube_dl_ext}" not in custom_file_name:
-        custom_file_name += f'.{youtube_dl_ext}'
+    if not "." + youtube_dl_ext in custom_file_name:
+        custom_file_name += '.' + youtube_dl_ext
     logger.info(youtube_dl_url)
     logger.info(custom_file_name)
 
@@ -93,7 +93,7 @@ async def ddl_call_back(bot, update):
         "/" + str(update.from_user.id)
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
-    download_directory = f"{tmp_directory_for_each_user}/{custom_file_name}"
+    download_directory = tmp_directory_for_each_user + "/" + custom_file_name
     command_to_exec = []
     async with aiohttp.ClientSession() as session:
         c_time = time.time()
@@ -218,7 +218,7 @@ async def ddl_call_back(bot, update):
                 )
 
             else:
-                logger.info(f"✅ {custom_file_name}")
+                logger.info("[OK] " + custom_file_name)
             end_two = datetime.now()
             try:
                 os.remove(download_directory)
@@ -235,8 +235,8 @@ async def ddl_call_back(bot, update):
                 disable_web_page_preview=True
             )
 
-            logger.info(f"✅ Downloaded in: {str(time_taken_for_download)}")
-            logger.info(f"✅ Uploaded in: {str(time_taken_for_upload)}")
+            logger.info("[OK] Downloaded in: " + str(time_taken_for_download))
+            logger.info("[OK] Uploaded in: " + str(time_taken_for_upload))
     else:
         await bot.edit_message_text(
             text=Translation.NO_VOID_FORMAT_FOUND.format("Incorrect Link"),
@@ -290,4 +290,5 @@ ETA: {}""".format(
                             display_message = current_message
                     except Exception as e:
                         logger.info(str(e))
+                        pass
         return await response.release()
