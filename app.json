@@ -12,8 +12,8 @@
     "remote",
     "uploader"
   ],
-  "website": "https://github.com/Tellybots",
-  "repository": "https://github.com/PlanetBots",
+  "website": "kalanakt.github.io/projects/telegram/all-url-uploader ",
+  "repository": "https://github.com/kalanakt/All-Url-Uploader",
   "env": {
     "WEBHOOK": {
       "description": "Setting this to ANYTHING will enable webhooks when in env mode",
