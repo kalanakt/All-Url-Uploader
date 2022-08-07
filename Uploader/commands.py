@@ -23,7 +23,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from Uploader.script import Translation
-from pyrogram import Client, filters
 from Uploader.config import *
 
 
