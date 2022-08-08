@@ -41,11 +41,7 @@
 <h3>Deploy</h3>
 
 <details><summary>Deploy To Heroku</summary>
-<p>
-<p>browse bellow link with your forked link</p>
-
-`https://heroku.com/deploy?template=<YOUR_REPO_LINK>`
-</p>
+<h4><a href="https://kalanakt.github.io/ToHeroku/app/" target="_blank">Click Here To Countinue</a></h4>
 </details>
 
 <details><summary>Deploy Locally</summary>
