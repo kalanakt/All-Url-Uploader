@@ -41,7 +41,12 @@
 <h3>Deploy</h3>
 
 <details><summary>Deploy To Heroku</summary>
-<h4><a href="https://kalanakt.github.io/ToHeroku/app/" target="_blank">Click Here To Countinue</a></h4>
+<br>
+
+* Fork the repo
+* copy forked repo link
+* <a href="https://kalanakt.github.io/ToHeroku/app/" target="_blank">Click Here</a> To Countinue.
+
 </details>
 
 <details><summary>Deploy Locally</summary>
@@ -108,7 +113,8 @@ python bot.py
 
 <h3>Thanks To</h3>
 
-<p>This Bot is developed by using many github open source projects. credit goes to first devs</p>
+<p>This Bot is developed by using many github open source projects.</p>
+<p>Special Thanks to people who star to this repo and contributed to this project</p>
 
 <h3>License</h3>
 
