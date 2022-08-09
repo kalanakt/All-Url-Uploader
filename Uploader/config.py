@@ -42,12 +42,9 @@ class Config(object):
     API_HASH = os.environ.get("API_HASH")
     # Get these values from my.telegram.org
     # Array to store users who are authorized to use the bot
-
+    
+    # file /video dpwnload location
     DOWNLOAD_LOCATION = "./DOWNLOADS"
-    # The download location for auth users. (Don't change anything in this field!)
-    ADMIN_LOCATION = "./ADOWNLOADS"
-    # Location where your mega.nz credentials for megatools gets saved if you provide them. (Don't change anything in this field!)
-    CREDENTIALS_LOCATION = "./CREDENTIALS"
 
     MEGA_EMAIL = os.environ.get("MEGA_EMAIL", "None")
     # If deploying on vps edit the above value as example := Mega_email = "Your-Mega_email-inside-inverted-commas."
