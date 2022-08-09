@@ -16,8 +16,6 @@ class Config(object):
     
     # No need to change
     DOWNLOAD_LOCATION = "./DOWNLOADS"
-    ADMIN_LOCATION = "./ADOWNLOADS"
-    CREDENTIALS_LOCATION = "./CREDENTIALS"
     ADL_BOT_RQ = {}
     CHUNK_SIZE = 128
     TG_MAX_FILE_SIZE = 4194304000

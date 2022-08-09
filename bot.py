@@ -37,14 +37,6 @@ if __name__ == "__main__":
         os.makedirs(Config.DOWNLOAD_LOCATION)
         logger.info("download location created for users") 
 
-    if not os.path.isdir(Config.ADMIN_LOCATION):
-        os.makedirs(Config.ADMIN_LOCATION)
-        logger.info("download location created for admin")
-        
-    if not os.path.isdir(Config.CREDENTIALS_LOCATION):
-        os.makedirs(Config.CREDENTIALS_LOCATION)
-        logger.info("Asset download location created")
-
     plugins = dict(root="Uploader")
     Uploadbot = Client("All-Url-Uploader",
                        bot_token=Config.BOT_TOKEN,
