@@ -77,9 +77,9 @@ async def youtube_dl_call_back(bot, update):
                 if entity.type == "text_link":
                     youtube_dl_url = entity.url
                 elif entity.type == "url":
-                    o = entity.offset
-                    l = entity.length
-                    youtube_dl_url = youtube_dl_url[o:o + l]
+                    offset = entity.offset
+                    length = entity.length
+                    youtube_dl_url = youtube_dl_url[offset:offset + length]
         if youtube_dl_url is not None:
             youtube_dl_url = youtube_dl_url.strip()
         if custom_file_name is not None:

@@ -58,26 +58,3 @@ async def aboutme(_, m: Message):
         reply_markup=Translation.ABOUT_BUTTONS,
         disable_web_page_preview=True,
     )
-
-
-@Client.on_message(
-    filters.private & filters.reply & filters.text
-)
-async def edit_caption(bot, update):
-    try:
-        await bot.send_cached_media(
-            chat_id=update.chat.id,
-            file_id=update.reply_to_message.video.file_id,
-            reply_to_message_id=update.id,
-            caption=update.text
-        )
-    except:
-        try:
-            await bot.send_cached_media(
-                chat_id=update.chat.id,
-                file_id=update.reply_to_message.document.file_id,
-                reply_to_message_id=update.id,
-                caption=update.text
-            )
-        except:
-            pass

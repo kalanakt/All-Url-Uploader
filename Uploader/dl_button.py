@@ -60,9 +60,9 @@ async def ddl_call_back(bot, update):
                 if entity.type == "text_link":
                     youtube_dl_url = entity.url
                 elif entity.type == "url":
-                    o = entity.offset
-                    l = entity.length
-                    youtube_dl_url = youtube_dl_url[o:o + l]
+                    offset = entity.offset
+                    length = entity.length
+                    youtube_dl_url = youtube_dl_url[offset:offset + length]
         if youtube_dl_url is not None:
             youtube_dl_url = youtube_dl_url.strip()
         if custom_file_name is not None:
@@ -73,9 +73,9 @@ async def ddl_call_back(bot, update):
             if entity.type == "text_link":
                 youtube_dl_url = entity.url
             elif entity.type == "url":
-                o = entity.offset
-                l = entity.length
-                youtube_dl_url = youtube_dl_url[o:o + l]
+                offset = entity.offset
+                length = entity.length
+                youtube_dl_url = youtube_dl_url[offset:offset + length]
 
     description = custom_file_name
     if f".{youtube_dl_ext}" not in custom_file_name:
@@ -223,7 +223,7 @@ async def ddl_call_back(bot, update):
             try:
                 os.remove(download_directory)
                 os.remove(thumb_image_path)
-            except:
+            except Exception:
                 pass
             time_taken_for_download = (end_one - start).seconds
             time_taken_for_upload = (end_two - end_one).seconds
