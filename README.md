@@ -5,7 +5,7 @@
 <br>
 <p align="center">
   <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/kalanakt/All-Url-Uploader?logo=files&logoColor=f72585&style=social">
-  <img alt="GitHub release (by tag)" src="https://img.shields.io/github/downloads/kalanakt/All-Url-Uploader/v1.0.0/total?color=90dbf4&logo=arlo&style=social">
+  <a href="https://www.codefactor.io/repository/github/kalanakt/all-url-uploader/overview/main"><img src="https://www.codefactor.io/repository/github/kalanakt/all-url-uploader/badge/main" alt="CodeFactor" /></a>
   <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/kalanakt/All-Url-Uploader?color=8eecf5&logo=anaconda&logoColor=06d6a0&style=social">
   <img alt="GitHub" src="https://img.shields.io/github/license/kalanakt/All-Url-Uploader?logo=adguard&logoColor=390099&style=social">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?color=90e0ef&logoColor=ff4d6d&style=social">

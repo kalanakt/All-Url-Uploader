@@ -96,9 +96,9 @@ async def youtube_dl_call_back(bot, update):
             if entity.type == "text_link":
                 youtube_dl_url = entity.url
             elif entity.type == "url":
-                o = entity.offset
-                l = entity.length
-                youtube_dl_url = youtube_dl_url[o:o + l]
+                offset = entity.offset
+                length = entity.length
+                youtube_dl_url = youtube_dl_url[offset:offset + length]
     await update.message.edit_caption(
         caption=Translation.DOWNLOAD_START.format(custom_file_name)
 
@@ -106,7 +106,7 @@ async def youtube_dl_call_back(bot, update):
     description = Translation.CUSTOM_CAPTION_UL_FILE
     if "fulltitle" in response_json:
         description = response_json["fulltitle"][:1021]
-            # escape Markdown and special characters
+        # escape Markdown and special characters
     tmp_directory_for_each_user = Config.DOWNLOAD_LOCATION + \
         "/" + str(update.from_user.id) + f'{random1}'
     if not os.path.isdir(tmp_directory_for_each_user):
@@ -290,7 +290,7 @@ async def youtube_dl_call_back(bot, update):
             time_taken_for_upload = (end_two - end_one).seconds
             try:
                 shutil.rmtree(tmp_directory_for_each_user)
-            except:
+            except Exception:
                 pass
             await update.message.edit_caption(
                 caption=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(

@@ -59,7 +59,7 @@ async def progress_for_pyrogram(
         )
         try:
             await message.edit(text=f"{ud_type}\n {tmp}")
-        except:
+        except Exception:
             pass
 
 
