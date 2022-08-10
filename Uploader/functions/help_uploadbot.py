@@ -63,6 +63,8 @@ def DownLoadFile(url, file_name, chunk_size, client, ud_type, message_id, chat_i
                         text=f"{ud_type}: {humanbytes(downloaded_size)} of {humanbytes(total_size)}",
                     )
 
-                except Exception:
-                    pass
+                except Exception as e:
+                    logger.info(f"Error: {e}")
+                    return
+
     return file_name
