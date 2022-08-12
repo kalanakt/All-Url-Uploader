@@ -22,7 +22,10 @@
 
 import os
 from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes
-from Uploader.config import Config
+if bool(os.environ.get("WEBHOOK")):
+    from Uploader.config import Config
+else:
+    from sample_config import Config
 from Uploader.dl_button import ddl_call_back
 from Uploader.button import youtube_dl_call_back
 from Uploader.script import Translation

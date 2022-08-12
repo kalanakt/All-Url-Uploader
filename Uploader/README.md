@@ -3,8 +3,11 @@
 <h3>How to edit config.py</h3>
 
 <p> Here is sample edited config.py for deploy to Locally/VPS. copy and past and edit with your variables</p>
+<p> Go To sample_config.py and edit with your veriable</p>
 
 <pre>
+# sample config file 
+
 class Config(object):
 
     # get a token from @BotFather
@@ -21,7 +24,6 @@ class Config(object):
     TG_MAX_FILE_SIZE = 4194304000
     HTTP_PROXY = ""
     PROCESS_MAX_TIMEOUT = 3700
-    DEF_WATER_MARK_FILE = ""
     
     # TG Ids
     LOG_CHANNEL = -1001798969594
@@ -31,6 +33,5 @@ class Config(object):
     BOT_USERNAME = "AdvanceUrlUploaderBot"
     
     # auth users
-    AUTH_USERS = [1288398722, 1288398724, 1288398725]
-    AUTH_USERS.append(OWNER_ID)
+    AUTH_USERS = [OWNER_ID, 1288398722, 1288398724, 1288398725]
 </pre>
