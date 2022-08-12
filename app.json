@@ -16,8 +16,8 @@
   "repository": "https://github.com/kalanakt/All-Url-Uploader",
   "env": {
     "WEBHOOK": {
-      "description": "Setting this to ANYTHING will enable webhooks when in env mode",
-      "value": "ANYTHING"
+      "description": "Don't Need To change - Setting this to True when in env mode",
+      "value": "True"
     },
     "BOT_TOKEN": {
       "description": "Your bot token, as a string.",

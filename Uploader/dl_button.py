@@ -20,21 +20,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-
-from PIL import Image
-from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
-from Uploader.utitles import *
-from Uploader.script import Translation
-from Uploader.config import Config
-from datetime import datetime
-import time
-import shutil
 import os
-import math
-import json
+import time
 import aiohttp
 import asyncio
 import logging
+
+from datetime import datetime
+
+from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
+from Uploader.utitles import *
+from Uploader.script import Translation
+if bool(os.environ.get("WEBHOOK")):
+    from Uploader.config import Config
+else:
+    from sample_config import Config
+
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -140,11 +141,7 @@ async def ddl_call_back(bot, update):
                 message_id=update.message.id
             )
         else:
-            # ref: message from @SOURCES_CODES
             start_time = time.time()
-            #id = f"{time.time()}/{m.from_user.id}"
-            #Config.ACTIVE_DOWNLOADS[id] = time.time()
-            # try to upload file
 
             if tg_send_type == "video":
                 width, height, duration = await Mdata01(download_directory)
@@ -166,23 +163,7 @@ async def ddl_call_back(bot, update):
                         start_time
                     )
                 )
-
-            else:
-                await bot.send_document(
-                    chat_id=update.message.chat.id,
-                    document=download_directory,
-                    caption=description,
-                    # parse_mode="HTML",
-                    reply_to_message_id=update.message.reply_to_message.id,
-                    progress=progress_for_pyrogram,
-                    progress_args=(
-                        Translation.UPLOAD_START,
-                        update.message,
-                        # custom_file_name,
-                        start_time
-                    )
-                )
-            if tg_send_type == "audio":
+            elif tg_send_type == "audio":
                 duration = await Mdata03(download_directory)
                 await bot.send_audio(
                     chat_id=update.message.chat.id,
@@ -206,7 +187,21 @@ async def ddl_call_back(bot, update):
                     video_note=download_directory,
                     duration=duration,
                     length=width,
-                    thumb=thumb_image_path,
+                    reply_to_message_id=update.message.reply_to_message.id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        Translation.UPLOAD_START,
+                        update.message,
+                        # custom_file_name,
+                        start_time
+                    )
+                )
+            else:
+                await bot.send_document(
+                    chat_id=update.message.chat.id,
+                    document=download_directory,
+                    caption=description,
+                    # parse_mode="HTML",
                     reply_to_message_id=update.message.reply_to_message.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
@@ -217,12 +212,9 @@ async def ddl_call_back(bot, update):
                     )
                 )
 
-            else:
-                logger.info(f"[OK] {custom_file_name}")
             end_two = datetime.now()
             try:
                 os.remove(download_directory)
-                os.remove(thumb_image_path)
             except Exception:
                 pass
             time_taken_for_download = (end_one - start).seconds
@@ -235,8 +227,8 @@ async def ddl_call_back(bot, update):
                 disable_web_page_preview=True
             )
 
-            logger.info(f"[OK] Downloaded in: {str(time_taken_for_download)}")
-            logger.info(f"[OK] Uploaded in: {str(time_taken_for_upload)}")
+            logger.info(f"Downloaded in: {str(time_taken_for_download)}")
+            logger.info(f"Uploaded in: {str(time_taken_for_upload)}")
     else:
         await bot.edit_message_text(
             text=Translation.NO_VOID_FORMAT_FOUND.format("Incorrect Link"),
@@ -263,30 +255,22 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
                 downloaded += Config.CHUNK_SIZE
                 now = time.time()
                 diff = now - start
-                if round(diff % 5.00) == 0 or downloaded == total_length:
+                if round(diff % 5.0) == 0 or downloaded == total_length:
                     percentage = downloaded * 100 / total_length
                     speed = downloaded / diff
                     elapsed_time = round(diff) * 1000
-                    time_to_completion = round(
-                        (total_length - downloaded) / speed) * 1000
+                    time_to_completion = (
+                        round((total_length - downloaded) / speed) * 1000)
                     estimated_total_time = elapsed_time + time_to_completion
                     try:
                         current_message = """**Download Status**
 URL: {}
 File Size: {}
 Downloaded: {}
-ETA: {}""".format(
-                            url,
-                            humanbytes(total_length),
-                            humanbytes(downloaded),
-                            TimeFormatter(estimated_total_time)
-                        )
+ETA: {}""".format(url, humanbytes(total_length), humanbytes(downloaded), TimeFormatter(estimated_total_time))
+
                         if current_message != display_message:
-                            await bot.edit_message_text(
-                                chat_id,
-                                message_id,
-                                text=current_message
-                            )
+                            await bot.edit_message_text(chat_id, message_id, text=current_message)
                             display_message = current_message
                     except Exception as e:
                         logger.info(str(e))

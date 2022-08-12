@@ -20,8 +20,14 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
+import os
 from pyrogram import Client, idle
-from Uploader.config import Config
+
+if bool(os.environ.get("WEBHOOK")):
+    from Uploader.config import Config
+else:
+    from sample_config import Config
+
 import os
 
 import logging
@@ -35,7 +41,6 @@ if __name__ == "__main__":
 
     if not os.path.isdir(Config.DOWNLOAD_LOCATION):
         os.makedirs(Config.DOWNLOAD_LOCATION)
-        logger.info("download location created for users") 
 
     plugins = dict(root="Uploader")
     Uploadbot = Client("All-Url-Uploader",
@@ -43,5 +48,7 @@ if __name__ == "__main__":
                        api_id=Config.API_ID,
                        api_hash=Config.API_HASH,
                        plugins=plugins)
+    logger.info("Bot Started :)")
     Uploadbot.run()
     idle()
+    logger.info("Bot Stoped ;)")

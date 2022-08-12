@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
+import os
 import time
 import json
 import asyncio
@@ -29,7 +30,10 @@ from pyrogram.types import Thumbnail
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from Uploader.config import Config
+if bool(os.environ.get("WEBHOOK")):
+    from Uploader.config import Config
+else:
+    from sample_config import Config
 from Uploader.script import Translation
 from Uploader.functions.ran_text import random_char
 from Uploader.functions.display_progress import humanbytes
@@ -43,32 +47,11 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 @Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
-    if Config.LOG_CHANNEL:
-        try:
-            log_message = await update.forward(Config.LOG_CHANNEL)
-            log_info = "Message Sender Information\n"
-            log_info += "\nFirst Name: " + update.from_user.first_name
-            log_info += "\nUser ID: " + str(update.from_user.id)
-            log_info += "\nUsername: @" + \
-                update.from_user.username if update.from_user.username else ""
-            log_info += "\nUser Link: " + update.from_user.mention
-            await log_message.reply_text(
-                text=log_info,
-                disable_web_page_preview=True,
-                quote=True
-            )
-        except Exception as error:
-            print(error)
-    if not update.from_user:
-        return await update.reply_text("I don't know about you sir :(")
-
+    logger.info(update.from_user)
     url = update.text
     youtube_dl_username = None
     youtube_dl_password = None
     file_name = None
-
-    if "mega.nz" in url:
-        return
 
     print(url)
     if "|" in url:
@@ -132,12 +115,11 @@ async def echo(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     logger.info(command_to_exec)
-
     chk = await bot.send_message(
         chat_id=update.chat.id,
-        text=f'Processing your link ⌛',
+        text='Proccesing your ⌛',
         disable_web_page_preview=True,
-        reply_to_message_id=update.message_id
+        reply_to_message_id=update.id
 
     )
     if update.from_user.id not in Config.AUTH_USERS:
@@ -149,6 +131,9 @@ async def echo(bot, update):
             present_time = round(Config.PROCESS_MAX_TIMEOUT -
                                  (current_time - previous_time))
             Config.ADL_BOT_RQ[str(update.from_user.id)] = time.time()
+            if round(current_time - previous_time) < Config.PROCESS_MAX_TIMEOUT:
+                await bot.edit_message_text(chat_id=update.chat.id, text=Translation.FREE_USER_LIMIT_Q_SZE.format(process_max_timeout, present_time), disable_web_page_preview=True, message_id=chk.id)
+                return
         else:
             Config.ADL_BOT_RQ[str(update.from_user.id)] = time.time()
 
@@ -173,10 +158,11 @@ async def echo(bot, update):
             error_message += Translation.SET_CUSTOM_USERNAME_PASSWORD
         await chk.delete()
 
+        time.sleep(40.5)
         await bot.send_message(
             chat_id=update.chat.id,
             text=Translation.NO_VOID_FORMAT_FOUND.format(str(error_message)),
-            reply_to_message_id=update.message_id,
+            reply_to_message_id=update.id,
 
             disable_web_page_preview=True
         )
@@ -227,16 +213,6 @@ async def echo(bot, update):
                             callback_data=(cb_string_video).encode("UTF-8")
                         )
                     ]
-                    """if duration is not None:
-                        cb_string_video_message = "{}|{}|{}|{}|{}".format(
-                            "vm", format_id, format_ext, ran, randem)
-                        ikeyboard.append(
-                            InlineKeyboardButton(
-                                "VM",
-                                callback_data=(
-                                    cb_string_video_message).encode("UTF-8")
-                            )
-                        )"""
                 else:
                     # special weird case :\
                     ikeyboard = [
@@ -301,7 +277,7 @@ async def echo(bot, update):
                 Thumbnail) + "\n" + Translation.SET_CUSTOM_USERNAME_PASSWORD,
             reply_markup=reply_markup,
 
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.id
         )
     else:
         # fallback for nonnumeric port a.k.a seedbox.io
@@ -324,5 +300,5 @@ async def echo(bot, update):
             text=Translation.FORMAT_SELECTION,
             reply_markup=reply_markup,
 
-            reply_to_message_id=update.message_id
+            reply_to_message_id=update.id
         )
