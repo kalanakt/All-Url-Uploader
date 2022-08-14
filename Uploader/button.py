@@ -24,7 +24,6 @@ import os
 import json
 import time
 import shutil
-import ffmpeg
 import asyncio
 import logging
 import subprocess
@@ -200,22 +199,6 @@ async def youtube_dl_call_back(bot, update):
         download_directoru = os.listdir(tmp_directory_for_each_user)
         # download_directory = download_directory[0]
         # download_directory = f"{tmp_directory_for_each_user}/{download_directory}"
-
-        if len(download_directoru) == 2:
-            audio = download_directory[0]
-            audio = f"{tmp_directory_for_each_user}/{audio}"
-            video = download_directory[1]
-            video = f"{tmp_directory_for_each_user}/{video}"
-            video = ffmpeg.input(audio)
-            audio = ffmpeg.input(video)
-            download_directory = f"{tmp_directory_for_each_user}/sample.mkv"
-            ffmpeg.concat(video, audio, v=1, a=1).output(
-                download_directory).run()
-
-        await update.message.edit_caption(
-            caption=Translation.UPLOAD_START.format(custom_file_name)
-
-        )
 
         # ref: message from @Sources_codes
         start_time = time.time()
