@@ -6,7 +6,7 @@ class Config(object):
     BOT_TOKEN = ""
 
     # Get these values from my.telegram.org
-    API_ID = 
+    API_ID = "" #int:API_ID
     API_HASH = ""
 
     # No need to change
