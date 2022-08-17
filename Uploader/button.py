@@ -46,12 +46,17 @@ logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
+
+
 async def youtube_dl_call_back(bot, update):
     cb_data = update.data
+    # youtube_dl extractors
     tg_send_type, youtube_dl_format, youtube_dl_ext, ranom = cb_data.split("|")
     print(cb_data)
     random1 = random_char(5)
-
     save_ytdl_json_path = Config.DOWNLOAD_LOCATION + \
         "/" + str(update.from_user.id) + f'{ranom}' + ".json"
     try:
@@ -80,9 +85,9 @@ async def youtube_dl_call_back(bot, update):
                 if entity.type == "text_link":
                     youtube_dl_url = entity.url
                 elif entity.type == "url":
-                    offset = entity.offset
-                    length = entity.length
-                    youtube_dl_url = youtube_dl_url[offset:offset + length]
+                    o = entity.offset
+                    l = entity.length
+                    youtube_dl_url = youtube_dl_url[o:o + l]
         if youtube_dl_url is not None:
             youtube_dl_url = youtube_dl_url.strip()
         if custom_file_name is not None:
@@ -92,14 +97,16 @@ async def youtube_dl_call_back(bot, update):
             youtube_dl_username = youtube_dl_username.strip()
         if youtube_dl_password is not None:
             youtube_dl_password = youtube_dl_password.strip()
+        logger.info(youtube_dl_url)
+        logger.info(custom_file_name)
     else:
         for entity in update.message.reply_to_message.entities:
             if entity.type == "text_link":
                 youtube_dl_url = entity.url
             elif entity.type == "url":
-                offset = entity.offset
-                length = entity.length
-                youtube_dl_url = youtube_dl_url[offset:offset + length]
+                o = entity.offset
+                l = entity.length
+                youtube_dl_url = youtube_dl_url[o:o + l]
     await update.message.edit_caption(
         caption=Translation.DOWNLOAD_START.format(custom_file_name)
 
@@ -120,7 +127,7 @@ async def youtube_dl_call_back(bot, update):
             "yt-dlp",
             "-c",
             "--max-filesize", str(Config.TG_MAX_FILE_SIZE),
-            "--audio-multistreams",
+            "--bidi-workaround",
             "--extract-audio",
             "--audio-format", youtube_dl_ext,
             "--audio-quality", youtube_dl_format,
@@ -138,7 +145,7 @@ async def youtube_dl_call_back(bot, update):
             "--max-filesize", str(Config.TG_MAX_FILE_SIZE),
             "--embed-subs",
             "-f", minus_f_format,
-            "--audio-multistreams", "--video-multistreams",
+            "--bidi-workaround",
             youtube_dl_url,
             "-o", download_directory
         ]
@@ -153,6 +160,8 @@ async def youtube_dl_call_back(bot, update):
         command_to_exec.append("--password")
         command_to_exec.append(youtube_dl_password)
     command_to_exec.append("--no-warnings")
+    # command_to_exec.append("--quiet")
+    logger.info(command_to_exec)
     start = datetime.now()
     process = await asyncio.create_subprocess_exec(
         *command_to_exec,
@@ -164,6 +173,8 @@ async def youtube_dl_call_back(bot, update):
     stdout, stderr = await process.communicate()
     e_response = stderr.decode().strip()
     t_response = stdout.decode().strip()
+    logger.info(e_response)
+    logger.info(t_response)
     ad_string_to_replace = "please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output."
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
@@ -174,6 +185,7 @@ async def youtube_dl_call_back(bot, update):
         return False
 
     if t_response:
+        logger.info(t_response)
         try:
             os.remove(save_ytdl_json_path)
         except FileNotFoundError as exc:
@@ -182,105 +194,103 @@ async def youtube_dl_call_back(bot, update):
         end_one = datetime.now()
         time_taken_for_download = (end_one - start).seconds
         file_size = Config.TG_MAX_FILE_SIZE + 1
-        # try:
-        #     file_size = os.stat(download_directory).st_size
-        # except FileNotFoundError as exc:
-        #     download_directory = os.path.splitext(
-        #         download_directory)[0] + "." + "mkv"
-        #     # https://stackoverflow.com/a/678242/4723940
-        #     file_size = os.stat(download_directory).st_size
-        # if ((file_size > Config.TG_MAX_FILE_SIZE)):
-        #     await update.message.edit_caption(
-
-        #         caption=Translation.RCHD_TG_API_LIMIT.format(
-        #             time_taken_for_download, humanbytes(file_size))
-
-        #     )
-        download_directoru = os.listdir(tmp_directory_for_each_user)
-        # download_directory = download_directory[0]
-        # download_directory = f"{tmp_directory_for_each_user}/{download_directory}"
-
-        # ref: message from @Sources_codes
-        start_time = time.time()
-        if tg_send_type == "video":
-            width, height, duration = await Mdata01(download_directory)
-            await update.message.reply_video(
-                # chat_id=update.message.chat.id,
-                video=download_directory,
-                caption=description,
-                duration=duration,
-                width=width,
-                height=height,
-                supports_streaming=True,
-                # reply_to_message_id=update.id,
-                progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.UPLOAD_START,
-                    update.message,
-                    start_time
-                )
-            )
-
-        else:
-            await update.message.reply_document(
-                # chat_id=update.message.chat.id,
-                document=download_directory,
-                caption=description,
-                # parse_mode=enums.ParseMode.HTML,
-                # reply_to_message_id=update.id,
-                progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.UPLOAD_START,
-                    update.message,
-                    start_time
-                )
-            )
-
-        if tg_send_type == "audio":
-            duration = await Mdata03(download_directory)
-            await update.message.reply_audio(
-                # chat_id=update.message.chat.id,
-                audio=download_directory,
-                caption=description,
-
-                duration=duration,
-                # reply_to_message_id=update.id,
-                progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.UPLOAD_START,
-                    update.message,
-                    start_time
-                )
-            )
-        elif tg_send_type == "vm":
-            width, duration = await Mdata02(download_directory)
-            await update.message.reply_video_note(
-                # chat_id=update.message.chat.id,
-                video_note=download_directory,
-                duration=duration,
-                length=width,
-                # reply_to_message_id=update.id,
-                progress=progress_for_pyrogram,
-                progress_args=(
-                    Translation.UPLOAD_START,
-                    update.message,
-                    start_time
-                )
-            )
-        else:
-            logger.info(f"[OK] {custom_file_name}")
-        end_two = datetime.now()
-        time_taken_for_upload = (end_two - end_one).seconds
         try:
-            shutil.rmtree(tmp_directory_for_each_user)
-        except Exception as e:
-            logger.info(f"Error: {e}")
-            return
-        await update.message.edit_caption(
-            caption=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(
-                time_taken_for_download, time_taken_for_upload)
+            file_size = os.stat(download_directory).st_size
+        except FileNotFoundError as exc:
+            download_directory = os.path.splitext(
+                download_directory)[0] + "." + "mkv"
+            # https://stackoverflow.com/a/678242/4723940
+            file_size = os.stat(download_directory).st_size
+        if ((file_size > Config.TG_MAX_FILE_SIZE)):
+            await update.message.edit_caption(
 
-        )
+                caption=Translation.RCHD_TG_API_LIMIT.format(
+                    time_taken_for_download, humanbytes(file_size))
 
-        logger.info(f"[OK] Downloaded in: {str(time_taken_for_download)}")
-        logger.info(f"[OK] Uploaded in: {str(time_taken_for_upload)}")
+            )
+        else:
+            await update.message.edit_caption(
+                caption=Translation.UPLOAD_START.format(custom_file_name)
+
+            )
+
+            # ref: message from @Sources_codes
+            start_time = time.time()
+            try:
+                await update.message.reply_document(
+                    # chat_id=update.message.chat.id,
+                    document=download_directory,
+                    caption=description,
+                    # parse_mode=enums.ParseMode.HTML,
+                    # reply_to_message_id=update.id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        Translation.UPLOAD_START,
+                        update.message,
+                        start_time
+                    )
+                )
+            except Exception:
+                width, height, duration = await Mdata01(download_directory)
+                await update.message.reply_video(
+                    # chat_id=update.message.chat.id,
+                    video=download_directory,
+                    caption=description,
+                    duration=duration,
+                    width=width,
+                    height=height,
+                    supports_streaming=True,
+                    # reply_to_message_id=update.id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        Translation.UPLOAD_START,
+                        update.message,
+                        start_time
+                    )
+                )
+            if tg_send_type == "audio":
+                duration = await Mdata03(download_directory)
+                await update.message.reply_audio(
+                    # chat_id=update.message.chat.id,
+                    audio=download_directory,
+                    caption=description,
+                    duration=duration,
+                    # reply_to_message_id=update.id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        Translation.UPLOAD_START,
+                        update.message,
+                        start_time
+                    )
+                )
+            elif tg_send_type == "vm":
+                width, duration = await Mdata02(download_directory)
+                await update.message.reply_video_note(
+                    # chat_id=update.message.chat.id,
+                    video_note=download_directory,
+                    duration=duration,
+                    length=width,
+                    # reply_to_message_id=update.id,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        Translation.UPLOAD_START,
+                        update.message,
+                        start_time
+                    )
+                )
+            else:
+                logger.info(custom_file_name)
+            end_two = datetime.now()
+            time_taken_for_upload = (end_two - end_one).seconds
+            try:
+                shutil.rmtree(tmp_directory_for_each_user)
+            except Exception:
+                pass
+            await update.message.edit_caption(
+                caption=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(
+                    time_taken_for_download, time_taken_for_upload)
+
+            )
+
+            logger.info(f"Downloaded in: {str(time_taken_for_download)}")
+            logger.info(f"Uploaded in: {str(time_taken_for_upload)}")
