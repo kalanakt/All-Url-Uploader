@@ -58,7 +58,7 @@
 git clone <YOUR_REPO_LINK>
 cd <YOUR_REPO_NAME> 
 pip3 install -U -r requirements.txt
-python bot.py
+python3 bot.py
 </pre>
 </p>
 </details>
@@ -69,7 +69,7 @@ python bot.py
 git clone https://github.com/kalanakt/All-Url-Uploader
 cd All-Url-Uploader
 pip3 install -U -r requirements.txt
-# Edit info.py with variables.
+# Edit Uploader/config.py with variables.
 python3 bot.py
 </pre>
 </p>
