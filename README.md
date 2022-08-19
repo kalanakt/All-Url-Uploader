@@ -67,9 +67,10 @@ python bot.py
 <p>
 <pre>
 git clone https://github.com/kalanakt/All-Url-Uploader
+cd All-Url-Uploader
 pip3 install -U -r requirements.txt
 # Edit info.py with variables.
-python bot.py
+python3 bot.py
 </pre>
 </p>
 </details>
