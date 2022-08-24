@@ -26,6 +26,8 @@ import json
 import asyncio
 import logging
 
+from opencc import OpenCC
+
 from pyrogram.types import Thumbnail
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
@@ -44,6 +46,8 @@ logging.basicConfig(level=logging.DEBUG,
 logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
+s2tw = OpenCC('s2tw.json').convert
+
 
 @Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
@@ -53,7 +57,22 @@ async def echo(bot, update):
     youtube_dl_password = None
     file_name = None
 
-    print(url)
+    if "youtu.be" in url:
+        return await update.reply_text(
+            "**Choose Download type**",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton(
+                            "Audio 🎵", callback_data="ytdl_audio"),
+                        InlineKeyboardButton(
+                            "Video 🎬", callback_data="ytdl_video")
+                    ]
+                ]
+            ),
+            quote=True
+        )
+
     if "|" in url:
         url_parts = url.split("|")
         if len(url_parts) == 2:
