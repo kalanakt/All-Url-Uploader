@@ -58,7 +58,7 @@
 git clone <YOUR_REPO_LINK>
 cd <YOUR_REPO_NAME> 
 pip3 install -U -r requirements.txt
-python bot.py
+python3 bot.py
 </pre>
 </p>
 </details>
@@ -67,9 +67,10 @@ python bot.py
 <p>
 <pre>
 git clone https://github.com/kalanakt/All-Url-Uploader
+cd All-Url-Uploader
 pip3 install -U -r requirements.txt
-# Edit info.py with variables.
-python bot.py
+# Edit Uploader/config.py with variables.
+python3 bot.py
 </pre>
 </p>
 </details>
@@ -103,6 +104,7 @@ python bot.py
     <td align="center"><a href="https://t.me/Divarion_D"><img src="https://avatars.githubusercontent.com/u/42798043?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Danil</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=Divarion-D" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/millysboy"><img src="https://avatars.githubusercontent.com/u/108298343?v=4?s=100" width="100px;" alt=""/><br /><sub><b>millysboy</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=millysboy" title="Code">💻</a> <a href="#ideas-millysboy" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://allcontributors.org"><img src="https://avatars.githubusercontent.com/u/46410174?v=4?s=100" width="100px;" alt=""/><br /><sub><b>All Contributors</b></sub></a><br /><a href="#design-all-contributors" title="Design">🎨</a></td>
+    <td align="center"><a href="https://github.com/hybridvamp"><img src="https://avatars.githubusercontent.com/u/48980248?v=4?s=100" width="100px;" alt=""/><br /><sub><b>HYBRID</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=hybridvamp" title="Code">💻</a></td>
   </tr>
 </table>
 
