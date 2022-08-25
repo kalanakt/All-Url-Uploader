@@ -11,34 +11,43 @@
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?color=90e0ef&logoColor=ff4d6d&style=social">
   <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/kalanakt/All-Url-Uploader?logo=electron&logoColor=89fc00&style=social">
 </p>
-<br><br>
+<br>
 
-<!--
-<a href="https://github.com/kalanakt/All-Url-Uploader/archive/refs/tags/v1.0.0.zip"><img alt="Download Zip file" src="https://img.shields.io/github/downloads/kalanakt/All-Url-Uploader/v1.0.0/total?color=caf0f8&label=Download%20As%20Zip%20v1.0.0&logo=Files&logoColor=caf0f8&style=for-the-badge"></a>
--->
-<h3>This is telegram url uploader bot using pyrogram libray</h3>
-<p>This is <a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer">Bot Universe</a> project for develop telegram url uploader bot using pyrogram</p>
+<h1>⛩ Introduction</h1>
 
-<h3>Introduction</h3>
-<p>This is complete url uploader bot. for host use <a href="https://dashboard.heroku.com/" target="_blank" rel="noopener noreferrer">heroku</a>. and <a href="https://docs.pyrogram.org" target="_blank" rel="noopener noreferrer">Pyrogram Documentation</a> for develop your bot.</p>
+<p>Yukki Music Bot is a Powerful Telegram Music+Video Bot written in Python using Pyrogram and Py-Tgcalls by which you can stream songs, video and even live streams in your group calls via various sources.</p>
+<ul>
+    <li>Youtube, GoogleDrive, Apple Music, Spotify, Resso, & Direct Links support.</li>
+    <li>Bot Can upload document, video & audio types.</li>
+    <li>Deploy To Heroku | locally | VPS.</li>
+    <li>Custom thumbunli support.</li>
+</ul>
+<br>
+<h1>🔥 Getting Started [<a href="https://kalanakt.github.io/All-Url-Uploader/">Documentation</a>]</h1>
 
-<h3>Ecosystem</h3>
+<blockquote cite="https://kalanakt.github.io/All-Url-Uploader">
+A simple telegram Bot, Upload Media File| video To telegram using the direct download link. (youtube, Mediafire, google drive, mega drive, etc)
+
+Complete Documentation for All-Url-Uploader Bot
+</blockquote>
+<br>
+<h1>⚡️ Ecosystem</h1>
 
 | Version              | Status                | Description                                                                    | 
 | -------------------- | --------------------- | ------------------------------------------------------------------------------ |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v1.0.0">v1.0.0</a>             | ✘                | ☑ Upload all ytdl links, direct links                                            |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.0">v2.0.0</a>             | ✔                | ☑ Upload all ytdl links, direct links, google drive etc. (Speed is much higher than version 1) |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.1">v2.0.1</a>             | ✔                | ☑ custom thumbunali support, fixed youtube download                              |
-
-<h3>To do</h3>
+<br>
+<h1>🎯 To do</h1>
 
  * [x] deploy to vps setup
  * [x] custom thumbunali support
  * [ ] custom caption support
  * [ ] mega.nz support
  * [ ] pdisk support
- 
-<h3>Deploy</h3>
+ <br>
+<h1>💥 Deploy</h1>
 
 <details><summary>Deploy To Heroku</summary>
 <br>
@@ -74,27 +83,28 @@ python3 bot.py
 </pre>
 </p>
 </details>
-
-<h3>Questions</h3>
+<br>
+<h1>⁉ Questions</h1>
 
 <p>For questions and support please use <a href="https://github.com/kalanakt/All-Url-Uploader/discussions" target="_blank" rel="noopener noreferrer">Discussions</a>. The issue list of this repo is <strong>exclusively</strong> for bug reports and feature requests.</p>
-
-<h3>Issues</h3>
+<br>
+<h1>⚠️ Issues</h1>
 
 <p>Please make sure to read the <a href="https://github.com/kalanakt/All-Url-Uploader/discussions/categories/issue-reporting-checklist" target="_blank" rel="noopener noreferrer">Issue Reporting Checklist</a>. before opening an <a href="https://github.com/kalanakt/All-Url-Uploader/issues" target="_blank" rel="noopener noreferrer">issue</a>. Issues not conforming to the guidelines may be closed immediately.</p>
-
-<h3>Changelog</h3>
+<br>
+<h1>📜 Changelog</h1>
 
 <p>Detailed changes for each release are documented in the <a href="https://github.com/kalanakt/All-Url-Uploader/commits/main" target="_blank" rel="noopener noreferrer">main commits</a></p> 
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/commits/v1.0.0">v1.0.0</a></code>
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v1.0.0...v2.0.0">v1.0.0...v2.0.0</a></code>
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v2.0.0...v2.0.1">v2.0.0...v2.0.1</a></code>
-
-<h3>Stay In Touch</h3>
+<br>
+<br>
+<h1>🔮 Stay In Touch</h1>
 
 - [Telegram](https://t.me/TMWAD)
-
-<h3>Contribution</h3>
+<br>
+<h1>📊 Contribution</h1>
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -117,13 +127,13 @@ python3 bot.py
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <p>If you have a this bot-related bug fix/component/tool/idea, add it with a <a href="https://github.com/kalanakt/All-Url-Uploader/pulls" target="_blank" rel="noopener noreferrer">pull request.</a> Thank you to all the people who contributed to this project!</p>
-
-<h3>Thanks To</h3>
+<br>
+<h1>💖 Thanks To</h1>
 
 <p>This Bot is developed by using many github open source projects.</p>
 <p>Special Thanks to people who star to this repo and contributed to this project</p>
-
-<h3>License</h3>
+<br>
+<h1>💷 License</h1>
 
 [MIT License](https://opensource.org/licenses/MIT)
 
