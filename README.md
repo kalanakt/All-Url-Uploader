@@ -15,13 +15,7 @@
 
 <h1>⛩ Introduction</h1>
 
-<p>Yukki Music Bot is a Powerful Telegram Music+Video Bot written in Python using Pyrogram and Py-Tgcalls by which you can stream songs, video and even live streams in your group calls via various sources.</p>
-<ul>
-    <li>Youtube, GoogleDrive, Apple Music, Spotify, Resso, & Direct Links support.</li>
-    <li>Bot Can upload document, video & audio types.</li>
-    <li>Deploy To Heroku | locally | VPS.</li>
-    <li>Custom thumbunli support.</li>
-</ul>
+<p>A simple TG URL Uploader Bot</p>
 <br>
 <h1>🔥 Getting Started [<a href="https://kalanakt.github.io/All-Url-Uploader/">Documentation</a>]</h1>
 
