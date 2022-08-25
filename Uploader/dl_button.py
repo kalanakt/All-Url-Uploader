@@ -97,6 +97,10 @@ async def ddl_call_back(bot, update):  # sourcery skip: low-code-quality
             return False
     if os.path.exists(download_directory):
         save_ytdl_json_path = f"{Config.DOWNLOAD_LOCATION}/{str(update.message.chat.id)}.json"
+        if download_location := f"{Config.DOWNLOAD_LOCATION}/{update.from_user.id}.jpg":
+            thumb = download_location
+        else:
+            thumb = None
 
         if os.path.exists(save_ytdl_json_path):
             os.remove(save_ytdl_json_path)
@@ -116,18 +120,18 @@ async def ddl_call_back(bot, update):  # sourcery skip: low-code-quality
             start_time = time.time()
             if tg_send_type == "video":
                 width, height, duration = await Mdata01(download_directory)
-                await bot.send_video(chat_id=update.message.chat.id, video=download_directory, caption=description, duration=duration, width=width, height=height, supports_streaming=True, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
+                await bot.send_video(chat_id=update.message.chat.id, video=download_directory, thumb=thumb, caption=description, duration=duration, width=width, height=height, supports_streaming=True, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
 
             elif tg_send_type == "audio":
                 duration = await Mdata03(download_directory)
-                await bot.send_audio(chat_id=update.message.chat.id, audio=download_directory, caption=description, duration=duration, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
+                await bot.send_audio(chat_id=update.message.chat.id, audio=download_directory, thumb=thumb, caption=description, duration=duration, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
 
             elif tg_send_type == "vm":
                 width, duration = await Mdata02(download_directory)
-                await bot.send_video_note(chat_id=update.message.chat.id, video_note=download_directory, duration=duration, length=width, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
+                await bot.send_video_note(chat_id=update.message.chat.id, video_note=download_directory, thumb=thumb, duration=duration, length=width, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
 
             else:
-                await bot.send_document(chat_id=update.message.chat.id, document=download_directory, caption=description, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
+                await bot.send_document(chat_id=update.message.chat.id, document=download_directory, thumb=thumb, caption=description, reply_to_message_id=update.message.reply_to_message.id, progress=progress_for_pyrogram, progress_args=(Translation.UPLOAD_START, update.message, start_time))
 
             end_two = datetime.now()
             try:

@@ -28,15 +28,15 @@
 | -------------------- | --------------------- | ------------------------------------------------------------------------------ |
 | v 1.0.0              | Stable                | Upload all ytdl links, direct links                                            |
 | v 2.0.0              | Stable                | Upload all ytdl links, direct links, google drive etc. (Speed is much higher than version 1) |
-|           -          |           -           |                                    -                                           |
+| v 2.0.1              | stable                | custom thumbunali support, fixed youtube download                              |
 
 <h3>To do</h3>
 
  * [x] deploy to vps setup
- * [ ] brodcast message to users
- * [ ] users counter
- * [ ] custom thumbunali support
+ * [x] custom thumbunali support
  * [ ] custom caption support
+ * [ ] mega.nz support
+ * [ ] pdisk support
  
 <h3>Deploy</h3>
 
@@ -88,6 +88,7 @@ python3 bot.py
 <p>Detailed changes for each release are documented in the <a href="https://github.com/kalanakt/All-Url-Uploader/commits/main" target="_blank" rel="noopener noreferrer">main commits</a></p> 
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/commits/v1.0.0">v1.0.0</a></code>
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v1.0.0...v2.0.0">v1.0.0...v2.0.0</a></code>
+<code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v2.0.0...v2.0.1">v2.0.0...v2.0.1</a></code>
 
 <h3>Stay In Touch</h3>
 

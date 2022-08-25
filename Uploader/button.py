@@ -201,6 +201,12 @@ async def youtube_dl_call_back(bot, update):
                 download_directory)[0] + "." + "mkv"
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
+
+        if download_location := f"{Config.DOWNLOAD_LOCATION}/{update.from_user.id}.jpg":
+            thumb = download_location
+        else:
+            thumb = None
+
         if ((file_size > Config.TG_MAX_FILE_SIZE)):
             await update.message.edit_caption(
 
@@ -223,6 +229,7 @@ async def youtube_dl_call_back(bot, update):
                     caption=description,
                     # parse_mode=enums.ParseMode.HTML,
                     # reply_to_message_id=update.id,
+                    thumb=thumb,
                     progress=progress_for_pyrogram,
                     progress_args=(
                         Translation.UPLOAD_START,
@@ -240,6 +247,7 @@ async def youtube_dl_call_back(bot, update):
                     width=width,
                     height=height,
                     supports_streaming=True,
+                    thumb=thumb,
                     # reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
@@ -255,6 +263,7 @@ async def youtube_dl_call_back(bot, update):
                     audio=download_directory,
                     caption=description,
                     duration=duration,
+                    thumb=thumb,
                     # reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
                     progress_args=(
@@ -270,6 +279,7 @@ async def youtube_dl_call_back(bot, update):
                     video_note=download_directory,
                     duration=duration,
                     length=width,
+                    thumb=thumb,
                     # reply_to_message_id=update.id,
                     progress=progress_for_pyrogram,
                     progress_args=(

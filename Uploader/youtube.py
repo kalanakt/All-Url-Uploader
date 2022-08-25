@@ -24,15 +24,17 @@ from urllib.parse import urlparse
 import wget
 import asyncio
 
+from opencc import OpenCC
+from youtube_dl import YoutubeDL
 from pyrogram import Client, filters, enums
 from pyrogram.types import Message
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardMarkup, KeyboardButton
 
+if bool(os.environ.get("WEBHOOK")):
+    from Uploader.config import Config
+else:
+    from sample_config import Config
 from functions.help_ytdl import get_file_extension_from_url, get_resolution
-
-from opencc import OpenCC
-from youtube_dl import YoutubeDL
 
 YTDL_REGEX = (r"^((?:https?:)?\/\/)")
 s2tw = OpenCC('s2tw.json').convert
@@ -76,12 +78,16 @@ async def callback_query_ytdl_audio(_, callback_query):
             audio_file = audio_file_weba
         thumbnail_url = info_dict['thumbnail']
         thumbnail_file = f"{basename}.{get_file_extension_from_url(thumbnail_url)}"
+        if download_location := f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg":
+            thumb = download_location
+        else:
+            thumb = thumbnail_file
         webpage_url = info_dict['webpage_url']
         title = s2tw(info_dict['title'])
         caption = f'<b><a href=\"{webpage_url}\">{title}</a></b>'
         duration = int(float(info_dict['duration']))
         performer = s2tw(info_dict['uploader'])
-        await message.reply_audio(audio_file, caption=caption, duration=duration, performer=performer, title=title, parse_mode=enums.ParseMode.HTML, thumb=thumbnail_file)
+        await message.reply_audio(audio_file, caption=caption, duration=duration, performer=performer, title=title, parse_mode=enums.ParseMode.HTML, thumb=thumb)
 
         os.remove(audio_file)
         os.remove(thumbnail_file)
@@ -122,12 +128,16 @@ async def callback_query_ytdl_video(_, callback_query):
         basename = video_file.rsplit(".", 1)[-2]
         thumbnail_url = info_dict['thumbnail']
         thumbnail_file = f"{basename}.{get_file_extension_from_url(thumbnail_url)}"
+        if download_location := f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg":
+            thumb = download_location
+        else:
+            thumb = thumbnail_file
         webpage_url = info_dict['webpage_url']
         title = s2tw(info_dict['title'])
         caption = f'<b><a href=\"{webpage_url}\">{title}</a></b>'
         duration = int(float(info_dict['duration']))
         width, height = get_resolution(info_dict)
-        await message.reply_video(video_file, caption=caption, duration=duration, width=width, height=height, parse_mode=enums.ParseMode.HTML, thumb=thumbnail_file)
+        await message.reply_video(video_file, caption=caption, duration=duration, width=width, height=height, parse_mode=enums.ParseMode.HTML, thumb=thumb)
 
         os.remove(video_file)
         os.remove(thumbnail_file)
