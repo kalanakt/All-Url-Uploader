@@ -86,6 +86,8 @@ python3 bot.py
 <h3>Changelog</h3>
 
 <p>Detailed changes for each release are documented in the <a href="https://github.com/kalanakt/All-Url-Uploader/commits/main" target="_blank" rel="noopener noreferrer">main commits</a></p> 
+<code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/commits/v1.0.0">v1.0.0</a></code>
+<code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v1.0.0...v2.0.0">v1.0.0...v2.0.0</a></code>
 
 <h3>Stay In Touch</h3>
 
