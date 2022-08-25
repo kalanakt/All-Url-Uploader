@@ -26,9 +26,9 @@
 
 | Version              | Status                | Description                                                                    | 
 | -------------------- | --------------------- | ------------------------------------------------------------------------------ |
-| v 1.0.0              | Stable                | Upload all ytdl links, direct links                                            |
-| v 2.0.0              | Stable                | Upload all ytdl links, direct links, google drive etc. (Speed is much higher than version 1) |
-| v 2.0.1              | stable                | custom thumbunali support, fixed youtube download                              |
+| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v1.0.0">v1.0.0</a>             | ✘                | ☑ Upload all ytdl links, direct links                                            |
+| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.0">v2.0.0</a>             | ✔                | ☑ Upload all ytdl links, direct links, google drive etc. (Speed is much higher than version 1) |
+| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.1">v2.0.1</a>             | ✔                | ☑ custom thumbunali support, fixed youtube download                              |
 
 <h3>To do</h3>
 
