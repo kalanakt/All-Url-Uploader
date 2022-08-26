@@ -15,7 +15,13 @@
 
 <h1>⛩ Introduction</h1>
 
-<p>A simple TG URL Uploader Bot</p>
+<p>A simple telegram Bot, Upload Media File| video To telegram using the direct download link. (youtube, Mediafire, google drive, mega drive, etc)</p>
+<ul>
+    <li>Youtube, GoogleDrive, Apple Music, Spotify, Resso, & Direct Links support.</li>
+    <li>Bot Can upload document, video & audio types.</li>
+    <li>Deploy To Heroku | locally | VPS.</li>
+    <li>Custom thumbunli support.</li>
+</ul>
 <br>
 <h1>🔥 Getting Started [<a href="https://kalanakt.github.io/All-Url-Uploader/">Documentation</a>]</h1>
 
