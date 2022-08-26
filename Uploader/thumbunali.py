@@ -36,7 +36,7 @@ async def save_photo(bot, message):
     await message.download(file_name=download_location)
 
     await message.reply_text(
-        text="your custom thumbunali is saved",
+        text="your custom thumbnail is saved",
         quote=True
     )
 
@@ -48,11 +48,11 @@ async def send_photo(bot, message):
     if os.path.isfile(download_location):
         await message.reply_photo(
             photo=download_location,
-            caption="your custom thumbunali",
+            caption="your custom thumbnail",
             quote=True
         )
     else:
-        await message.reply_text(text="you don't have set thumbunali yet!. send .jpg img to save as thumbunali.", quote=True)
+        await message.reply_text(text="you don't have set thumbnail yet!. send .jpg img to save as thumbnail.", quote=True)
 
 
 @Client.on_message(filters.command("delthumb") & filters.incoming & filters.private)
@@ -60,6 +60,6 @@ async def delete_photo(bot, message):
     download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
     if os.path.isfile(download_location):
         os.remove(download_location)
-        await message.reply_text(text="your thumbunli removed successfully.", quote=True)
+        await message.reply_text(text="your thumbnail removed successfully.", quote=True)
     else:
-        await message.reply_text(text="you don't have set thumbunali yet!. send .jpg img to save as thumbunali.", quote=True)
+        await message.reply_text(text="you don't have set thumbnail yet!. send .jpg img to save as thumbnail.", quote=True)

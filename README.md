@@ -20,7 +20,7 @@
     <li>Youtube, GoogleDrive, Apple Music, Spotify, Resso, & Direct Links support.</li>
     <li>Bot Can upload document, video & audio types.</li>
     <li>Deploy To Heroku | locally | VPS.</li>
-    <li>Custom thumbunli support.</li>
+    <li>Custom thumbnail support.</li>
 </ul>
 <ul>
   <li>/thumb - view your custom thumbunli</li>
@@ -41,12 +41,12 @@ Complete Documentation for All-Url-Uploader Bot
 | -------------------- | --------------------- | ------------------------------------------------------------------------------ |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v1.0.0">v1.0.0</a>             | ✘                | ☑ Upload all ytdl links, direct links                                            |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.0">v2.0.0</a>             | ✔                | ☑ Upload all ytdl links, direct links, google drive etc. (Speed is much higher than version 1) |
-| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.1">v2.0.1</a>             | ✔                | ☑ custom thumbunali support, fixed youtube download                              |
+| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.1">v2.0.1</a>             | ✔                | ☑ custom thumbnail support, fixed youtube download                              |
 <br>
 <h1>🎯 To do</h1>
 
  * [x] deploy to vps setup
- * [x] custom thumbunali support
+ * [x] custom thumbnail support
  * [ ] custom caption support
  * [ ] mega.nz support
  * [ ] pdisk support
