@@ -22,6 +22,10 @@
     <li>Deploy To Heroku | locally | VPS.</li>
     <li>Custom thumbunli support.</li>
 </ul>
+<ul>
+  <li>/thumb - view your custom thumbunli</li>
+  <li>/delthumb - delete your custom thumbunli</li>
+</ul>
 <br>
 <h1>🔥 Getting Started [<a href="https://kalanakt.github.io/All-Url-Uploader/">Documentation</a>]</h1>
 
