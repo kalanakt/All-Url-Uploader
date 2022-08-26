@@ -41,7 +41,8 @@ Complete Documentation for All-Url-Uploader Bot
 | -------------------- | --------------------- | ------------------------------------------------------------------------------ |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v1.0.0">v1.0.0</a>             | ✘                | ☑ Upload all ytdl links, direct links                                            |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.0">v2.0.0</a>             | ✔                | ☑ Upload all ytdl links, direct links, google drive etc. (Speed is much higher than version 1) |
-| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.1">v2.0.1</a>             | ✔                | ☑ custom thumbnail support, fixed youtube download                              |
+| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.1">v2.0.1</a>             | ✘                | ☑ custom thumbnail support, fixed youtube download                              |
+| <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.2">v2.0.2</a>             | ✔                | ☑ fixed Bugs in v2.0.1, Modify custom thumbnail support                          | 
 <br>
 <h1>🎯 To do</h1>
 
@@ -102,6 +103,7 @@ python3 bot.py
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/commits/v1.0.0">v1.0.0</a></code>
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v1.0.0...v2.0.0">v1.0.0...v2.0.0</a></code>
 <code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v2.0.0...v2.0.1">v2.0.0...v2.0.1</a></code>
+<code>Full Changelog: <a href="https://github.com/kalanakt/All-Url-Uploader/compare/v2.0.1...v2.0.2">v2.0.1...v2.0.2</a></code>
 <br>
 <br>
 <h1>🔮 Stay In Touch</h1>
