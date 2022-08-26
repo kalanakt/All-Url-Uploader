@@ -175,7 +175,7 @@ async def youtube_dl_call_back(bot, update):
     t_response = stdout.decode().strip()
     logger.info(e_response)
     logger.info(t_response)
-    ad_string_to_replace = "please report this issue on https://yt-dl.org/bug . Make sure you are using the latest version; see  https://yt-dl.org/update  on how to update. Be sure to call youtube-dl with the --verbose flag and include its complete output."
+    ad_string_to_replace = "please report this issue on https://github.com/kalanakt/All-Url-Uploader/issues"
     if e_response and ad_string_to_replace in e_response:
         error_message = e_response.replace(ad_string_to_replace, "")
         await update.message.edit_caption(
@@ -202,10 +202,9 @@ async def youtube_dl_call_back(bot, update):
             # https://stackoverflow.com/a/678242/4723940
             file_size = os.stat(download_directory).st_size
 
-        if download_location := f"{Config.DOWNLOAD_LOCATION}/{update.from_user.id}.jpg":
-            thumb = download_location
-        else:
-            thumb = None
+        download_location = f"{Config.DOWNLOAD_LOCATION}/{update.from_user.id}.jpg"
+        thumb = download_location if os.path.isfile(
+            download_location) else None
 
         if ((file_size > Config.TG_MAX_FILE_SIZE)):
             await update.message.edit_caption(
@@ -219,25 +218,8 @@ async def youtube_dl_call_back(bot, update):
                 caption=Translation.UPLOAD_START.format(custom_file_name)
 
             )
-
-            # ref: message from @Sources_codes
             start_time = time.time()
-            try:
-                await update.message.reply_document(
-                    # chat_id=update.message.chat.id,
-                    document=download_directory,
-                    caption=description,
-                    # parse_mode=enums.ParseMode.HTML,
-                    # reply_to_message_id=update.id,
-                    thumb=thumb,
-                    progress=progress_for_pyrogram,
-                    progress_args=(
-                        Translation.UPLOAD_START,
-                        update.message,
-                        start_time
-                    )
-                )
-            except Exception:
+            if tg_send_type == "video":
                 width, height, duration = await Mdata01(download_directory)
                 await update.message.reply_video(
                     # chat_id=update.message.chat.id,
@@ -256,7 +238,7 @@ async def youtube_dl_call_back(bot, update):
                         start_time
                     )
                 )
-            if tg_send_type == "audio":
+            elif tg_send_type == "audio":
                 duration = await Mdata03(download_directory)
                 await update.message.reply_audio(
                     # chat_id=update.message.chat.id,
@@ -289,7 +271,21 @@ async def youtube_dl_call_back(bot, update):
                     )
                 )
             else:
-                logger.info(custom_file_name)
+                await update.message.reply_document(
+                    # chat_id=update.message.chat.id,
+                    document=download_directory,
+                    caption=description,
+                    # parse_mode=enums.ParseMode.HTML,
+                    # reply_to_message_id=update.id,
+                    thumb=thumb,
+                    progress=progress_for_pyrogram,
+                    progress_args=(
+                        Translation.UPLOAD_START,
+                        update.message,
+                        start_time
+                    )
+                )
+
             end_two = datetime.now()
             time_taken_for_upload = (end_two - end_one).seconds
             try:

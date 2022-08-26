@@ -18,6 +18,7 @@
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE
 
 import os
 from urllib.parse import urlparse
@@ -34,7 +35,8 @@ if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
 else:
     from sample_config import Config
-from functions.help_ytdl import get_file_extension_from_url, get_resolution
+
+from Uploader.functions.help_ytdl import get_file_extension_from_url, get_resolution
 
 YTDL_REGEX = (r"^((?:https?:)?\/\/)")
 s2tw = OpenCC('s2tw.json').convert
@@ -78,10 +80,9 @@ async def callback_query_ytdl_audio(_, callback_query):
             audio_file = audio_file_weba
         thumbnail_url = info_dict['thumbnail']
         thumbnail_file = f"{basename}.{get_file_extension_from_url(thumbnail_url)}"
-        if download_location := f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg":
-            thumb = download_location
-        else:
-            thumb = thumbnail_file
+        download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
+        thumb = download_location if os.path.isfile(
+            download_location) else None
         webpage_url = info_dict['webpage_url']
         title = s2tw(info_dict['title'])
         caption = f'<b><a href=\"{webpage_url}\">{title}</a></b>'
@@ -128,10 +129,9 @@ async def callback_query_ytdl_video(_, callback_query):
         basename = video_file.rsplit(".", 1)[-2]
         thumbnail_url = info_dict['thumbnail']
         thumbnail_file = f"{basename}.{get_file_extension_from_url(thumbnail_url)}"
-        if download_location := f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg":
-            thumb = download_location
-        else:
-            thumb = thumbnail_file
+        download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
+        thumb = download_location if os.path.isfile(
+            download_location) else None
         webpage_url = info_dict['webpage_url']
         title = s2tw(info_dict['title'])
         caption = f'<b><a href=\"{webpage_url}\">{title}</a></b>'

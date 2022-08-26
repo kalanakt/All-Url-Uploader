@@ -97,10 +97,9 @@ async def ddl_call_back(bot, update):  # sourcery skip: low-code-quality
             return False
     if os.path.exists(download_directory):
         save_ytdl_json_path = f"{Config.DOWNLOAD_LOCATION}/{str(update.message.chat.id)}.json"
-        if download_location := f"{Config.DOWNLOAD_LOCATION}/{update.from_user.id}.jpg":
-            thumb = download_location
-        else:
-            thumb = None
+        download_location = f"{Config.DOWNLOAD_LOCATION}/{update.from_user.id}.jpg"
+        thumb = download_location if os.path.isfile(
+            download_location) else None
 
         if os.path.exists(save_ytdl_json_path):
             os.remove(save_ytdl_json_path)
