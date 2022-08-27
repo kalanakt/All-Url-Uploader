@@ -21,8 +21,12 @@
 # SOFTWARE
 
 import os
-
 import logging
+
+
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env
 
 logging.basicConfig(
     format='%(name)s - %(levelname)s - %(message)s',
