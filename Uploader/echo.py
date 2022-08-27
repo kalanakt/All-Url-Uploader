@@ -444,4 +444,4 @@ def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_a
 
 
 # polling
-app.run()    
+Client.run()    
