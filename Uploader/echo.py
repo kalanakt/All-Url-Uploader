@@ -115,7 +115,7 @@ def down(message,link):
     msg = bot.send_message(chat_id=update.chat.id, text="__Downloading__", reply_to_message_id=message.id)
     size = mdisk.getsize(link)
     if size == 0:
-        bot.send_message(chat_id=update.chat.id, msg.id, text="__**Invalid Link**__")
+        bot.send_message(chat_id=update.chat.id, text="__**Invalid Link**__")
         return
     sta = threading.Thread(target=lambda:status(str(message.id),msg,size),daemon=True)
     sta.start()
