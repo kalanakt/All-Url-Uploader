@@ -63,7 +63,7 @@ s2tw = OpenCC('s2tw.json').convert
 #Try downloading Mdisk videos
 
 # download status
-def status(folder,message,fsize):
+async def status(folder,message,fsize):
 
     fsize = fsize / pow(2,20)
     length = len(folder)
@@ -84,7 +84,7 @@ def status(folder,message,fsize):
 
 
 # upload status
-def upstatus(statusfile,message):
+async def upstatus(statusfile,message):
 
     while True:
         if os.path.exists(statusfile):
@@ -102,13 +102,13 @@ def upstatus(statusfile,message):
 
 
 # progress writter
-def progress(current, total, message):
+async def progress(current, total, message):
     with open(f'{message.id}upstatus.txt',"w") as fileup:
         fileup.write(f"{current * 100 / total:.1f}%")
 
 
 # download and upload
-def down(message,link):
+async def down(message,link):
 
     msg = bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
     size = mdisk.getsize(link)
