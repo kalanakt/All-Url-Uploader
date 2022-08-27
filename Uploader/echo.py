@@ -432,7 +432,7 @@ def down(message,link):
 
 # mdisk command
 @Client.on_message(filters.command(["mdisk"]))
-def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+async def mdiskdown(bot, update):
     
     try:
         link = message.text.split("mdisk ")[1]
