@@ -4,6 +4,8 @@ import os
 import subprocess
 import threading
 import shutil
+import Uploader.binaries
+import Uploader.ffmpeg
 
 # setting
 currentFile = __file__

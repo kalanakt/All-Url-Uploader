@@ -30,8 +30,6 @@ import subprocess
 import pyrogram
 import Uploader.mdisk
 import Uploader.split
-import Uploader.binaries
-import Uploader.ffmpeg
 
 from Uploader.split import TG_SPLIT_SIZE
 
