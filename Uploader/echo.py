@@ -56,7 +56,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 s2tw = OpenCC('s2tw.json').convert
 
 
-@Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
+@Client.on_message(filters.private & filters.regex(pattern="http.*"))
 async def echo(bot, update):
     logger.info(update.from_user)
     url = update.text
@@ -431,7 +431,7 @@ def down(message,link):
 
 
 # mdisk command
-@Client.on_message(filters.private & filters.command(["mdisk"]))
+@Client.on_message(filters.private & filters.regex(pattern="/mdisk*"))
 async def mdiskdown(bot, update):
     
     try:
