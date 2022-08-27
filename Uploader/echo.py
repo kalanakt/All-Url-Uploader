@@ -111,7 +111,7 @@ async def progress(current, total, message):
 
 # download and upload
 def down(message,link):
-
+    bot = Client
     msg = bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
     size = mdisk.getsize(link)
     if size == 0:
