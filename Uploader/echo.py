@@ -440,4 +440,4 @@ def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_a
             d = threading.Thread(target=lambda:down(message,link),daemon=True)
             d.start()
     except:
-        Client.send_message(message.chat.id, '**Send only __MDisk Link__ with command followed by the link**',reply_to_message_id=message.id)
+        Client.send_message(message.chat.id, text='**Send only __MDisk Link__ with command followed by the link**',reply_to_message_id=message.id)
