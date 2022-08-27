@@ -431,7 +431,7 @@ def down(message,link):
 
 
 # mdisk command
-@Client.on_message(filters.private & filters.regex(pattern="/mdisk*"))
+@Client.on_message(filters.private & filters.regex(pattern="/mdisk.*"))
 async def mdiskdown(bot, update):
     
     try:
