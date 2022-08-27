@@ -448,7 +448,7 @@ async def echo(bot, update):
         )
 
 
-@Client.on_message(filters.private & filters.command("status") & filters.user(Config.AUTH_USERS))
+@Client.on_message(filters.private & filters.command("status"))
 async def status(bot, update):
     total, used, free = shutil.disk_usage(".")
     total = humanbytes(total)
