@@ -112,10 +112,10 @@ async def progress(current, total, message):
 # download and upload
 def down(message,link):
     bot = Client
-    msg = bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
+    msg = bot.send_message(message.chat.id, text="__Downloading__", reply_to_message_id=message.id)
     size = mdisk.getsize(link)
     if size == 0:
-        bot.edit_message_text(message.chat.id, msg.id,"__**Invalid Link**__")
+        bot.edit_message_text(message.chat.id, msg.id, text="__**Invalid Link**__")
         return
     sta = threading.Thread(target=lambda:status(str(message.id),msg,size),daemon=True)
     sta.start()
