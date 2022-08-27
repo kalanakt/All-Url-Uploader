@@ -44,12 +44,16 @@ if __name__ == "__main__":
 
     if not os.path.isdir(Config.DOWNLOAD_LOCATION):
         os.makedirs(Config.DOWNLOAD_LOCATION)
+    
+    bot_token = os.environ.get("BOT_TOKEN", "")
+    api_id = os.environ.get("API_ID", "")
+    api_hash = os.environ.get("API_HASH", "")
 
     plugins = dict(root="Uploader")
     Uploadbot = Client("All-Url-Uploader",
-                       bot_token=Config.BOT_TOKEN,
-                       api_id=Config.API_ID,
-                       api_hash=Config.API_HASH,
+                       bot_token=bot_token,
+                       api_id=api_id,
+                       api_hash=api_hash,
                        plugins=plugins)
     logger.info("Bot Started :)")
     Uploadbot.run()
