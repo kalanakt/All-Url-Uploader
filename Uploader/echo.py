@@ -169,6 +169,7 @@ async def mdiskdown(bot, update):
             d.start()
     except:
        await bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
+       print(Exception)
 
 
 
