@@ -56,6 +56,22 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 s2tw = OpenCC('s2tw.json').convert
 
 
+
+# mdisk command
+@Client.on_message(filters.private & filters.regex(pattern="/mdisk.*"))
+async def mdiskdown(bot, update):
+    
+    try:
+        link = message.text.split("mdisk ")[1]
+        if "mdisk" in link:
+            d = threading.Thread(target=lambda:down(message,link),daemon=True)
+            d.start()
+    except:
+       await bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
+
+
+
+
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
 async def echo(bot, update):
     logger.info(update.from_user)
@@ -430,14 +446,4 @@ def down(message,link):
     app.delete_messages(message.chat.id,message_ids=[msg.id])
 
 
-# mdisk command
-@Client.on_message(filters.private & filters.regex(pattern="/mdisk.*"))
-async def mdiskdown(bot, update):
-    
-    try:
-        link = message.text.split("mdisk ")[1]
-        if "mdisk" in link:
-            d = threading.Thread(target=lambda:down(message,link),daemon=True)
-            d.start()
-    except:
-       await bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
+
