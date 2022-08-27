@@ -431,7 +431,7 @@ def down(message,link):
 
 
 # mdisk command
-@Client.on_message(filters.text(contains=['mdisk.me']))
+@Client.on_message(filters.text.startswith("/mdisk")))
 async def mdiskdown(bot, update):
     
     try:
