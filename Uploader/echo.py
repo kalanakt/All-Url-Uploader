@@ -40,6 +40,7 @@ from opencc import OpenCC
 from pyrogram.types import Thumbnail
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import enums
 
 if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
@@ -460,7 +461,7 @@ async def status(bot, update):
     ram_usage = psutil.virtual_memory().percent
     disk_usage = psutil.disk_usage('/').percent
     await update.reply_text(
-        text=f"**Total Disk Space:** {total} \n**Used Space:** {used}({disk_usage}%) \n**Free Space:** {free} \n**CPU Usage:** {cpu_usage}% \n**RAM Usage:** {ram_usage}%",
-        parse_mode="Markdown",
+        text=f"**Total Disk Space:** {total} \n**Used Space:** {used}({disk_usage}%) \n**Free Space:** {free} \n**CPU Usage:** {cpu_usage}% \n**RAM Usage:** {ram_usage}% ",
+        parse_mode=enums.ParseMode.MARKDOWN,
         quote=True
     )
