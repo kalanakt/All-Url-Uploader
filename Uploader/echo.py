@@ -440,4 +440,4 @@ async def mdiskdown(bot, update):
             d = threading.Thread(target=lambda:down(message,link),daemon=True)
             d.start()
     except:
-        Client.send_message(chat_id=update.chat.id, text='**Send only __MDisk Link__ with command followed by the link**')
+        Client.send_message(chat_id=update.chat.id, text=Translation.MDISK)
