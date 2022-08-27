@@ -1,2 +1,2 @@
-chmod 777 ~/All-Url-Uploader/Uploader/ffmpeg/ffprobe
+pip3 install -U -r requirements.txt
 python3 bot.py
