@@ -77,7 +77,7 @@ def status(folder,message,fsize):
         result = subprocess.run(["du", "-hs", f"{folder}/"], capture_output=True, text=True)
         size = result.stdout[:-(length+2)]
         try:
-            Client.edit_message_text(message.chat.id, message.id, f"__Downloaded__ : **{size} **__of__**  {fsize:.1f}M**")
+            bot.edit_message_text(message.chat.id, message.id, f"__Downloaded__ : **{size} **__of__**  {fsize:.1f}M**")
             time.sleep(10)
         except:
             time.sleep(5)
@@ -95,7 +95,7 @@ def upstatus(statusfile,message):
         with open(statusfile,"r") as upread:
             txt = upread.read()
         try:
-            Client.edit_message_text(message.chat.id, message.id, f"__Uploaded__ : **{txt}**")
+            bot.edit_message_text(message.chat.id, message.id, f"__Uploaded__ : **{txt}**")
             time.sleep(10)
         except:
             time.sleep(5)
@@ -110,17 +110,17 @@ def progress(current, total, message):
 # download and upload
 def down(message,link):
 
-    msg = Client.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
+    msg = bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
     size = mdisk.getsize(link)
     if size == 0:
-        Client.edit_message_text(message.chat.id, msg.id,"__**Invalid Link**__")
+        bot.edit_message_text(message.chat.id, msg.id,"__**Invalid Link**__")
         return
     sta = threading.Thread(target=lambda:status(str(message.id),msg,size),daemon=True)
     sta.start()
 
     file,check,filename = mdisk.mdow(link,message)
     if file == None:
-        Client.edit_message_text(message.chat.id, msg.id,"__**Invalid Link**__")
+        bot.edit_message_text(message.chat.id, msg.id,"__**Invalid Link**__")
         return
 
     size = split.get_path_size(file)
@@ -129,35 +129,35 @@ def down(message,link):
 
     if(size > TG_SPLIT_SIZE):
 
-        Client.edit_message_text(message.chat.id, msg.id, "__Splitting__")
+        bot.edit_message_text(message.chat.id, msg.id, "__Splitting__")
         flist = split.split_file(file,size,file,".", TG_SPLIT_SIZE)
         os.remove(file)
-        Client.edit_message_text(message.chat.id, msg.id, "__Uploading__")
+        bot.edit_message_text(message.chat.id, msg.id, "__Uploading__")
         i = 1
 
         for ele in flist:
             if not os.path.exists(f'{message.from_user.id}-thumb.jpg'):
-                Client.send_document(message.chat.id,document=ele,caption=f"__**part {i}**__\n**{filename}**", reply_to_message_id=message.id, progress=progress, progress_args=[message])
+                bot.send_document(message.chat.id,document=ele,caption=f"__**part {i}**__\n**{filename}**", reply_to_message_id=message.id, progress=progress, progress_args=[message])
             else:
-                Client.send_document(message.chat.id,document=ele,caption=f"__**part {i}**__\n**{filename}**", thumb=f'{message.from_user.id}-thumb.jpg', reply_to_message_id=message.id, progress=progress, progress_args=[message])
+                bot.send_document(message.chat.id,document=ele,caption=f"__**part {i}**__\n**{filename}**", thumb=f'{message.from_user.id}-thumb.jpg', reply_to_message_id=message.id, progress=progress, progress_args=[message])
             i = i + 1
             os.remove(ele)
     
     else:
-        Client.edit_message_text(message.chat.id, msg.id, "__Uploading __")
+        bot.edit_message_text(message.chat.id, msg.id, "__Uploading __")
         if os.path.exists(file):
             if not os.path.exists(f'{message.from_user.id}-thumb.jpg'):
-                Client.send_document(message.chat.id,document=file, caption=f'**{filename}**', reply_to_message_id=message.id, progress=progress, progress_args=[message])
+                bot.send_document(message.chat.id,document=file, caption=f'**{filename}**', reply_to_message_id=message.id, progress=progress, progress_args=[message])
             else:
-                Client.send_document(message.chat.id,document=file,  caption=f'**{filename}**', thumb=f'{message.from_user.id}-thumb.jpg', reply_to_message_id=message.id, progress=progress, progress_args=[message])  
+                bot.send_document(message.chat.id,document=file,  caption=f'**{filename}**', thumb=f'{message.from_user.id}-thumb.jpg', reply_to_message_id=message.id, progress=progress, progress_args=[message])  
             os.remove(file)
         else:
-            Client.send_message(message.chat.id,"**Error in Merging File**",reply_to_message_id=message.id)
+            bot.send_message(message.chat.id,"**Error in Merging File**",reply_to_message_id=message.id)
         
     if check == 0:
-        Client.send_message(message.chat.id,"__Can't remove the **restriction**, you have to use **MX player** to play this **video**\n\nThis happens because either the **file** length is **too small** or **video** doesn't have separate **audio layer**__",reply_to_message_id=message.id)
+        bot.send_message(message.chat.id,"__Can't remove the **restriction**, you have to use **MX player** to play this **video**\n\nThis happens because either the **file** length is **too small** or **video** doesn't have separate **audio layer**__",reply_to_message_id=message.id)
     os.remove(f'{message.id}upstatus.txt')
-    Client.delete_messages(message.chat.id,message_ids=[msg.id])
+    bot.delete_messages(message.chat.id,message_ids=[msg.id])
 
 
 
