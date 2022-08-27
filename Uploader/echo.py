@@ -28,6 +28,7 @@ import logging
 import threading
 import subprocess
 import shutil
+import psutil
 import pyrogram
 import Uploader.mdisk
 import Uploader.split
