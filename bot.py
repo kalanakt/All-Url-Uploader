@@ -22,6 +22,9 @@
 
 import os
 from pyrogram import Client, idle
+from dotenv import load_dotenv
+
+load_dotenv()  # take environment variables from .env
 
 if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
