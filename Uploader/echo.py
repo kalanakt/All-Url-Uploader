@@ -441,7 +441,3 @@ def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_a
             d.start()
     except:
         Client.send_message(message.chat.id, '**Send only __MDisk Link__ with command followed by the link**',reply_to_message_id=message.id)
-
-
-# polling
-Client.run()    
