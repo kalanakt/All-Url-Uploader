@@ -1,0 +1,3 @@
+chmod 777 ~/Uploader/ffmpeg/qt-faststart
+chmod 777 ~/Uploader/ffmpeg/ffprobe
+python3 bot.py
