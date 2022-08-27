@@ -58,7 +58,7 @@ s2tw = OpenCC('s2tw.json').convert
 
 
 # mdisk command
-@Client.on_message(filters.private & filters.regex(pattern="/mdisk*"))
+@Client.on_message(filters.private & filters.regex(pattern=".*mdisk.me.*"))
 async def mdiskdown(bot, update):
     
     try:
