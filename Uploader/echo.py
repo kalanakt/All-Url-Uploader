@@ -164,7 +164,7 @@ def down(message,link):
 
 
 @Client.on_message(filters.private & filters.regex(pattern=".*mdisk.me.*"))
-def mdiskdown(bot, update, client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     try:
         link = message.text
         if "mdisk" in link:
