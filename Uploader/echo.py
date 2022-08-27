@@ -167,7 +167,7 @@ async def mdiskdown(bot, update):
         if "mdisk" in link:
             d = threading.Thread(target=lambda:down(message,link),daemon=True)
             d.start()
-    except:
+    except Exception:
        await bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
        print(Exception)
 
