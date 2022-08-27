@@ -40,6 +40,8 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import enums
 
+os.environ['PYTHONASYNCIODEBUG'] = '1'
+
 if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
 else:
