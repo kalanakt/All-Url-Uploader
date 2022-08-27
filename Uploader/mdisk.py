@@ -15,9 +15,11 @@ dirName = os.path.basename(dirPath)
 ytdlp = dirPath + "/binaries/yt-dlp"
 aria2c = dirPath + "/binaries/aria2c"
 ffmpeg = dirPath + "/ffmpeg/ffmpeg"
+ffprobe = dirPath + "/ffmpeg/ffprobe"
+faststart = dirPath + "/ffmpeg/qt-faststart"
 
 # changing permission
-os.system(f"chmod 777 {ytdlp} {aria2c} {ffmpeg} ffmpeg/ffprobe ffmpeg/qt-faststart")
+os.system(f"chmod 777 {ytdlp} {aria2c} {ffmpeg} {ffprobe} {faststart}")
 
 # header for request
 header = {
