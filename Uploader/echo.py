@@ -162,14 +162,14 @@ async def down(message,link):
 
 
 @Client.on_message(filters.private & filters.regex(pattern=".*mdisk.me.*"))
-async def mdiskdown(bot, update):
+def mdiskdown(bot, update):
     try:
         link = message.text
         if "mdisk" in link:
             d = threading.Thread(target=lambda:down(message,link),daemon=True)
             d.start()
     except Exception:
-       await bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
+       bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
        print(Exception)
 
 
