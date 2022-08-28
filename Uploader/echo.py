@@ -89,7 +89,7 @@ async def echo(bot, update):
     if "mdisk" in url:
         split = url.split("/")[-1]
         r = requests.get("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(split))
-        if r.status_code == 200:
+        if downlink(r, 'get'):
                 json = r.json
                 link = json.get("download")
         return await update.reply_text("your link {}".format(link))
