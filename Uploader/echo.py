@@ -165,14 +165,14 @@ def down(message, link):
 
 #mdisk
 @Client.on_message(filters.private & filters.regex(pattern=".*mdisk.me.*"))
-def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
+async def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
     try:
         link = "https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(message.text)
         if "mdisk" in link:
             d = threading.Thread(target=lambda:echo(message,link),daemon=True)
             d.start()
     except Exception:
-       bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
+       await bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
        print(Exception)
 
 
