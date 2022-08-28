@@ -93,6 +93,7 @@ async def echo(bot, update):
                 json = r.json
                 link = json.get("download")
                 return await update.reply_text("your link {}".format(link))
+        return await bot.send_video(message.chat.id, {link})
         return await update.reply_text("**Mdisk link found**")
         await bot.send_video(message.chat.id, {link})
 
