@@ -60,124 +60,6 @@ s2tw = OpenCC('s2tw.json').convert
 
 
 
-# mdisk command
-
-#Try downloading Mdisk videos
-
-# download status
-def status(folder,message,fsize):
-
-    fsize = fsize / pow(2,20)
-    length = len(folder)
-    # wait for the folder to create
-    while True:
-        if os.path.exists(folder + "/vid.mp4.part-Frag0") or os.path.exists(folder + "/vid.mp4.part"):
-            break
-    
-    time.sleep(3)
-    while os.path.exists(folder + "/" ):
-        result = subprocess.run(["du", "-hs", f"{folder}/"], capture_output=True, text=True)
-        size = result.stdout[:-(length+2)]
-        try:
-            bot.edit_message_text(message.chat.id, message.id, f"__Downloaded__ : **{size} **__of__**  {fsize:.1f}M**")
-            time.sleep(10)
-        except:
-            time.sleep(5)
-
-
-# upload status
-def upstatus(statusfile,message):
-
-    while True:
-        if os.path.exists(statusfile):
-            break
-
-    time.sleep(3)      
-    while os.path.exists(statusfile):
-        with open(statusfile,"r") as upread:
-            txt = upread.read()
-        try:
-            bot.edit_message_text(message.chat.id, message.id, f"__Uploaded__ : **{txt}**")
-            time.sleep(10)
-        except:
-            time.sleep(5)
-
-
-# progress writter
-async def progress(current, total, message):
-    with open(f'{message.id}upstatus.txt',"w") as fileup:
-        fileup.write(f"{current * 100 / total:.1f}%")
-
-
-# download and upload
-def down(message, link):
-    bot = Client
-    msg = bot.send_message(chat_id=chat.id, text="__Downloading__", reply_to_message_id=message.id)
-    size = mdisk.getsize(link)
-    if size == 0:
-        bot.send_message(chat_id=chat.id, text="__**Invalid Link**__")
-        return
-    sta = threading.Thread(target=lambda:status(str(message.id),msg,size),daemon=True)
-    sta.start()
-
-    file,check,filename = mdisk.mdow(link,message)
-    if file == None:
-        bot.edit_message_text(message.chat.id, msg.id,"__**Invalid Link**__")
-        return
-
-    size = split.get_path_size(file)
-    upsta = threading.Thread(target=lambda:upstatus(f'{message.id}upstatus.txt',msg),daemon=True)
-    upsta.start()
-
-    if(size > TG_SPLIT_SIZE):
-
-        bot.edit_message_text(message.chat.id, msg.id, "__Splitting__")
-        flist = split.split_file(file,size,file,".", TG_SPLIT_SIZE)
-        os.remove(file)
-        bot.edit_message_text(message.chat.id, msg.id, "__Uploading__")
-        i = 1
-
-        for ele in flist:
-            if not os.path.exists(f'{message.from_user.id}-thumb.jpg'):
-                bot.send_document(message.chat.id,document=ele,caption=f"__**part {i}**__\n**{filename}**", reply_to_message_id=message.id, progress=progress, progress_args=[message])
-            else:
-                bot.send_document(message.chat.id,document=ele,caption=f"__**part {i}**__\n**{filename}**", thumb=f'{message.from_user.id}-thumb.jpg', reply_to_message_id=message.id, progress=progress, progress_args=[message])
-            i = i + 1
-            os.remove(ele)
-    
-    else:
-        bot.edit_message_text(message.chat.id, msg.id, "__Uploading __")
-        if os.path.exists(file):
-            if not os.path.exists(f'{message.from_user.id}-thumb.jpg'):
-                bot.send_document(message.chat.id,document=file, caption=f'**{filename}**', reply_to_message_id=message.id, progress=progress, progress_args=[message])
-            else:
-                bot.send_document(message.chat.id,document=file,  caption=f'**{filename}**', thumb=f'{message.from_user.id}-thumb.jpg', reply_to_message_id=message.id, progress=progress, progress_args=[message])  
-            os.remove(file)
-        else:
-            bot.send_message(message.chat.id,"**Error in Merging File**",reply_to_message_id=message.id)
-        
-    if check == 0:
-        bot.send_message(message.chat.id,"__Can't remove the **restriction**, you have to use **MX player** to play this **video**\n\nThis happens because either the **file** length is **too small** or **video** doesn't have separate **audio layer**__",reply_to_message_id=message.id)
-    os.remove(f'{message.id}upstatus.txt')
-    bot.delete_messages(message.chat.id,message_ids=[msg.id])
-
-
-
-#mdisk
-@Client.on_message(filters.private & filters.regex(pattern=".*mdisk.me.*"))
-async def mdiskdown(client: pyrogram.client.Client, message: pyrogram.types.messages_and_media.message.Message):
-    try:
-        link = "https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(message.text)
-        if "mdisk" in link:
-            d = threading.Thread(target=lambda:echo(message,link),daemon=True)
-            d.start()
-    except Exception:
-       await bot.send_message(chat_id=update.chat.id, text=Translation.MDISK)
-       print(Exception)
-
-
-
-
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
 async def echo(bot, update):
     logger.info(update.from_user)
@@ -201,6 +83,13 @@ async def echo(bot, update):
             ),
             quote=True
         )
+
+    #mdisk
+    if "mdisk" in url:
+        return await update.reply_text("**Mdisk link found**")
+        link = "https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(message.text)
+        await bot.send_video(message.chat.id, {url})
+
 
     if "|" in url:
         url_parts = url.split("|")
