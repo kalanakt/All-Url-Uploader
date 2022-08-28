@@ -89,12 +89,13 @@ async def echo(bot, update):
     if "mdisk" in url:
         split = url.split("/")[-1]
         r = requests.get("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(split))
-        json = r.json
-        link = json.get("download")
-        await update.reply_text("your link {}".format(link))
-        await bot.send_video(chat_id=update.chat.id, file={link})
-        await update.reply_text("**Mdisk link found**")
-        await bot.send_video(message.chat.id, {link})
+        if hasattr(r, 'get'):
+            json = r.json
+            link = json.get("download")
+            await update.reply_text("your link {}".format(link))
+            await bot.send_video(chat_id=update.chat.id, file={link})
+            await update.reply_text("**Mdisk link found**")
+            await bot.send_video(message.chat.id, {link})
 
 
     if "|" in url:
