@@ -87,7 +87,10 @@ async def echo(bot, update):
     #mdisk
     if "mdisk" in url:
         split = url.split("/")[-1]
-        link = "https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(split)
+        r = request.get("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(split))
+        if r.status_code == 200:
+                json = r.json
+                link = json[download]
         return await update.reply_text("your link {}".format(link))
         return await update.reply_text("**Mdisk link found**")
         await bot.send_video(message.chat.id, {link})
