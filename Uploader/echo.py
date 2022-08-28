@@ -31,7 +31,6 @@ import shutil
 import psutil
 import requests
 import pyrogram
-import Uploader.mdisk
 import Uploader.split
 
 from Uploader.split import TG_SPLIT_SIZE
@@ -40,6 +39,10 @@ from pyrogram.types import Thumbnail
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram import enums
+from Uploader.script import Translation
+from Uploader.functions.ran_text import random_char
+from Uploader.functions.display_progress import humanbytes
+from Uploader.functions.display_progress import humanbytes
 
 os.environ['PYTHONASYNCIODEBUG'] = '1'
 
@@ -47,10 +50,7 @@ if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
 else:
     from sample_config import Config
-from Uploader.script import Translation
-from Uploader.functions.ran_text import random_char
-from Uploader.functions.display_progress import humanbytes
-from Uploader.functions.display_progress import humanbytes
+
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
