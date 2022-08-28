@@ -87,10 +87,10 @@ async def echo(bot, update):
     #mdisk
     if "mdisk" in url:
         return await update.reply_text("**Mdisk link found**")
-        link = message.text.split("/")[:1]
-        url = "https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(link)
-        await update.reply_text("your link {}".format(link))
-        await bot.send_video(message.chat.id, {url})
+        split = url.split("/")[:1]
+        link = "https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(split)
+        return await update.reply_text("your link {}".format(link))
+        await bot.send_video(message.chat.id, {link})
 
 
     if "|" in url:
