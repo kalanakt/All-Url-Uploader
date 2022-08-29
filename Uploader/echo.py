@@ -66,7 +66,7 @@ async def mdisk(bot, update):
     await update.reply_text(("File Name: **{}** \nDirect Link: ```{}```").format(desc, link))
 
 
-@Client.on_message(filters.private & filters.regex(pattern="http.*"))
+@Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
 async def echo(bot, update):
     logger.info(update.from_user)
     url = update.text
