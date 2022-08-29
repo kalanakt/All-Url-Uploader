@@ -60,7 +60,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 s2tw = OpenCC('s2tw.json').convert
 
 @Client.on_message(filters.private & filters.regex(pattern="mdisk.me.*"))
-async def mdisk(bot, update):
+async def mdisk(bot, update, get):
     url = update.text
     split = url.split("/")[-1]
     r = requests.post(("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}").format(split))
