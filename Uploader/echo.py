@@ -67,10 +67,9 @@ async def mdisk(bot, update):
     if hasattr(r, 'get'):
         z = r.json
         link = z.get("download")
-        print (link)
-        await bot.send_video(chat, link)
-        await update.reply_text("**Mdisk link found**")
-        await bot.send_video(message.chat.id, {link})
+        #await bot.send_video(chat, link)
+        await update.reply_text("your link: {link}")
+        #await bot.send_video(message.chat.id, {link})
 
 
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
