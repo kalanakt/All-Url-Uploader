@@ -27,8 +27,6 @@ import asyncio
 import logging
 import threading
 import subprocess
-import shutil
-import psutil
 import requests
 import pyrogram
 
