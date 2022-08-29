@@ -61,6 +61,7 @@ s2tw = OpenCC('s2tw.json').convert
 
 @Client.on_message(filters.private & filters.regex(pattern="mdisk.me.*"))
 async def mdisk(bot, update):
+    logger.info(update.from_user)
     url = update.text
     split = url.split("/")[-1]
     r = requests.get(("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}").format(split)).json()
@@ -68,7 +69,7 @@ async def mdisk(bot, update):
     desc = r.get("filename")
     await update.reply_text(("your link: {}").format(link))
     await bot.send_video(
-        chat_id=url.chat.id,
+        chat_id=update.chat.id,
         video=link,
         caption=desc
     )
