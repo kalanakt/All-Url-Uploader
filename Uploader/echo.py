@@ -68,11 +68,13 @@ async def mdisk(bot, update):
     link = r.get("download")
     desc = r.get("filename")
     await update.reply_text(("your link: {}").format(link))
-    await bot.send_video(
-        chat_id=update.chat.id,
-        video=link,
-        caption=desc
-    )
+    await command_to_exec = [
+            "yt-dlp",
+            "--no-warnings",
+            "--allow-dynamic-mpd",
+            "-j",
+            url
+        ]
 
 
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
