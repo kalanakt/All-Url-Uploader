@@ -68,7 +68,7 @@ async def mdisk(bot, update):
     link = r.get("download")
     desc = r.get("filename")
     await update.reply_text(("File Name: **{}** \nDirect Link: ```{}```").format(desc, link))
-    await update.edit_reply_text("test")
+    await update.edit_message_text("test")
 
 
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
