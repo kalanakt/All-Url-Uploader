@@ -3,7 +3,7 @@ beautifulsoup4
 hachoir
 numpy
 Pillow
-pyrogram>=2.0.36
+pyrogram==2.0.43
 requests
 tgcrypto
 olefile
@@ -17,7 +17,7 @@ tldextract
 aiofiles
 pyromod
 yt-dlp
-filesplit==3.0.2
+filesplit==4.0.0
 mega.py
 opencc
 wget
