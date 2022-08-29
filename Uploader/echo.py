@@ -67,8 +67,7 @@ async def echo(bot, update):
         z = r.json
         link = z.get("download")
         print (link)
-        update.reply_text("your link {}".format(link))
-        await bot.send_video(chat_id=update.chat.id, file={link})
+        await bot.send_video(chat, link)
         await update.reply_text("**Mdisk link found**")
         await bot.send_video(message.chat.id, {link})
 
