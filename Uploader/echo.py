@@ -68,7 +68,7 @@ async def mdisk(bot, update):
     link = r.get("download")
     desc = r.get("filename")
     await update.reply_text(("your link: {}").format(link))
-    await command_to_exec = [
+    command_to_exec = [
             "yt-dlp",
             "--no-warnings",
             "--allow-dynamic-mpd",
