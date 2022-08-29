@@ -68,7 +68,7 @@ async def mdisk(bot, update):
     desc = r.get("filename")
     await update.reply_text(("your link: {}").format(link))
     await bot.send_video(
-        chat_id=update.message.chat.id,
+        chat,
         video=link,
         caption=desc
     )
