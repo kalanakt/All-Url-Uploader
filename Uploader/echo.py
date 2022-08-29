@@ -63,7 +63,7 @@ s2tw = OpenCC('s2tw.json').convert
 async def mdisk(bot, update):
     url = update.text
     split = url.split("/")[-1]
-    r = requests.post(("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}").format(split))
+    r = requests.get(("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}").format(split)).json()
     r = r.json
     if hasattr(r, 'get'):
         link = r.get("download")
