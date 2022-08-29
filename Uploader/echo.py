@@ -67,7 +67,7 @@ async def mdisk(bot, update):
     link = r.get("download")
     #await bot.send_video(chat, link)
     await update.reply_text(("your link: {}").format(link))
-    #await bot.send_video(message.chat.id, {link})
+    await bot.send_video(message.chat.id, {link})
 
 
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
