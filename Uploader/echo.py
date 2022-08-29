@@ -64,12 +64,10 @@ async def mdisk(bot, update):
     url = update.text
     split = url.split("/")[-1]
     r = requests.get(("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}").format(split)).json()
-    r = r.json
-    if hasattr(r, 'get'):
-        link = r.get("download")
-        #await bot.send_video(chat, link)
-        await update.reply_text("your link: {link}")
-        #await bot.send_video(message.chat.id, {link})
+    link = r.get("download")
+    #await bot.send_video(chat, link)
+    await update.reply_text("your link: {link}")
+    #await bot.send_video(message.chat.id, {link})
 
 
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
