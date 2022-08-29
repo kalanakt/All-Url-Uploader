@@ -31,9 +31,7 @@ import shutil
 import psutil
 import requests
 import pyrogram
-import Uploader.split
 
-from Uploader.split import TG_SPLIT_SIZE
 from opencc import OpenCC
 from pyrogram.types import Thumbnail
 from pyrogram import Client, filters
