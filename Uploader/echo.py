@@ -88,7 +88,7 @@ async def echo(bot, update):
     #mdisk
     if "mdisk" in url:
         split = url.split("/")[-1]
-        r = requests.get("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}".format(split))
+        r = requests.get("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={split}")
         if hasattr(r, 'get'):
             z = r.json
             link = z.get("download")
