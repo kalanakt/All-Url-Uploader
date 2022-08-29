@@ -29,6 +29,8 @@ import threading
 import subprocess
 import requests
 import pyrogram
+import shutil
+import psutil
 
 from opencc import OpenCC
 from pyrogram.types import Thumbnail
