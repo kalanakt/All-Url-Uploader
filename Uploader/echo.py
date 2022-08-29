@@ -59,6 +59,18 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 s2tw = OpenCC('s2tw.json').convert
 
+@Client.on_message(filters.private & filters.regex(pattern="*mdisk.me*"))
+async def echo(bot, update):
+    split = url.split("/")[-1]
+    r = requests.get("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={split}")
+    if hasattr(r, 'get'):
+        z = r.json
+        link = z.get("download")
+        print (link)
+        update.reply_text("your link {}".format(link))
+        await bot.send_video(chat_id=update.chat.id, file={link})
+        await update.reply_text("**Mdisk link found**")
+        await bot.send_video(message.chat.id, {link})
 
 
 @Client.on_message(filters.private & filters.regex(pattern="http.*"))
@@ -85,18 +97,6 @@ async def echo(bot, update):
             quote=True
         )
 
-    #mdisk
-    if "mdisk" in url:
-        split = url.split("/")[-1]
-        r = requests.get("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={split}")
-        if hasattr(r, 'get'):
-            z = r.json
-            link = z.get("download")
-            print (link)
-            await update.reply_text("your link {}".format(link))
-            await bot.send_video(chat_id=update.chat.id, file={link})
-            await update.reply_text("**Mdisk link found**")
-            await bot.send_video(message.chat.id, {link})
 
 
     if "|" in url:
