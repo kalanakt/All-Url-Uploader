@@ -1,10 +1,10 @@
-<a href="https://kalanakt.github.io/awesome-telegram/"><img align="right" title="Awesome Heroku" src="https://github.com/kalanakt/awesome-telegram/raw/main/assets/logo.svg" alt="Awesome Heroku" width="200px"></a>
+<a href="https://github.com/kalanakt/awesome-telegram"><img align="right" title="Awesome Heroku" src="https://github.com/kalanakt/awesome-telegram/raw/main/assets/logo.svg" alt="Awesome Heroku" width="200px"></a>
 
 ## Awesome Telegram
 > A curated list of awesome things related to Telegram groups, channels, bots, apis.
 > Add your awesome Telegram groups, channels, bots & opensource project. your pull request is greatly appreciating..
 
-<a href="https://kalanakt.github.io/awesome-telegram/"><h4>Learn More...</h4></a>
+<a href="https://github.com/kalanakt/awesome-telegram"><h4>Learn More...</h4></a>
 
 <br>
 <p align="center"><a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer"><img width="450" src="https://github.com/kalanakt/All-Url-Uploader/blob/main/asset/tmwad.png" alt="@TMWAD logo"></a></p>
