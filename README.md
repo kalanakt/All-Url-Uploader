@@ -13,7 +13,7 @@
 </p>
 <br>
 <p align="center">
-  <img alt="Awesome Telegram" src="https://cdn.jsdelivr.net/gh/kalanakt/awesome-telegram@a681ddb4e5e432704a7f1c89b97bbfa3dee28594/assets/Awesome%20Telegram.svg">
+  <a href="https://github.com/kalanakt/awesome-telegram"><img alt="Awesome Telegram" src="https://cdn.jsdelivr.net/gh/kalanakt/awesome-telegram@a681ddb4e5e432704a7f1c89b97bbfa3dee28594/assets/Awesome%20Telegram.svg"></a>
   <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/kalanakt/All-Url-Uploader?logo=files&logoColor=f72585&style=social">
   <a href="https://www.codefactor.io/repository/github/kalanakt/all-url-uploader/overview/main"><img src="https://www.codefactor.io/repository/github/kalanakt/all-url-uploader/badge/main" alt="CodeFactor" /></a>
   <img alt="GitHub issues" src="https://img.shields.io/github/issues-raw/kalanakt/All-Url-Uploader?color=8eecf5&logo=anaconda&logoColor=06d6a0&style=social">
