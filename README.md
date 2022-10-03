@@ -1,6 +1,10 @@
-<a href="https://github.com/kalanakt/awesome-telegram"><img align="right" title="Awesome Telegram" src="https://github.com/kalanakt/awesome-telegram/raw/main/assets/logo.svg" alt="Awesome Heroku" width="200px"></a>
-
 ## Awesome Telegram
+
+
+<a href="https://github.com/kalanakt/awesome-telegram"><img align="right" title="Awesome Telegram" src="https://github.com/kalanakt/awesome-telegram/raw/main/assets/logo.svg" alt="Awesome Heroku" width="180px"></a>
+
+<br>
+
 > A curated list of awesome things related to Telegram groups, channels, bots, apis.
 > Add your awesome Telegram groups, channels, bots & opensource project. your pull request is greatly appreciating..
 
