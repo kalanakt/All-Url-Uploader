@@ -21,7 +21,6 @@
 # SOFTWARE
 
 import os
-
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from Uploader.script import Translation

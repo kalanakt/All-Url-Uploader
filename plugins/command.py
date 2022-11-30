@@ -21,34 +21,44 @@
 # SOFTWARE
 
 import os
-from pyrogram import Client, idle
-
+from pyrogram import Client, filters
+from pyrogram.types import Message
+from core.script import Translation
 if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
 else:
     from sample_config import Config
 
-import os
 
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
+@Client.on_message(
+    filters.command("start") & filters.private,
+)
+async def start_bot(_, m: Message):
+    return await m.reply_text(
+        Translation.START_TEXT.format(m.from_user.first_name),
+        reply_markup=Translation.START_BUTTONS,
+        disable_web_page_preview=True,
+        quote=True,
+    )
 
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-if __name__ == "__main__":
+@Client.on_message(
+    filters.command("help") & filters.private,
+)
+async def help_bot(_, m: Message):
+    return await m.reply_text(
+        Translation.HELP_TEXT,
+        reply_markup=Translation.HELP_BUTTONS,
+        disable_web_page_preview=True,
+    )
 
-    if not os.path.isdir(Config.DOWNLOAD_LOCATION):
-        os.makedirs(Config.DOWNLOAD_LOCATION)
 
-    plugins = dict(root="plugins")
-    Uploadbot = Client("All-Url-Uploader",
-                       bot_token=Config.BOT_TOKEN,
-                       api_id=Config.API_ID,
-                       api_hash=Config.API_HASH,
-                       plugins=plugins)
-    logger.info("Bot Started :)")
-    Uploadbot.run()
-    idle()
-    logger.info("Bot Stoped ;)")
+@Client.on_message(
+    filters.command("about") & filters.private,
+)
+async def aboutme(_, m: Message):
+    return await m.reply_text(
+        Translation.ABOUT_TEXT,
+        reply_markup=Translation.ABOUT_BUTTONS,
+        disable_web_page_preview=True,
+    )
