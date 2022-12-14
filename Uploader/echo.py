@@ -62,10 +62,12 @@ async def mdisk(bot, update):
     logger.info(update.from_user)
     url = update.text
     split = url.split("/")[-1]
-    r = requests.get(("https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={}").format(split)).json()
+    r = requests.get(
+        f"https://diskuploader.entertainvideo.com/v1/file/cdnurl?param={split}"
+    ).json()
     link = r.get("download")
     desc = r.get("filename")
-    await update.reply_text(("File Name: **{}** \nDirect Link: ```{}```").format(desc, link))
+    await update.reply_text(f"File Name: **{desc}** \nDirect Link: ```{link}```")
 
 
 @Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
