@@ -6,13 +6,12 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
+          folder: docs
           node-version: 16
           cache: npm
 
@@ -24,7 +23,7 @@ jobs:
           touch out/.nojekyll
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@4.4.0
+        uses: JamesIves/github-pages-deploy-action@4
         with:
           branch: gh-pages
           folder: out
