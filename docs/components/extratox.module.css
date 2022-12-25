@@ -1,0 +1,56 @@
+.bg {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 10px;
+  background-color: inherit;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
+
+.bgt {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 100%;
+  padding: 20px 40px 20px 40px;
+  width: 100%;
+}
+
+.container {
+  flex: auto;
+  flex-wrap: wrap;
+  flex-flow: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.h {
+  text-shadow: black;
+  justify-content: center;
+  align-items: center;
+  font-size: large;
+  margin-top: 10px;
+}
+
+.sponsors {
+  flex: auto;
+  flex-wrap: wrap;
+  flex-flow: row;
+  gap: 2px;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.text {
+  flex: auto;
+  text-shadow: 2px;
+}
+
+.card {
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 100%;
+}

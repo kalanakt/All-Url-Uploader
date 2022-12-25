@@ -1,7 +1,7 @@
 // Example from https://beta.reactjs.org/learn
 
 import { useState } from 'react'
-import styles from './counters.module.css'
+import styles from './changelog.module.css'
 
 function ChangeLog() {
   const [count, setCount] = useState(0)

@@ -1,15 +1,13 @@
 {
   "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
-    "type": "page"
-  },
+  "changelog": "Change Logs",
+  "version": "Versions",
+  "deploy": "Deploy Bot",
+  "contribution": "Thanks To",
   "contact": {
     "title": "Contact ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://t.me/kinu6",
     "newWindow": true
   }
 }
