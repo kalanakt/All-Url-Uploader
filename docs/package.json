@@ -1,0 +1,31 @@
+{
+  "name": "all-url-uploader-docs",
+  "version": "0.0.1",
+  "description": "All-Url-Uploader complete doc website source",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kalanakt/All-Url-Uploader.git"
+  },
+  "author": "Kalanakt <e19198@eng.pdn.ac.lk>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kalanakt/All-Url-Uploader/issues"
+  },
+  "homepage": "kalanakt.github.io/all-url-uploader",
+  "dependencies": {
+    "next": "^13.0.6",
+    "nextra": "2.0.1",
+    "nextra-theme-docs": "2.0.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.11.10",
+    "typescript": "^4.9.3"
+  }
+}
