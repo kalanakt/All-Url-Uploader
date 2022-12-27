@@ -28,7 +28,7 @@ function ChangeLog() {
   }, []);
   return (
     <div className={styles.container}>
-      {books && (
+      {books ? (
         <div className="books">
           {books.map((book: { commit: { message: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; author: { date: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; }; comment_count: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; verification: { verified: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; }; }; html_url: string; comments_url: string; author: {
             [x: string]: string; login: string; avatar_url: string; 
@@ -46,12 +46,14 @@ function ChangeLog() {
                 </div>
                 <div className={styles.iconset}>
                   <div className={styles.bicon}>Committer : <a href={book.author.html_url}><img className={styles.avatar} alt="github icon" src={book.author.avatar_url} width={25} height={25} /></a></div>
-                  <div className={styles.bicon}><a href={book.comments_url}> Comments : {book.commit.comment_count}</a></div>
+                  <div className={styles.bicon}> Comments : {book.commit.comment_count}</div>
                 </div>
               </div>
             );
           })}
         </div>
+      ) : (
+        <span>404 : Page Not Found</span>
       )}
     </div>
   )

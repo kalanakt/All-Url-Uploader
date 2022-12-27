@@ -21,7 +21,7 @@ const config: DocsThemeConfig = {
       🎉 All-Url-Uploader 2.0 is released. Read more →
     </a>,
   },
-  logo: <span>All-url-uploader</span>,
+  logo: <span>All Url Uploader</span>,
   project: {
     link: 'https://github.com/kalanakt/All-Url-Uploader',
   },

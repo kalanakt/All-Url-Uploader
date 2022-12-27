@@ -1,5 +1,4 @@
 .container {
-  padding: 8px;
   justify-content: start;
   align-items: center;
   display: flex;
@@ -11,13 +10,13 @@
 
 .sponsor_card {
   width: 180px;
-  height: 150px;
+  height: 100px;
   border-radius: 8px;
 }
 
 .sponsor_cardh {
   width: 180px;
-  height: 150px;
+  height: 100px;
   background-color: rgba(19, 17, 41, 0.692);
   border-radius: 8px;
   border-width: 2px;
@@ -28,7 +27,7 @@
 .sponsor_img {
   display: flex;
   width: 180px;
-  height: 100px;
+  height: 75px;
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
@@ -52,6 +51,5 @@
   justify-content: center;
   align-items: center;
   flex-direction: row;
-  height: 50px;
   box-shadow: 2px;
 }

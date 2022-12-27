@@ -30,7 +30,7 @@ function Releases() {
   }, []);
   return (
     <div className={styles.container}>
-      {books && (
+      {books ? (
         <div className="books">
           {books.map((book: {
             [x: string]: any; commit: { message: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; author: { date: string; }; comment_count: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; verification: { verified: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; }; }; html_url: string; comments_url: string; author: {
@@ -52,6 +52,8 @@ function Releases() {
             );
           })}
         </div>
+      ) : (
+        <span>404 : Page Not Found</span>
       )}
     </div>
   )
