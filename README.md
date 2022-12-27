@@ -42,7 +42,7 @@
   <li>/delthumb - delete your custom thumbunli</li>
 </ul>
 <br>
-<h1>🔥 Getting Started [<a href="https://kalanakt.github.io/All-Url-Uploader/">Documentation</a>]</h1>
+<h1>🔥 Getting Started [<a href="https://urluploader.vercel.app/">Documentation</a>]</h1>
 
 <blockquote cite="https://kalanakt.github.io/All-Url-Uploader">
 A simple telegram Bot, Upload Media File| video To telegram using the direct download link. (youtube, Mediafire, google drive, mega drive, etc)
