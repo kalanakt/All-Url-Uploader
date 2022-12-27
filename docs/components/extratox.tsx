@@ -14,11 +14,6 @@ function ExtraTox() {
             <img src='./tmwad.png' alt='TMWAD IMG' width={200} height={50}/>
           </a>
         </div>
-        {/* <div className={styles.bg}>
-          <a href="https://www.buymeacoffee.com/kalanakt" className={styles.text}>
-            Sponsor +
-          </a>
-        </div> */}
       </div>
     <div className={styles.bgt}>
       <a href="https://www.buymeacoffee.com/kalanakt" className={styles.text}>

@@ -124,3 +124,10 @@
   box-shadow: #1a1a1a;
   padding: 2px;
 }
+
+.readmore {
+  font-weight: 400;
+  text-shadow: #1a1a1a;
+  color: #2657b2;
+  -webkit-text-fill-color: #2c26d9;
+}

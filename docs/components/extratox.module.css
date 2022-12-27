@@ -34,9 +34,9 @@
 }
 
 .sponsors {
-  flex: auto;
+  display: flex;
   flex-wrap: wrap;
-  flex-flow: row;
+  flex-direction: row;
   gap: 2px;
   justify-content: space-around;
   align-items: center;

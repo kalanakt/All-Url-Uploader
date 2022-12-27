@@ -1,0 +1,38 @@
+.avatars {
+  display: flex;
+  flex-wrap: wrap;
+}
+.container {
+  display: flex;
+  padding-top: 20px;
+}
+
+.avatars__item {
+  margin-left: -0.25rem;
+  margin-bottom: 20px;
+}
+
+.avatars__image {
+  box-shadow: 0 0 0 0.25rem #fff;
+  overflow: hidden;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  border-radius: 9999px;
+}
+
+.more {
+  box-shadow: 0 0 0 0.25rem #fff;
+  display: flex;
+  overflow: hidden;
+  border-radius: 9999px;
+  margin-left: -10px;
+  z-index: 10;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(1, 4, 14, 0.653);
+}
