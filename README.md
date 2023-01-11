@@ -6,7 +6,7 @@
 <br>
 
 > A curated list of awesome things related to Telegram groups, channels, bots, apis.
-> Add your awesome Telegram groups, channels, bots & opensource project. Your pull request is greatly appreciated..
+> Add your awesome Telegram groups, channels, bots & open-source project. Your pull request is greatly appreciated..
 
 <a href="https://github.com/kalanakt/awesome-telegram"><h4>Learn More...</h4></a>
 
@@ -30,7 +30,7 @@
 
 <h1>⛩ Introduction</h1>
 
-<p>A simple Telegram Bot, upload media file | video to Telegram using the direct download link. (YouTube, Mediafire, Google Drive, Mega drive, etc)</p>
+<p>A simple Telegram bot, upload media file | video to Telegram using the direct download link. (YouTube, Mediafire, Google Drive, Mega drive, etc)</p>
 <ul>
     <li>YouTube, Google Drive, Apple Music, Spotify, Resso, & direct Links support.</li>
     <li>Bot can upload documents and files of video & audio types.</li>
