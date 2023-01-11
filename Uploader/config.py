@@ -34,7 +34,7 @@ logging.basicConfig(
 
 class Config(object):
     WEBHOOK = os.environ.get("BOT_TOKEN", False)
-    # get a token from @BotFather
+    # Get a token from @BotFather
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
     # The Telegram API things
     API_ID = int(os.environ.get("API_ID", 12345))
@@ -42,7 +42,7 @@ class Config(object):
     # Get these values from my.telegram.org
     # Array to store users who are authorized to use the bot
 
-    # file /video dpwnload location
+    # File /video download location
     DOWNLOAD_LOCATION = "./DOWNLOADS"
 
     MEGA_EMAIL = os.environ.get("MEGA_EMAIL", "None")
@@ -54,13 +54,13 @@ class Config(object):
     # Telegram maximum file upload size
     TG_MAX_FILE_SIZE = 4194304000
 
-    # chunk size that should be used with requests
+    # Chunk size that should be used with requests
     CHUNK_SIZE = int(os.environ.get("CHUNK_SIZE", 128))
-    # proxy for accessing youtube-dl in GeoRestricted Areas
+    # Proxy for accessing youtube-dl in GeoRestricted Areas
     # Get your own proxy from https://github.com/rg3/youtube-dl/issues/1091#issuecomment-230163061
     HTTP_PROXY = os.environ.get("HTTP_PROXY", "")
 
-    # set timeout for subprcess
+    # Set timeout for subprcess
     PROCESS_MAX_TIMEOUT = 3700
 
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", -100))
