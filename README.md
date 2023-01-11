@@ -6,7 +6,7 @@
 <br>
 
 > A curated list of awesome things related to Telegram groups, channels, bots, apis.
-> Add your awesome Telegram groups, channels, bots & opensource project. your pull request is greatly appreciating..
+> Add your awesome Telegram groups, channels, bots & open-source project. Your pull request is greatly appreciated..
 
 <a href="https://github.com/kalanakt/awesome-telegram"><h4>Learn More...</h4></a>
 
@@ -30,11 +30,11 @@
 
 <h1>⛩ Introduction</h1>
 
-<p>A simple telegram Bot, Upload Media File| video To telegram using the direct download link. (youtube, Mediafire, google drive, mega drive, etc)</p>
+<p>A simple Telegram bot, upload media file | video to Telegram using the direct download link. (YouTube, Mediafire, Google Drive, Mega drive, etc)</p>
 <ul>
-    <li>Youtube, GoogleDrive, Apple Music, Spotify, Resso, & Direct Links support.</li>
-    <li>Bot Can upload document, video & audio types.</li>
-    <li>Deploy To Heroku | locally | VPS.</li>
+    <li>YouTube, Google Drive, Apple Music, Spotify, Resso, & direct Links support.</li>
+    <li>Bot can upload documents and files of video & audio types.</li>
+    <li>Deploy to Heroku | locally | VPS.</li>
     <li>Custom thumbnail support.</li>
 </ul>
 <ul>
@@ -45,7 +45,7 @@
 <h1>🔥 Getting Started [<a href="https://urluploader.vercel.app/">Documentation</a>]</h1>
 
 <blockquote cite="https://kalanakt.github.io/All-Url-Uploader">
-A simple telegram Bot, Upload Media File| video To telegram using the direct download link. (youtube, Mediafire, google drive, mega drive, etc)
+A simple Telegram Bot, upload media file | video To Telegram using the direct download link. (YouTube, Mediafire, Google Drive, Mega drive, etc)
 
 Complete Documentation for All-Url-Uploader Bot
 </blockquote>
@@ -59,7 +59,7 @@ Complete Documentation for All-Url-Uploader Bot
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.1">v2.0.1</a>             | ✘                | ☑ custom thumbnail support, fixed youtube download                              |
 | <a href="https://github.com/kalanakt/All-Url-Uploader/releases/tag/v2.0.2">v2.0.2</a>             | ✔                | ☑ fixed Bugs in v2.0.1, Modify custom thumbnail support                          | 
 <br>
-<h1>🎯 To do</h1>
+<h1>🎯 To-Dos</h1>
 
  * [x] deploy to vps setup
  * [x] custom thumbnail support
@@ -74,7 +74,7 @@ Complete Documentation for All-Url-Uploader Bot
 
 * Fork the repo
 * Copy forked repo link
-* <a href="https://kalanakt.github.io/ToHeroku/app/" target="_blank">Click Here</a> To Countinue.
+* <a href="https://kalanakt.github.io/ToHeroku/app/" target="_blank">Click Here</a> To Continue.
 
 </details>
 
@@ -151,8 +151,8 @@ python3 bot.py
 <br>
 <h1>💖 Thanks To</h1>
 
-<p>This Bot is developed by using many github open source projects.</p>
-<p>Special Thanks to people who star to this repo and contributed to this project</p>
+<p>This bot is developed by using many Github open source projects.</p>
+<p>Special thanks to people who starred to this repo and contributed to this project</p>
 <br>
 <h1>💷 License</h1>
 
