@@ -6,7 +6,7 @@
 
 Download YouTube videos and playlists. It supports both video and audio downloads, and provides a variety of resolution and format options for video downloads.
 
-<a href="https://github.com/kalanakt/videoDefUserBot"><h4>Try Now...</h4></a>
+<a href="https://github.com/kalanakt/videoDefUserBot">Try Now...</a>
 
 <br>
 <p align="center"><a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer"><img width="450" src="https://github.com/kalanakt/All-Url-Uploader/blob/main/asset/tmwad.png" alt="@TMWAD logo"></a></p>
