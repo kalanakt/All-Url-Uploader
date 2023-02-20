@@ -1,14 +1,12 @@
-## Awesome Telegram
-
+## Check Out Youtube Video & Playlist Downloder Bot
 
 <a href="https://github.com/kalanakt/awesome-telegram"><img align="right" title="Awesome Telegram" src="https://github.com/kalanakt/awesome-telegram/raw/main/assets/logo.svg" alt="Awesome Heroku" width="180px"></a>
 
 <br>
 
-> A curated list of awesome things related to Telegram groups, channels, bots, apis.
-> Add your awesome Telegram groups, channels, bots & open-source project. Your pull request is greatly appreciated..
+Download YouTube videos and playlists. It supports both video and audio downloads, and provides a variety of resolution and format options for video downloads.
 
-<a href="https://github.com/kalanakt/awesome-telegram"><h4>Learn More...</h4></a>
+<a href="https://github.com/kalanakt/videoDefUserBot"><h4>Try Now...</h4></a>
 
 <br>
 <p align="center"><a href="https://t.me/TMWAD" target="_blank" rel="noopener noreferrer"><img width="450" src="https://github.com/kalanakt/All-Url-Uploader/blob/main/asset/tmwad.png" alt="@TMWAD logo"></a></p>
