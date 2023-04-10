@@ -31,14 +31,14 @@ from datetime import datetime
 from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes, TimeFormatter
 from Uploader.utitles import *
 from Uploader.script import Translation
-if bool(os.environ.get("WEBHOOK")):
-    from Uploader.config import Config
-else:
-    from sample_config import Config
 
+import logging
+
+from config import Config
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
+
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 

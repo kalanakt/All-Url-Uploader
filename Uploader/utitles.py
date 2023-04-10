@@ -26,10 +26,6 @@ from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
 
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
 async def Mdata01(download_directory):

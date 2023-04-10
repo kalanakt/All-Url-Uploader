@@ -22,3 +22,5 @@ mega.py
 opencc
 wget
 youtube_dl
+ssl
+vimeo_dl

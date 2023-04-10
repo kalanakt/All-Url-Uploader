@@ -22,29 +22,31 @@
 
 # edit this file with your veriable if you'r deploy bot via locally | vps
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 class Config(object):
 
     # get a token from @BotFather
-    BOT_TOKEN = ""
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "xxxxadd")
+    # bot username without @
+    BOT_USERNAME = os.environ.get("BOT_USERNAME", "xxxxadd")
 
     # Get these values from my.telegram.org
-    API_ID = 1234567
-    API_HASH = ""
-
-    # No need to change
-    DOWNLOAD_LOCATION = "./DOWNLOADS"
-    ADL_BOT_RQ = {}
-    CHUNK_SIZE = 128
-    TG_MAX_FILE_SIZE = 4194304000
-    HTTP_PROXY = ""
-    PROCESS_MAX_TIMEOUT = 3700
+    API_ID = os.environ.get("API_ID", "123add")
+    API_HASH = os.environ.get("API_HASH", "xxxxadd")
 
     # TG Ids
-    LOG_CHANNEL = -1007119867241
-    OWNER_ID = 1288398723
+    LOG_CHANNEL = os.environ.get("LOG_CHANNEL", "123add")
+    OWNER_ID = os.environ.get("OWNER_ID", "123add")
+    AUTH_USERS = [OWNER_ID] + os.environ.get("AUTH_USERS", "").split(" ")
 
-    # bot username without @
-    BOT_USERNAME = "AdvanceUrlUploaderBot"
-
-    # auth users
-    AUTH_USERS = [OWNER_ID]
+    # No need to change
+    ADL_BOT_RQ = {}
+    DOWNLOAD_LOCATION = os.environ.get("DOWNLOAD_LOCATION", "./DOWNLOADS")
+    CHUNK_SIZE = os.environ.get("CHUNK_SIZE", 128)
+    TG_MAX_FILE_SIZE = os.environ.get("TG_MAX_FILE_SIZE", 4194304000)
+    HTTP_PROXY = os.environ.get("HTTP_PROXY", "")
+    PROCESS_MAX_TIMEOUT = os.environ.get("PROCESS_MAX_TIMEOUT", 3700)

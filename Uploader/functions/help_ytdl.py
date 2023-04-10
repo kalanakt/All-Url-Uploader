@@ -27,10 +27,6 @@ import logging
 
 from urllib.parse import urlparse
 
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
 
 def get_file_extension_from_url(url):
     url_path = urlparse(url).path

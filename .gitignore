@@ -1,4 +1,16 @@
+# ignore python builds
 __pycache__/
 dist/
 downloads/
 *.log
+.spyproject/
+
+
+# ignore doc builds
+.next/
+node_modules/
+
+
+# ignore .env
+
+.env

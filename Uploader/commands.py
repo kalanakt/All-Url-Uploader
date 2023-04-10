@@ -25,11 +25,6 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from Uploader.script import Translation
 
-if bool(os.environ.get("WEBHOOK")):
-    from Uploader.config import Config
-else:
-    from sample_config import Config
-
 
 @Client.on_message(
     filters.command("start") & filters.private,

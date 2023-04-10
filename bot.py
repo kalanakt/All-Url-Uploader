@@ -22,14 +22,6 @@
 
 import os
 from pyrogram import Client, idle
-
-if bool(os.environ.get("WEBHOOK")):
-    from Uploader.config import Config
-else:
-    from sample_config import Config
-
-import os
-
 import logging
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
@@ -37,6 +29,7 @@ logger = logging.getLogger(__name__)
 
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
+from config import Config
 if __name__ == "__main__":
 
     if not os.path.isdir(Config.DOWNLOAD_LOCATION):
