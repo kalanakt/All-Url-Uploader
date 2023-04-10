@@ -4,6 +4,8 @@ dist/
 downloads/
 *.log
 .spyproject/
+*.session
+*.session-journal
 
 
 # ignore doc builds
