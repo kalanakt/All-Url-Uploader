@@ -47,8 +47,10 @@ if __name__ == "__main__":
                        bot_token=Config.BOT_TOKEN,
                        api_id=Config.API_ID,
                        api_hash=Config.API_HASH,
+                       workers=50,
+                       sleep_threshold=5,
                        plugins=plugins)
     logger.info("Bot Started :)")
     Uploadbot.run()
-    idle()
-    logger.info("Bot Stoped ;)")
+#     idle()
+#     logger.info("Bot Stoped ;)")
