@@ -19,9 +19,9 @@ async def vimeo_link(client, message, uvew):
     if not match:
         print("Invalid Vimeo URL")
         return
-    
-    video_id = match.group(1)
-    
+
+    video_id = match[1]
+
     # Fetch video information from Vimeo's API
     api_url = f"https://api.vimeo.com/videos/{video_id}"
     headers = {"Authorization": "Bearer YOUR_ACCESS_TOKEN"}
@@ -29,7 +29,7 @@ async def vimeo_link(client, message, uvew):
     if response.status_code != 200:
         print("Failed to fetch video information")
         return
-    
+
     data = response.json()
     title = data.get("name", "vimeo_video")
     ext = data.get("download", {}).get("data", {}).get("mime_type", "").split("/")[-1]
@@ -38,11 +38,11 @@ async def vimeo_link(client, message, uvew):
     response = requests.get(url)
     with open(f"{title}.{ext}", "wb") as f:
         f.write(response.content)
-        
+
     video = vimeo.new(url)
     best = video.getbest()
-    filename = video.title + '.' + best.extension
-    filepath = Config.DOWNLOAD_LOCATION + '/' + filename
+    filename = f'{video.title}.{best.extension}'
+    filepath = f'{Config.DOWNLOAD_LOCATION}/{filename}'
 
     # Download the file using vimeo-dl
     vimeo.download(url, filepath=filepath)

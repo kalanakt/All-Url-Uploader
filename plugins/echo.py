@@ -79,8 +79,6 @@ async def echo(bot, update):
         except Exception as e:
             logger.warn(
                 f"an error occurred while trying to connect to the website : {e}")
-            pass
-
         uvew = await update.reply_text("Please Wait ...")
 
     elif parsed_link.scheme == "http":

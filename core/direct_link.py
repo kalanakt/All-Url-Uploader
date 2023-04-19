@@ -18,10 +18,10 @@ async def direct_link(client, message, uvew):
 
     # Download the file using youtube-dl
     ydl_opts = {
-        'outtmpl': Config.DOWNLOAD_LOCATION + '/' + '%(title)s.%(ext)s',
+        'outtmpl': f'{Config.DOWNLOAD_LOCATION}/%(title)s.%(ext)s',
         'nooverwrites': True,
         'format': 'bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4',
-        'progress_hooks': [progress_hook]
+        'progress_hooks': [progress_hook],
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         try:

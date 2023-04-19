@@ -58,8 +58,7 @@ async def ddl_call_back(bot, update):  # sourcery skip: low-code-quality
                     youtube_dl_url = entity.url
                 elif entity.type == "url":
                     o = entity.offset
-                    l = entity.length
-                    youtube_dl_url = youtube_dl_url[o:o + l]
+                    youtube_dl_url = youtube_dl_url[o:o + entity.length]
         if youtube_dl_url is not None:
             youtube_dl_url = youtube_dl_url.strip()
         if custom_file_name is not None:
