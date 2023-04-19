@@ -21,7 +21,9 @@
 # SOFTWARE
 
 import os
-from pyrogram import Client, idle
+from pyrogram.raw.all import layer
+from pyrogram import Client, __version__
+
 
 if bool(os.environ.get("WEBHOOK")):
     from Uploader.config import Config
@@ -37,20 +39,31 @@ logger = logging.getLogger(__name__)
 
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-if __name__ == "__main__":
+class Bot(Client):
 
-    if not os.path.isdir(Config.DOWNLOAD_LOCATION):
-        os.makedirs(Config.DOWNLOAD_LOCATION)
+    def __init__(self):
+        super().__init__(
+            name='All-Url-Uploader',
+            api_id=Config.API_ID,
+            api_hash=Config.API_HASH,
+            bot_token=Config.BOT_TOKEN,
+            workers=50,
+            plugins={"root": "plugins"},
+            sleep_threshold=5,
+        )
 
-    plugins = dict(root="Uploader")
-    Uploadbot = Client("All-Url-Uploader",
-                       bot_token=Config.BOT_TOKEN,
-                       api_id=Config.API_ID,
-                       api_hash=Config.API_HASH,
-                       workers=50,
-                       sleep_threshold=5,
-                       plugins=plugins)
-    logger.info("Bot Started :)")
-    Uploadbot.run()
-#     idle()
+    async def start(self):
+        await super().start()
+        me = await self.get_me()
+        logging.info(
+            f"{me.first_name} with for Pyrogram v{__version__} (Layer {layer}) started on {me.username}.")
+        logging.info(LOG_STR)
+
+    async def stop(self, *args):
+        await super().stop()
+        logging.info("Bot stopped. Bye.")
+
+
+app = Bot()
+app.run()
 #     logger.info("Bot Stoped ;)")
