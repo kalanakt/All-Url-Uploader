@@ -165,6 +165,11 @@ python3 bot.py
 
 [MIT License](https://opensource.org/licenses/MIT)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=kalanakt/All-Url-Uploader&type=Date)](https://star-history.com/#kalanakt/All-Url-Uploader&Date)
+
+
 <br>
 <em>Copyright (c) 2022-present <strong><a href="https://github.com/kalanakt">Hash Minner</a></strong></em>
 
