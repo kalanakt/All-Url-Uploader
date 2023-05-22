@@ -39,6 +39,8 @@ logger = logging.getLogger(__name__)
 
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
+if not os.path.isdir(Config.DOWNLOAD_LOCATION):
+   os.makedirs(Config.DOWNLOAD_LOCATION)
 
 app = Client(
     name='All-Url-Uploader',
