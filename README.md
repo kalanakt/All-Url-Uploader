@@ -138,15 +138,20 @@ python3 bot.py
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
 <table>
-  <tr>
-    <td align="center"><a href="https://github.com/kalanakt"><img src="https://avatars.githubusercontent.com/u/86665964?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Hash Minner</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Code">💻</a> <a href="#ideas-kalanakt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-kalanakt" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-kalanakt" title="Maintenance">🚧</a> <a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Tests">⚠️</a></td>
-    <td align="center"><a href="http://www.tamilvip007.me"><img src="https://avatars.githubusercontent.com/u/79161058?v=4?s=100" width="100px;" alt=""/><br /><sub><b>TAMILVIP007</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=TAMILVIP007" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/ananth-28"><img src="https://avatars.githubusercontent.com/u/106482929?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ananth-28</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=ananth-28" title="Code">💻</a></td>
-    <td align="center"><a href="https://t.me/Divarion_D"><img src="https://avatars.githubusercontent.com/u/42798043?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Danil</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=Divarion-D" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/millysboy"><img src="https://avatars.githubusercontent.com/u/108298343?v=4?s=100" width="100px;" alt=""/><br /><sub><b>millysboy</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=millysboy" title="Code">💻</a> <a href="#ideas-millysboy" title="Ideas, Planning, & Feedback">🤔</a></td>
-    <td align="center"><a href="https://allcontributors.org"><img src="https://avatars.githubusercontent.com/u/46410174?v=4?s=100" width="100px;" alt=""/><br /><sub><b>All Contributors</b></sub></a><br /><a href="#design-all-contributors" title="Design">🎨</a></td>
-    <td align="center"><a href="https://github.com/hybridvamp"><img src="https://avatars.githubusercontent.com/u/48980248?v=4?s=100" width="100px;" alt=""/><br /><sub><b>HYBRID</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=hybridvamp" title="Code">💻</a></td>
-  </tr>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/kalanakt"><img src="https://avatars.githubusercontent.com/u/86665964?v=4?s=100" width="100px;" alt="Hash Minner"/><br /><sub><b>Hash Minner</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Code">💻</a> <a href="#ideas-kalanakt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-kalanakt" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-kalanakt" title="Maintenance">🚧</a> <a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Tests">⚠️</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://www.tamilvip007.me"><img src="https://avatars.githubusercontent.com/u/79161058?v=4?s=100" width="100px;" alt="TAMILVIP007"/><br /><sub><b>TAMILVIP007</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=TAMILVIP007" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/ananth-28"><img src="https://avatars.githubusercontent.com/u/106482929?v=4?s=100" width="100px;" alt="ananth-28"/><br /><sub><b>ananth-28</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=ananth-28" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://t.me/Divarion_D"><img src="https://avatars.githubusercontent.com/u/42798043?v=4?s=100" width="100px;" alt="Danil"/><br /><sub><b>Danil</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=Divarion-D" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/millysboy"><img src="https://avatars.githubusercontent.com/u/108298343?v=4?s=100" width="100px;" alt="millysboy"/><br /><sub><b>millysboy</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=millysboy" title="Code">💻</a> <a href="#ideas-millysboy" title="Ideas, Planning, & Feedback">🤔</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://allcontributors.org"><img src="https://avatars.githubusercontent.com/u/46410174?v=4?s=100" width="100px;" alt="All Contributors"/><br /><sub><b>All Contributors</b></sub></a><br /><a href="#design-all-contributors" title="Design">🎨</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/hybridvamp"><img src="https://avatars.githubusercontent.com/u/48980248?v=4?s=100" width="100px;" alt="HYBRID"/><br /><sub><b>HYBRID</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=hybridvamp" title="Code">💻</a></td>
+    </tr>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/Drago991"><img src="https://avatars.githubusercontent.com/u/69932259?v=4?s=100" width="100px;" alt="Damin.du"/><br /><sub><b>Damin.du</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=Drago991" title="Code">💻</a></td>
+    </tr>
+  </tbody>
 </table>
 
 <!-- markdownlint-restore -->
