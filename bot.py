@@ -46,7 +46,7 @@ bot = Client(
     api_hash=Config.API_HASH,
     bot_token=Config.BOT_TOKEN,
     workers=50,
-    plugins=dict(root="plugins")
+    plugins=dict(root="Uploader")
 )
 
 bot.start()
