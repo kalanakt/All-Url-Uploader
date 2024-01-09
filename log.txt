@@ -1,0 +1,18 @@
+__main__ - ERROR - Please set BOT_TOKEN in config.py or as env var
+__main__ - ERROR - Please set BOT_TOKEN in config.py or as env var
+__main__ - INFO - Bot has started.
+__main__ - INFO - **Bot Started**
+
+**Pyrogram Version:** `2.0.106`
+**Layer:** `158`
+__main__ - INFO - Developed by github.com/kalanakt Sponsored by www.netronk.com
+root - INFO - Stop signal received (SIGINT). Exiting...
+__main__ - INFO - Bot Stopped ;)
+__main__ - INFO - Bot has started.
+__main__ - INFO - **Bot Started**
+
+**Pyrogram Version:** `2.0.106`
+**Layer:** `158`
+__main__ - INFO - Developed by github.com/kalanakt Sponsored by www.netronk.com
+root - INFO - Stop signal received (SIGINT). Exiting...
+__main__ - INFO - Bot Stopped ;)

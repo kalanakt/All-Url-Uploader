@@ -1,0 +1,43 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="ignoredPackages">
+        <value>
+          <list size="16">
+            <item index="0" class="java.lang.String" itemvalue="pysqlite3-binary" />
+            <item index="1" class="java.lang.String" itemvalue="pyromod" />
+            <item index="2" class="java.lang.String" itemvalue="pymongo" />
+            <item index="3" class="java.lang.String" itemvalue="pyrogram" />
+            <item index="4" class="java.lang.String" itemvalue="tgcrypto" />
+            <item index="5" class="java.lang.String" itemvalue="pytest" />
+            <item index="6" class="java.lang.String" itemvalue="dotenv" />
+            <item index="7" class="java.lang.String" itemvalue="jose" />
+            <item index="8" class="java.lang.String" itemvalue="openai" />
+            <item index="9" class="java.lang.String" itemvalue="Pyrogram" />
+            <item index="10" class="java.lang.String" itemvalue="aiohttp" />
+            <item index="11" class="java.lang.String" itemvalue="pydub" />
+            <item index="12" class="java.lang.String" itemvalue="requests" />
+            <item index="13" class="java.lang.String" itemvalue="telegram" />
+            <item index="14" class="java.lang.String" itemvalue="TgCrypto" />
+            <item index="15" class="java.lang.String" itemvalue="gCrypto" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyPep8NamingInspection" enabled="true" level="WEAK WARNING" enabled_by_default="true">
+      <option name="ignoredErrors">
+        <list>
+          <option value="N806" />
+        </list>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="pyrogram.enums" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

@@ -20,33 +20,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-import os
 import time
 import json
 import asyncio
 import logging
 
-from opencc import OpenCC
-
 from pyrogram.types import Thumbnail
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-if bool(os.environ.get("WEBHOOK")):
-    from Uploader.config import Config
-else:
-    from sample_config import Config
+from config import Config
 from Uploader.script import Translation
 from Uploader.functions.ran_text import random_char
-from Uploader.functions.display_progress import humanbytes
 from Uploader.functions.display_progress import humanbytes
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-
-s2tw = OpenCC('s2tw.json').convert
 
 
 @Client.on_message(filters.private & filters.regex(pattern=".*http.*"))
