@@ -25,17 +25,10 @@ import json
 import time
 import shutil
 import asyncio
-import logging
-import subprocess
-
-from pyrogram.types import *
 from datetime import datetime
 
 from Uploader.utitles import *
-if bool(os.environ.get("WEBHOOK")):
-    from Uploader.config import Config
-else:
-    from sample_config import Config
+from config import Config
 from Uploader.script import Translation
 from Uploader.functions.ran_text import random_char
 from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes

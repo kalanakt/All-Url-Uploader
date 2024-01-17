@@ -24,10 +24,7 @@ import os
 
 from pyrogram import Client, filters
 
-if bool(os.environ.get("WEBHOOK")):
-    from Uploader.config import Config
-else:
-    from sample_config import Config
+from config import Config
 
 
 @Client.on_message(filters.photo & filters.incoming & filters.private)

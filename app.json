@@ -15,10 +15,6 @@
   "website": "kalanakt.github.io/projects/telegram/all-url-uploader ",
   "repository": "https://github.com/kalanakt/All-Url-Uploader",
   "env": {
-    "WEBHOOK": {
-      "description": "Don't Need To change - Setting this to True when in env mode",
-      "value": "True"
-    },
     "BOT_TOKEN": {
       "description": "Your bot token, as a string.",
       "value": ""
@@ -31,17 +27,9 @@
       "description": "Get this value from https://my.telegram.org",
       "value": ""
     },
-    "LOG_CHANNEL": {
-      "description": "Your Any Own Private Channel ID Where Your Bot As Admin With Full Permission",
-      "value": ""
-    },
     "OWNER_ID": {
       "description": "Your Telegram ID For Broadcast",
       "value": "12345678"
-    },
-    "BOT_USERNAME": {
-      "description": "Your Bot Username Without @",
-      "value": ""
     }
   },
   "addons": [

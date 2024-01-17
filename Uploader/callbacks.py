@@ -20,17 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE
 
-import os
-from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes
-if bool(os.environ.get("WEBHOOK")):
-    from Uploader.config import Config
-else:
-    from sample_config import Config
 from Uploader.dl_button import ddl_call_back
 from Uploader.button import youtube_dl_call_back
 from Uploader.script import Translation
-from pyrogram import Client, types
-from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import Client
 import logging
 logging.basicConfig(level=logging.DEBUG,
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')

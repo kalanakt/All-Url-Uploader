@@ -21,8 +21,6 @@
 # SOFTWARE
 
 import os
-import time
-import requests
 import logging
 
 from urllib.parse import urlparse
@@ -39,6 +37,9 @@ def get_file_extension_from_url(url):
 
 
 def get_resolution(info_dict):
+    width = 0
+    height = 0
+
     if {"width", "height"} <= info_dict.keys():
         width = int(info_dict['width'])
         height = int(info_dict['height'])
@@ -58,4 +59,4 @@ def get_resolution(info_dict):
     elif info_dict['height'] == 240:
         width = 426
         height = 240
-    return (width, height)
+    return width, height
