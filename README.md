@@ -160,7 +160,13 @@ python3 bot.py
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 <p>If you have a this bot-related bug fix/component/tool/idea, add it with a <a href="https://github.com/kalanakt/All-Url-Uploader/pulls" target="_blank" rel="noopener noreferrer">pull request.</a> Thank you to all the people who contributed to this project!</p>
-<br>
+<a href="https:///pr.new/kalanakt/All-Url-Uploader">
+  <img
+    alt="Open in Codeflow"
+    src="https://developer.stackblitz.com/img/open_in_codeflow.svg"
+  />
+</a>
+<br />
 <h1>💖 Thanks To</h1>
 
 <p>This bot is developed by using many Github open source projects.</p>
