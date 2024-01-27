@@ -1,15 +1,17 @@
+"""module for youtube download"""
+
+import logging
 import os
 import json
 import time
 import shutil
 import asyncio
 from datetime import datetime
-
-from Uploader.utitles import *
-from config import Config
-from Uploader.script import Translation
+from Uploader.functions.display_progress import humanbytes, progress_for_pyrogram
 from Uploader.functions.ran_text import random_char
-from Uploader.functions.display_progress import progress_for_pyrogram, humanbytes
+from Uploader.script import Translation
+from Uploader.utitles import Mdata01, Mdata02, Mdata03
+from config import Config
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -24,7 +26,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-async def youtube_dl_call_back(bot, update):
+async def youtube_dl_call_back(_bot, update):
     cb_data = update.data
     # youtube_dl extractors
     tg_send_type, youtube_dl_format, youtube_dl_ext, ranom = cb_data.split("|")
@@ -38,6 +40,7 @@ async def youtube_dl_call_back(bot, update):
         with open(save_ytdl_json_path, "r", encoding="utf8") as f:
             response_json = json.load(f)
     except FileNotFoundError as e:
+        await update.message(f"error: {e}")
         await update.message.delete()
         return False
     youtube_dl_url = update.message.reply_to_message.text
@@ -63,8 +66,8 @@ async def youtube_dl_call_back(bot, update):
                     youtube_dl_url = entity.url
                 elif entity.type == "url":
                     o = entity.offset
-                    l = entity.length
-                    youtube_dl_url = youtube_dl_url[o: o + l]
+                    length = entity.length
+                    youtube_dl_url = youtube_dl_url[o: o + length]
         if youtube_dl_url is not None:
             youtube_dl_url = youtube_dl_url.strip()
         if custom_file_name is not None:
@@ -82,8 +85,8 @@ async def youtube_dl_call_back(bot, update):
                 youtube_dl_url = entity.url
             elif entity.type == "url":
                 o = entity.offset
-                l = entity.length
-                youtube_dl_url = youtube_dl_url[o: o + l]
+                length = entity.length
+                youtube_dl_url = youtube_dl_url[o: o + length]
     await update.message.edit_caption(
         caption=Translation.DOWNLOAD_START.format(custom_file_name)
     )
@@ -170,7 +173,7 @@ async def youtube_dl_call_back(bot, update):
         logger.info(t_response)
         try:
             os.remove(save_ytdl_json_path)
-        except FileNotFoundError as exc:
+        except FileNotFoundError:
             pass
 
         end_one = datetime.now()
@@ -178,7 +181,7 @@ async def youtube_dl_call_back(bot, update):
         file_size = Config.TG_MAX_FILE_SIZE + 1
         try:
             file_size = os.stat(download_directory).st_size
-        except FileNotFoundError as exc:
+        except FileNotFoundError:
             download_directory = os.path.splitext(
                 download_directory)[0] + "." + "mkv"
             # https://stackoverflow.com/a/678242/4723940
@@ -268,15 +271,13 @@ async def youtube_dl_call_back(bot, update):
 
             end_two = datetime.now()
             time_taken_for_upload = (end_two - end_one).seconds
-            try:
-                shutil.rmtree(tmp_directory_for_each_user)
-            except Exception:
-                pass
+
+            shutil.rmtree(tmp_directory_for_each_user)
             await update.message.edit_caption(
                 caption=Translation.AFTER_SUCCESSFUL_UPLOAD_MSG_WITH_TS.format(
                     time_taken_for_download, time_taken_for_upload
                 )
             )
 
-            logger.info(f"Downloaded in: {str(time_taken_for_download)}")
-            logger.info(f"Uploaded in: {str(time_taken_for_upload)}")
+            logger.info("Downloaded in: : %s", str(time_taken_for_download))
+            logger.info("Uploaded in: %s", str(time_taken_for_upload))
