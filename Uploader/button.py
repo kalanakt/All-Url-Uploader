@@ -40,7 +40,7 @@ async def youtube_dl_call_back(_bot, update):
         with open(save_ytdl_json_path, "r", encoding="utf8") as f:
             response_json = json.load(f)
     except FileNotFoundError as e:
-        await update.message(f"error: {e}")
+        await update.message.edit(f"error: {e}")
         await update.message.delete()
         return False
     youtube_dl_url = update.message.reply_to_message.text
