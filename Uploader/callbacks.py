@@ -1,9 +1,12 @@
+"""Module for handling Pyrogram callback queries"""
+
+import logging
+from pyrogram import Client
 from Uploader.dl_button import ddl_call_back
 from Uploader.button import youtube_dl_call_back
 from Uploader.script import Translation
-from pyrogram import Client
-import logging
 
+# Set up logging configuration
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
@@ -36,6 +39,5 @@ async def button(bot, update):
         await youtube_dl_call_back(bot, update)
     elif "=" in update.data:
         await ddl_call_back(bot, update)
-
     else:
         await update.message.delete()

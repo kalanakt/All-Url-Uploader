@@ -1,8 +1,6 @@
 import logging
-
 from hachoir.parser import createParser
 from hachoir.metadata import extractMetadata
-
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -12,6 +10,15 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
 async def Mdata01(download_directory):
+    """
+    Extract metadata information for video files.
+
+    Parameters:
+    - download_directory (str): The path to the video file.
+
+    Returns:
+    Tuple[int, int, int]: Tuple containing width, height, and duration.
+    """
     width = 0
     height = 0
     duration = 0
@@ -28,6 +35,15 @@ async def Mdata01(download_directory):
 
 
 async def Mdata02(download_directory):
+    """
+    Extract metadata information for video files.
+
+    Parameters:
+    - download_directory (str): The path to the video file.
+
+    Returns:
+    Tuple[int, int]: Tuple containing width and duration.
+    """
     width = 0
     duration = 0
     metadata = extractMetadata(createParser(download_directory))
@@ -41,6 +57,15 @@ async def Mdata02(download_directory):
 
 
 async def Mdata03(download_directory):
+    """
+    Extract metadata information for audio files.
+
+    Parameters:
+    - download_directory (str): The path to the audio file.
+
+    Returns:
+    int: Duration of the audio file.
+    """
     metadata = extractMetadata(createParser(download_directory))
     return (
         metadata.get("duration").seconds

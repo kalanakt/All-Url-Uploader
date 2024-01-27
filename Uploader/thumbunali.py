@@ -1,12 +1,10 @@
 import os
-
 from pyrogram import Client, filters
-
 from config import Config
 
 
 @Client.on_message(filters.photo & filters.incoming & filters.private)
-async def save_photo(bot, message):
+async def save_photo(_bot, message):
     download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
     await message.download(file_name=download_location)
 
@@ -14,7 +12,7 @@ async def save_photo(bot, message):
 
 
 @Client.on_message(filters.command("thumb") & filters.incoming & filters.private)
-async def send_photo(bot, message):
+async def send_photo(_bot, message):
     download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
 
     if os.path.isfile(download_location):
@@ -29,7 +27,7 @@ async def send_photo(bot, message):
 
 
 @Client.on_message(filters.command("delthumb") & filters.incoming & filters.private)
-async def delete_photo(bot, message):
+async def delete_photo(_bot, message):
     download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
     if os.path.isfile(download_location):
         os.remove(download_location)

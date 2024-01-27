@@ -1,6 +1,5 @@
 import os
 import logging
-
 from urllib.parse import urlparse
 
 logging.basicConfig(
@@ -10,12 +9,30 @@ logger = logging.getLogger(__name__)
 
 
 def get_file_extension_from_url(url):
+    """
+    Get the file extension from a URL.
+
+    Parameters:
+    - url (str): URL of the file.
+
+    Returns:
+    str: File extension.
+    """
     url_path = urlparse(url).path
     basename = os.path.basename(url_path)
     return basename.split(".")[-1]
 
 
 def get_resolution(info_dict):
+    """
+    Get the width and height of a video from its info dictionary.
+
+    Parameters:
+    - info_dict (dict): Dictionary containing information about the video.
+
+    Returns:
+    tuple: Width and height of the video.
+    """
     width = 0
     height = 0
 

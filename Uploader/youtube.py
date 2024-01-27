@@ -31,8 +31,7 @@ async def callback_query_ytdl_audio(_, callback_query):
             ydl.process_info(info_dict)
             # upload
             audio_file = ydl.prepare_filename(info_dict)
-            task = asyncio.create_task(
-                send_audio(message, info_dict, audio_file))
+            task = asyncio.create_task(send_audio(message, info_dict, audio_file))
             while not task.done():
                 await asyncio.sleep(3)
                 await message.reply_chat_action(enums.ChatAction.UPLOAD_DOCUMENT)
@@ -43,34 +42,34 @@ async def callback_query_ytdl_audio(_, callback_query):
     await callback_query.message.reply_to_message.delete()
     await callback_query.message.delete()
 
-    async def send_audio(message: Message, info_dict, audio_file):
-        basename = audio_file.rsplit(".", 1)[-2]
-        if info_dict["ext"] == "webm":
-            audio_file_weba = f"{basename}.weba"
-            os.rename(audio_file, audio_file_weba)
-            audio_file = audio_file_weba
-        thumbnail_url = info_dict["thumbnail"]
-        thumbnail_file = f"{basename}.{get_file_extension_from_url(thumbnail_url)}"
-        download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
-        thumb = download_location if os.path.isfile(
-            download_location) else None
-        webpage_url = info_dict["webpage_url"]
-        title = info_dict["title"] or ""
-        caption = f'<b><a href="{webpage_url}">{title}</a></b>'
-        duration = int(float(info_dict["duration"]))
-        performer = info_dict["uploader"] or ""
-        await message.reply_audio(
-            audio_file,
-            caption=caption,
-            duration=duration,
-            performer=performer,
-            title=title,
-            parse_mode=enums.ParseMode.HTML,
-            thumb=thumb,
-        )
 
-        os.remove(audio_file)
-        os.remove(thumbnail_file)
+async def send_audio(message: Message, info_dict, audio_file):
+    basename = audio_file.rsplit(".", 1)[-2]
+    if info_dict["ext"] == "webm":
+        audio_file_weba = f"{basename}.weba"
+        os.rename(audio_file, audio_file_weba)
+        audio_file = audio_file_weba
+    thumbnail_url = info_dict["thumbnail"]
+    thumbnail_file = f"{basename}.{get_file_extension_from_url(thumbnail_url)}"
+    download_location = f"{Config.DOWNLOAD_LOCATION}/{message.from_user.id}.jpg"
+    thumb = download_location if os.path.isfile(download_location) else None
+    webpage_url = info_dict["webpage_url"]
+    title = info_dict["title"] or ""
+    caption = f'<b><a href="{webpage_url}">{title}</a></b>'
+    duration = int(float(info_dict["duration"]))
+    performer = info_dict["uploader"] or ""
+    await message.reply_audio(
+        audio_file,
+        caption=caption,
+        duration=duration,
+        performer=performer,
+        title=title,
+        parse_mode=enums.ParseMode.HTML,
+        thumb=thumb,
+    )
+
+    os.remove(audio_file)
+    os.remove(thumbnail_file)
 
 
 async def send_video(message: Message, info_dict, video_file):
@@ -117,8 +116,7 @@ async def callback_query_ytdl_video(_, callback_query):
             ydl.process_info(info_dict)
             # upload
             video_file = ydl.prepare_filename(info_dict)
-            task = asyncio.create_task(
-                send_video(message, info_dict, video_file))
+            task = asyncio.create_task(send_video(message, info_dict, video_file))
             while not task.done():
                 await asyncio.sleep(3)
                 await message.reply_chat_action(enums.ChatAction.UPLOAD_DOCUMENT)

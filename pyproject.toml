@@ -1,0 +1,6 @@
+[tool.autopep8]
+max_line_length = 150
+ignore = "E402,W503,C0116,C0114"
+in-place = true
+recursive = true
+aggressive = 3

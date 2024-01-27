@@ -33,10 +33,8 @@ async def echo(bot, update):
             reply_markup=InlineKeyboardMarkup(
                 [
                     [
-                        InlineKeyboardButton(
-                            "Audio 🎵", callback_data="ytdl_audio"),
-                        InlineKeyboardButton(
-                            "Video 🎬", callback_data="ytdl_video"),
+                        InlineKeyboardButton("Audio 🎵", callback_data="ytdl_audio"),
+                        InlineKeyboardButton("Video 🎬", callback_data="ytdl_video"),
                     ]
                 ]
             ),
@@ -91,8 +89,7 @@ async def echo(bot, update):
             Config.HTTP_PROXY,
         ]
     else:
-        command_to_exec = ["yt-dlp", "--no-warnings",
-                           "--allow-dynamic-mpd", "-j", url]
+        command_to_exec = ["yt-dlp", "--no-warnings", "--allow-dynamic-mpd", "-j", url]
     if youtube_dl_username is not None:
         command_to_exec.append("--username")
         command_to_exec.append(youtube_dl_username)
@@ -202,12 +199,9 @@ async def echo(bot, update):
                 else:
                     size = 0
 
-                cb_string_video = "{}|{}|{}|{}".format(
-                    "video", format_id, format_ext, randem
-                )
-                cb_string_file = "{}|{}|{}|{}".format(
-                    "file", format_id, format_ext, randem
-                )
+                cb_string_video = f"video |{format_id}|{format_ext}|{randem}"
+                cb_string_file = f"fille |{format_id}|{format_ext}|{randem}"
+                
                 if format_string is not None and not ("audio only" in format_string):
                     ikeyboard = [
                         InlineKeyboardButton(
@@ -231,12 +225,9 @@ async def echo(bot, update):
                     ]
                 inline_keyboard.append(ikeyboard)
             if duration is not None:
-                cb_string_64 = "{}|{}|{}|{}".format(
-                    "audio", "64k", "mp3", randem)
-                cb_string_128 = "{}|{}|{}|{}".format(
-                    "audio", "128k", "mp3", randem)
-                cb_string = "{}|{}|{}|{}".format(
-                    "audio", "320k", "mp3", randem)
+                cb_string_64 = "{}|{}|{}|{}".format("audio", "64k", "mp3", randem)
+                cb_string_128 = "{}|{}|{}|{}".format("audio", "128k", "mp3", randem)
+                cb_string = "{}|{}|{}|{}".format("audio", "320k", "mp3", randem)
                 inline_keyboard.append(
                     [
                         InlineKeyboardButton(
@@ -263,8 +254,7 @@ async def echo(bot, update):
         else:
             format_id = response_json["format_id"]
             format_ext = response_json["ext"]
-            cb_string_file = "{}|{}|{}|{}".format(
-                "file", format_id, format_ext, randem)
+            cb_string_file = "{}|{}|{}|{}".format("file", format_id, format_ext, randem)
             cb_string_video = "{}|{}|{}|{}".format(
                 "video", format_id, format_ext, randem
             )

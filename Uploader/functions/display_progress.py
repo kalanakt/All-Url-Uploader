@@ -10,10 +10,22 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
+    """
+    Display progress for a Pyrogram file upload or download.
+
+    Parameters:
+    - current (int): Current progress value.
+    - total (int): Total value (completion point).
+    - ud_type (str): Type of upload/download (e.g., "Uploading", "Downloading").
+    - message: The Pyrogram message to edit.
+    - start: The start time of the operation.
+
+    Returns:
+    None
+    """
     now = time.time()
     diff = now - start
     if round(diff % 10.00) == 0 or current == total:
-        # if round(current / total * 100, 0) % 5 == 0:
         percentage = current * 100 / total
         speed = current / diff
         elapsed_time = round(diff) * 1000
@@ -33,13 +45,12 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
             humanbytes(current),
             humanbytes(total),
             humanbytes(speed),
-            # elapsed_time if elapsed_time != '' else "0 s",
             estimated_total_time if estimated_total_time != "" else "0 s",
         )
         try:
             await message.edit(text=f"{ud_type}\n {tmp}")
         except Exception as e:
-            logger.info(f"Error {e}")
+            logger.info("Error %s", e)
             return
 
 
@@ -47,6 +58,15 @@ SIZE_UNITS = ["B", "KB", "MB", "GB", "TB", "PB"]
 
 
 def huanbytes(size_in_bytes) -> str:
+    """
+    Convert size in bytes to human-readable format.
+
+    Parameters:
+    - size_in_bytes (int): Size in bytes.
+
+    Returns:
+    str: Human-readable size.
+    """
     if size_in_bytes is None:
         return "0B"
     index = 0
@@ -60,8 +80,15 @@ def huanbytes(size_in_bytes) -> str:
 
 
 def humanbytes(size):
-    # https://stackoverflow.com/a/49361727/4723940
-    # 2**10 = 1024
+    """
+    Convert size to human-readable format.
+
+    Parameters:
+    - size (int): Size in bytes.
+
+    Returns:
+    str: Human-readable size.
+    """
     if not size:
         return ""
     power = 2**10
@@ -74,6 +101,15 @@ def humanbytes(size):
 
 
 def TimeFormatter(milliseconds: int) -> str:
+    """
+    Format time in milliseconds to a human-readable string.
+
+    Parameters:
+    - milliseconds (int): Time in milliseconds.
+
+    Returns:
+    str: Formatted time string.
+    """
     seconds, milliseconds = divmod(milliseconds, 1000)
     minutes, seconds = divmod(seconds, 60)
     hours, minutes = divmod(minutes, 60)

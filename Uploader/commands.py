@@ -6,7 +6,7 @@ from Uploader.script import Translation
 @Client.on_message(
     filters.command("start") & filters.private,
 )
-async def start_bot(_, m: Message):
+async def start_bot(_bot, m: Message):
     return await m.reply_text(
         Translation.START_TEXT.format(m.from_user.first_name),
         reply_markup=Translation.START_BUTTONS,
@@ -18,7 +18,7 @@ async def start_bot(_, m: Message):
 @Client.on_message(
     filters.command("help") & filters.private,
 )
-async def help_bot(_, m: Message):
+async def help_bot(_bot, m: Message):
     return await m.reply_text(
         Translation.HELP_TEXT,
         reply_markup=Translation.HELP_BUTTONS,
@@ -29,7 +29,7 @@ async def help_bot(_, m: Message):
 @Client.on_message(
     filters.command("about") & filters.private,
 )
-async def aboutme(_, m: Message):
+async def aboutme(_bot, m: Message):
     return await m.reply_text(
         Translation.ABOUT_TEXT,
         reply_markup=Translation.ABOUT_BUTTONS,
