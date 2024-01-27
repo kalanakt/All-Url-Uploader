@@ -113,7 +113,7 @@ async def echo(bot, update):
             previous_time = Config.ADL_BOT_RQ[str(update.from_user.id)]
             process_max_timeout = round(Config.PROCESS_MAX_TIMEOUT / 60)
             present_time = round(
-                Config.PROCESS_MAX_TIMEOUT(current_time - previous_time)
+                Config.PROCESS_MAX_TIMEOUT - (current_time - previous_time)
             )
             Config.ADL_BOT_RQ[str(update.from_user.id)] = time.time()
             if round(current_time - previous_time) < Config.PROCESS_MAX_TIMEOUT:
