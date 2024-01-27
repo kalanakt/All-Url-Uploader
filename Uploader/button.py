@@ -52,7 +52,12 @@ async def youtube_dl_call_back(_bot, update):
         if len(url_parts) == 2:
             youtube_dl_url, custom_file_name = map(str.strip, url_parts)
         elif len(url_parts) == 4:
-            youtube_dl_url, custom_file_name, youtube_dl_username, youtube_dl_password = map(str.strip, url_parts)
+            (
+                youtube_dl_url,
+                custom_file_name,
+                youtube_dl_username,
+                youtube_dl_password,
+            ) = map(str.strip, url_parts)
         else:
             for entity in update.message.reply_to_message.entities:
                 if entity.type == "text_link":
@@ -60,10 +65,20 @@ async def youtube_dl_call_back(_bot, update):
                 elif entity.type == "url":
                     o = entity.offset
                     length = entity.length
-                    youtube_dl_url = youtube_dl_url[o: o + length]
+                    youtube_dl_url = youtube_dl_url[o : o + length]
 
         # Cleaning up inputs
-        youtube_dl_url, custom_file_name, youtube_dl_username, youtube_dl_password = map(str.strip, [youtube_dl_url, custom_file_name, youtube_dl_username, youtube_dl_password])
+        youtube_dl_url, custom_file_name, youtube_dl_username, youtube_dl_password = (
+            map(
+                str.strip,
+                [
+                    youtube_dl_url,
+                    custom_file_name,
+                    youtube_dl_username,
+                    youtube_dl_password,
+                ],
+            )
+        )
 
     else:
         for entity in update.message.reply_to_message.entities:
@@ -72,7 +87,7 @@ async def youtube_dl_call_back(_bot, update):
             elif entity.type == "url":
                 o = entity.offset
                 length = entity.length
-                youtube_dl_url = youtube_dl_url[o: o + length]
+                youtube_dl_url = youtube_dl_url[o : o + length]
 
     await update.message.edit_caption(
         caption=Translation.DOWNLOAD_START.format(custom_file_name)

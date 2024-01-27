@@ -174,6 +174,6 @@ async def generate_screen_shots(
                     ss_img, f"{output_directory}/{str(time.time())}.jpg", wf
                 )
             images.append(ss_img)
-        return images    
-    
+        return images
+
     return None

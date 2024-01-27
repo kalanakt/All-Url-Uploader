@@ -58,7 +58,7 @@ async def echo(bot, update):
                 elif entity.type == "url":
                     o = entity.offset
                     length = entity.length
-                    url = url[o: o + length]
+                    url = url[o : o + length]
         if url is not None:
             url = url.strip()
         if file_name is not None:
@@ -77,7 +77,7 @@ async def echo(bot, update):
             elif entity.type == "url":
                 o = entity.offset
                 length = entity.length
-                url = url[o: o + length]
+                url = url[o : o + length]
     if Config.HTTP_PROXY != "":
         command_to_exec = [
             "yt-dlp",
@@ -201,7 +201,7 @@ async def echo(bot, update):
 
                 cb_string_video = f"video |{format_id}|{format_ext}|{randem}"
                 cb_string_file = f"fille |{format_id}|{format_ext}|{randem}"
-                
+
                 if format_string is not None and not ("audio only" in format_string):
                     ikeyboard = [
                         InlineKeyboardButton(

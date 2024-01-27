@@ -40,7 +40,7 @@ async def ddl_call_back(bot, update):
                 elif entity.type == "url":
                     o = entity.offset
                     length = entity.length
-                    youtube_dl_url = youtube_dl_url[o: o + length]
+                    youtube_dl_url = youtube_dl_url[o : o + length]
         if youtube_dl_url is not None:
             youtube_dl_url = youtube_dl_url.strip()
         if custom_file_name is not None:
@@ -52,7 +52,7 @@ async def ddl_call_back(bot, update):
             elif entity.type == "url":
                 o = entity.offset
                 length = entity.length
-                youtube_dl_url = youtube_dl_url[o: o + length]
+                youtube_dl_url = youtube_dl_url[o : o + length]
 
     description = custom_file_name
 
@@ -70,7 +70,9 @@ async def ddl_call_back(bot, update):
         message_id=update.message.id,
     )
 
-    tmp_directory_for_each_user = f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}"
+    tmp_directory_for_each_user = (
+        f"{Config.DOWNLOAD_LOCATION}/{str(update.from_user.id)}"
+    )
 
     if not os.path.isdir(tmp_directory_for_each_user):
         os.makedirs(tmp_directory_for_each_user)
@@ -99,7 +101,9 @@ async def ddl_call_back(bot, update):
             return False
 
     if os.path.exists(download_directory):
-        save_ytdl_json_path = f"{Config.DOWNLOAD_LOCATION}/{str(update.message.chat.id)}.json"
+        save_ytdl_json_path = (
+            f"{Config.DOWNLOAD_LOCATION}/{str(update.message.chat.id)}.json"
+        )
         download_location = f"{Config.DOWNLOAD_LOCATION}/{update.from_user.id}.jpg"
         thumb = download_location if os.path.isfile(download_location) else None
 
@@ -258,7 +262,9 @@ async def download_coroutine(bot, session, url, file_name, chat_id, message_id, 
                     percentage = downloaded * 100 / total_length
                     speed = downloaded / diff
                     elapsed_time = round(diff) * 1000
-                    time_to_completion = round((total_length - downloaded) / speed) * 1000
+                    time_to_completion = (
+                        round((total_length - downloaded) / speed) * 1000
+                    )
                     estimated_total_time = elapsed_time + time_to_completion
 
                     try:

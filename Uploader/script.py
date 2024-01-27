@@ -1,7 +1,7 @@
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
-class Translation():
+class Translation:
     START_TEXT = """
 Hi {}
 
