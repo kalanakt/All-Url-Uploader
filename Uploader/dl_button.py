@@ -1,11 +1,11 @@
 """Module for handling download callback and related functions"""
 
+import asyncio
+from datetime import datetime
+import logging
 import os
 import time
 import aiohttp
-import asyncio
-import logging
-from datetime import datetime
 from Uploader.functions.display_progress import (
     progress_for_pyrogram,
     humanbytes,
@@ -40,7 +40,7 @@ async def ddl_call_back(bot, update):
                 elif entity.type == "url":
                     o = entity.offset
                     length = entity.length
-                    youtube_dl_url = youtube_dl_url[o : o + length]
+                    youtube_dl_url = youtube_dl_url[o: o + length]
         if youtube_dl_url is not None:
             youtube_dl_url = youtube_dl_url.strip()
         if custom_file_name is not None:
@@ -52,7 +52,7 @@ async def ddl_call_back(bot, update):
             elif entity.type == "url":
                 o = entity.offset
                 length = entity.length
-                youtube_dl_url = youtube_dl_url[o : o + length]
+                youtube_dl_url = youtube_dl_url[o: o + length]
 
     description = custom_file_name
 
@@ -224,8 +224,8 @@ async def ddl_call_back(bot, update):
                 disable_web_page_preview=True,
             )
 
-            logger.info(f"Downloaded in: {str(time_taken_for_download)}")
-            logger.info(f"Uploaded in: {str(time_taken_for_upload)}")
+            logger.info("Downloaded in: %s", str(time_taken_for_download))
+            logger.info("Uploaded in: %s", str(time_taken_for_upload))
     else:
         await bot.edit_message_text(
             text=Translation.NO_VOID_FORMAT_FOUND.format("Incorrect Link"),
