@@ -34,14 +34,12 @@ bot = Client(
     api_hash=Config.API_HASH,
     bot_token=Config.BOT_TOKEN,
     workers=50,
-    plugins=dict(root="Uploader"),
+    plugins=dict(root="plugins"),
 )
 
 bot.start()
 logger.info("Bot has started.")
-logger.info(
-    f"**Bot Started**\n\n**Pyrogram Version:** `{__version__}`\n**Layer:** `{layer}`"
-)
+logger.info("**Bot Started**\n\n**Pyrogram Version:** %s \n**Layer:** %s", __version__, layer)
 logger.info("Developed by github.com/kalanakt Sponsored by www.netronk.com")
 idle()
 bot.stop()
