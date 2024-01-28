@@ -5,12 +5,11 @@ import time
 import shutil
 import asyncio
 from datetime import datetime
-
-from Uploader.functions.display_progress import humanbytes, progress_for_pyrogram
-from Uploader.functions.ran_text import random_char
-from Uploader.script import Translation
-from Uploader.utitles import Mdata01, Mdata02, Mdata03
 from config import Config
+from plugins.functions.display_progress import humanbytes, progress_for_pyrogram
+from plugins.functions.ran_text import random_char
+from plugins.script import Translation
+from plugins.utitles import Mdata01, Mdata02, Mdata03
 
 # Set up logging configuration
 logging.basicConfig(
@@ -65,7 +64,7 @@ async def youtube_dl_call_back(_bot, update):
                 elif entity.type == "url":
                     o = entity.offset
                     length = entity.length
-                    youtube_dl_url = youtube_dl_url[o : o + length]
+                    youtube_dl_url = youtube_dl_url[o: o + length]
 
         # Cleaning up inputs
         youtube_dl_url, custom_file_name, youtube_dl_username, youtube_dl_password = (
@@ -87,7 +86,7 @@ async def youtube_dl_call_back(_bot, update):
             elif entity.type == "url":
                 o = entity.offset
                 length = entity.length
-                youtube_dl_url = youtube_dl_url[o : o + length]
+                youtube_dl_url = youtube_dl_url[o: o + length]
 
     await update.message.edit_caption(
         caption=Translation.DOWNLOAD_START.format(custom_file_name)

@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-from Uploader.script import Translation
+from plugins.script import Translation
 
 
 @Client.on_message(

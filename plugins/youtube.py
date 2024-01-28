@@ -7,9 +7,7 @@ from pyrogram.types import Message
 from pyrogram import Client, filters
 
 from config import Config
-
-from Uploader.functions.help_ytdl import get_file_extension_from_url, get_resolution
-
+from plugins.functions.help_ytdl import get_file_extension_from_url, get_resolution
 YTDL_REGEX = r"^((?:https?:)?\/\/)"
 
 

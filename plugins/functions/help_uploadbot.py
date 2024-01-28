@@ -1,9 +1,9 @@
+import logging
 import os
 import time
 import requests
-import logging
 
-from Uploader.functions.display_progress import humanbytes
+from plugins.functions.display_progress import humanbytes
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -21,7 +21,7 @@ def DetectFileSize(url):
     Returns:
     int: Size of the file in bytes.
     """
-    r = requests.head(url, allow_redirects=True)
+    r = requests.head(url, allow_redirects=True, timeout=60)
     return int(r.headers.get("content-length", 0))
 
 

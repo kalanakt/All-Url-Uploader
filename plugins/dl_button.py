@@ -6,13 +6,13 @@ import logging
 import os
 import time
 import aiohttp
-from Uploader.functions.display_progress import (
+from plugins.functions.display_progress import (
     progress_for_pyrogram,
     humanbytes,
     TimeFormatter,
 )
-from Uploader.script import Translation
-from Uploader.utitles import Mdata01, Mdata02, Mdata03
+from plugins.script import Translation
+from plugins.utitles import Mdata01, Mdata02, Mdata03
 from config import Config
 
 logging.basicConfig(

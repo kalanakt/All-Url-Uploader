@@ -8,9 +8,9 @@ from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from config import Config
-from Uploader.script import Translation
-from Uploader.functions.ran_text import random_char
-from Uploader.functions.display_progress import humanbytes
+from plugins.script import Translation
+from plugins.functions.ran_text import random_char
+from plugins.functions.display_progress import humanbytes
 
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -58,7 +58,7 @@ async def echo(bot, update):
                 elif entity.type == "url":
                     o = entity.offset
                     length = entity.length
-                    url = url[o : o + length]
+                    url = url[o: o + length]
         if url is not None:
             url = url.strip()
         if file_name is not None:
@@ -77,7 +77,7 @@ async def echo(bot, update):
             elif entity.type == "url":
                 o = entity.offset
                 length = entity.length
-                url = url[o : o + length]
+                url = url[o: o + length]
     if Config.HTTP_PROXY != "":
         command_to_exec = [
             "yt-dlp",

@@ -2,9 +2,9 @@
 
 import logging
 from pyrogram import Client
-from Uploader.dl_button import ddl_call_back
-from Uploader.button import youtube_dl_call_back
-from Uploader.script import Translation
+from plugins.dl_button import ddl_call_back
+from plugins.button import youtube_dl_call_back
+from plugins.script import Translation
 
 # Set up logging configuration
 logging.basicConfig(
