@@ -150,6 +150,7 @@ python3 bot.py
     </tr>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Drago991"><img src="https://avatars.githubusercontent.com/u/69932259?v=4?s=100" width="100px;" alt="Damin.du"/><br /><sub><b>Damin.du</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=Drago991" title="Code">💻</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://t.me/sudodotsh"><img src="https://avatars.githubusercontent.com/u/84050503?v=4?s=100" width="100px;" alt="Avika Trivedi"/><br /><sub><b>Avika Trivedi</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=AvikaTrivedi" title="Code">💻</a></td>
     </tr>
   </tbody>
 </table>
