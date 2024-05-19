@@ -86,8 +86,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "AvikaTrivedi",
+      "name": "Avika Trivedi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/84050503?v=4",
+      "profile": "https://t.me/sudodotsh",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs"
 }
