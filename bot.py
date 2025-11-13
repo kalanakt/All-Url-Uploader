@@ -5,6 +5,7 @@ from datetime import datetime
 import re
 from pyrogram.raw.all import layer
 from pyrogram import Client, idle, __version__, filters
+from pyrogram.errors import SessionPasswordNeeded
 from config import Config
 from aiohttp import web
 
@@ -29,6 +30,9 @@ current_task = None
 
 user_link_input_state = {}  # Tracks users waiting for queue URLs input
 user_batch_state = {}  # Tracks users current batch state for /batch command
+
+user_sessions = {}  # user_id -> string_session
+user_clients = {}   # user_id -> Client instance (user client)
 
 
 async def handle(request):
@@ -56,7 +60,7 @@ async def process_next_task(bot: Client):
         try:
             logger.info(f"Starting task #{task_id}: {url}")
             await bot.send_message(user_id, f"Starting task #{task_id}: {url}")
-            # Simulate upload/download here - replace with your actual process logic
+            # TODO: Replace with your actual download/upload logic
             await asyncio.sleep(10)
             await bot.send_message(user_id, f"Finished task #{task_id}")
             logger.info(f"Finished task #{task_id}")
@@ -87,7 +91,6 @@ async def process_batch_download(client: Client, user_id: int, chat_id: int, sta
                 continue
 
             file_path = await client.download_media(msg)
-            # Example: send file back to user (customize as needed)
             await client.send_document(user_id, file_path)
             os.remove(file_path)
 
@@ -100,11 +103,17 @@ async def process_batch_download(client: Client, user_id: int, chat_id: int, sta
         remain = count - (completed + skipped)
         eta = f"{int(remain * (elapsed / completed))} seconds" if completed > 0 else "Unknown"
 
-        status_text = f"""📌 Batch download in progress:
-✅ Completed: {completed}
-⏭ Skipped: {skipped}
-📥 Remaining: {remain}
-⏳ ETA: {eta}"""
+        status_text = (
+            f"📌 Batch download in progress:
+"
+            f"✅ Completed: {completed}
+"
+            f"⏭ Skipped: {skipped}
+"
+            f"📥 Remaining: {remain}
+"
+            f"⏳ ETA: {eta}"
+        )
         try:
             await pinned_msg.edit(status_text)
         except Exception:
@@ -115,8 +124,11 @@ async def process_batch_download(client: Client, user_id: int, chat_id: int, sta
     except Exception:
         pass
 
-    await client.send_message(user_id, f"✅ Batch download completed.
-Total: {count}, Completed: {completed}, Skipped: {skipped}")
+    await client.send_message(
+        user_id,
+        f"✅ Batch download completed.
+Total: {count}, Completed: {completed}, Skipped: {skipped}"
+    )
 
 
 async def main():
@@ -129,13 +141,96 @@ async def main():
         plugins=dict(root="plugins"),
     )
 
-    # /batch command start
+
+    # LOGIN COMMAND
+    @bot.on_message(filters.command("login") & filters.private)
+    async def login_handler(client, message):
+        user_id = message.from_user.id
+        if user_id in user_clients:
+            await message.reply_text("You are already logged in.")
+            return
+
+        await message.reply_text("Send your phone number with country code (e.g., +123456789):")
+
+        try:
+            phone_msg = await bot.listen(message.chat.id, filters=filters.private, timeout=120)
+            phone_number = phone_msg.text.strip()
+
+            temp_client = Client(f"user_{user_id}_temp")
+
+            await temp_client.start(phone_number=phone_number)
+
+            await message.reply_text("Send the login code you received on Telegram:")
+
+            code_msg = await bot.listen(message.chat.id, timeout=120)
+            code = code_msg.text.strip()
+
+            try:
+                await temp_client.sign_in(phone_number, code)
+
+                if await temp_client.check_password():
+                    await message.reply_text("Send your 2FA password:")
+                    password_msg = await bot.listen(message.chat.id, timeout=120)
+                    password = password_msg.text.strip()
+                    await temp_client.check_password(password)
+
+                string_session = temp_client.export_session_string()
+                user_sessions[user_id] = string_session
+
+                user_clients[user_id] = Client(f"user_session_{user_id}", session_string=string_session)
+                await user_clients[user_id].start()
+
+                await message.reply_text("✅ Login successful!")
+
+            except SessionPasswordNeeded:
+                await message.reply_text("2FA required but not provided. Login failed.")
+
+            await temp_client.stop()
+
+        except asyncio.TimeoutError:
+            await message.reply_text("Login timed out. Please try again.")
+        except Exception as e:
+            await message.reply_text(f"An error occurred: {str(e)}")
+
+    # LOGOUT COMMAND
+    @bot.on_message(filters.command("logout") & filters.private)
+    async def logout_handler(client, message):
+        user_id = message.from_user.id
+        if user_id not in user_clients:
+            await message.reply_text("You are not logged in.")
+            return
+        await user_clients[user_id].stop()
+        user_clients.pop(user_id, None)
+        user_sessions.pop(user_id, None)
+        await message.reply_text("👋 You have been logged out successfully.")
+
+    # ACCESS WITH USER CLIENT EXAMPLE
+    @bot.on_message(filters.command("mygroups") & filters.private)
+    async def my_groups(client, message):
+        user_id = message.from_user.id
+        user_client = user_clients.get(user_id)
+        if not user_client:
+            await message.reply_text("You need to /login first to access private groups.")
+            return
+        dialogs = await user_client.get_dialogs()
+        groups = [
+            d.chat.title for d in dialogs if d.chat.type in ["group", "supergroup"]
+        ]
+        if not groups:
+            await message.reply_text("You have no accessible groups.")
+            return
+        await message.reply_text("Your groups:
+" + "
+".join(groups))
+
+
+    # /batch command start and handler (as in your previous code)...
+
     @bot.on_message(filters.command("batch") & filters.private)
     async def batch_start(client, message):
         user_batch_state[message.from_user.id] = {"step": "await_start_link"}
         await message.reply_text("🚀 Send me the starting Telegram message link from where you want to download.")
 
-    # Batch command multi-step handler
     @bot.on_message(filters.private)
     async def batch_handler(client, message):
         user_id = message.from_user.id
@@ -163,7 +258,6 @@ https://t.me/c/2793359066/2/48"
                 }
             )
             await message.reply_text("📥 How many files do you want to download? (max 10000)")
-
             return
 
         if state["step"] == "await_count":
@@ -190,7 +284,7 @@ https://t.me/c/2793359066/2/48"
             )
             user_batch_state.pop(user_id, None)
 
-    # /queue command start for collecting multiple URLs
+    # /queue command
     @bot.on_message(filters.command("queue") & filters.private)
     async def queue_command_handler(client, message):
         user_link_input_state[message.from_user.id] = True
@@ -198,7 +292,7 @@ https://t.me/c/2793359066/2/48"
             "📥 Send me one or more URLs separated by spaces or new lines."
         )
 
-    # Collect URLs after /queue and put into task queue
+    # Collect links for /queue
     @bot.on_message(filters.private)
     async def collect_links_handler(client, message):
         user_id = message.from_user.id
@@ -255,6 +349,9 @@ https://t.me/c/2793359066/2/48"
 📋 /queue - Add multiple URLs to queue (bot will ask for input)
 ⏭ /skip - Skip the current running task
 🚀 /batch - Start batch sequential download from a Telegram link
+🔐 /login - Login to access private groups
+🔓 /logout - Logout of user session
+📂 /mygroups - List your accessible groups
 🏓 /ping - Check bot status and uptime
 ❓ /help - Show this help message
 """
