@@ -140,10 +140,10 @@ async def main():
 @bot.on_message(filters.command("start") & filters.private)
 async def start_handler(client, message):
     await message.reply_text(
-        "👋 Hello! I am your file uploader bot.
-"
+        "👋 Hello! I am your file uploader bot.\n"
         "Use /help to see available commands."
     )
+
     # LOGIN COMMAND
     @bot.on_message(filters.command("login") & filters.private)
     async def login_handler(client, message):
