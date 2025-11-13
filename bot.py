@@ -27,6 +27,13 @@ if not Config.API_HASH:
     logger.error("Please set API_HASH in config.py or as env var")
     quit(1)
 
+
+# Queue to hold tasks: (task_id, url, user_id)
+task_queue = asyncio.Queue()
+
+# Current running task info
+current_task = None
+
 async def handle(request):
     return web.Response(text="Bot is running")
 
@@ -40,6 +47,28 @@ async def run_webserver():
     await site.start()
     logger.info(f"HTTP server running on port {port}")
 
+
+async def process_next_task(bot: Client):
+    global current_task
+    if current_task is not None:
+        return  # Task is already running
+
+    while not task_queue.empty():
+        current_task = await task_queue.get()
+        task_id, url, user_id = current_task
+        try:
+            logger.info(f"Starting task #{task_id}: {url}")
+            await bot.send_message(user_id, f"Starting task #{task_id}: {url}")
+            # Simulate task processing, replace with upload logic
+            await asyncio.sleep(10)
+            await bot.send_message(user_id, f"Finished task #{task_id}")
+            logger.info(f"Finished task #{task_id}")
+        except Exception as e:
+            await bot.send_message(user_id, f"Error in task #{task_id}: {str(e)}")
+            logger.error(f"Error in task #{task_id}: {str(e)}")
+        current_task = None
+
+
 async def main():
     bot = Client(
         "All-Url-Uploader",
@@ -49,17 +78,50 @@ async def main():
         workers=50,
         plugins=dict(root="plugins"),
     )
+
+    # Add command handlers for queue commands here or better inside plugins
+    @bot.on_message(filters.command("addtotask") & filters.private)
+    async def addtotask_handler(client, message):
+        if len(message.command) < 2:
+            await message.reply_text("Usage: /addtotask <url>")
+            return
+        url = message.command[1]
+        task_id = task_queue.qsize() + 1
+        user_id = message.from_user.id
+        await task_queue.put((task_id, url, user_id))
+        await message.reply_text(f"Task #{task_id} added to queue.")
+        await process_next_task(bot)
+
+    @bot.on_message(filters.command("queue") & filters.private)
+    async def show_queue_handler(client, message):
+        if task_queue.empty():
+            await message.reply_text("The task queue is empty.")
+            return
+        tasks = list(task_queue._queue)
+        text = "Current task queue:\n" + "\n".join(f"#{t[0]}: {t[1]}" for t in tasks)
+        await message.reply_text(text)
+
+    @bot.on_message(filters.command("skip") & filters.private)
+    async def skip_task_handler(client, message):
+        global current_task
+        if current_task is None:
+            await message.reply_text("No task is currently running.")
+            return
+        await message.reply_text(f"Skipping task #{current_task[0]}")
+        current_task = None
+        await process_next_task(bot)
+
     await bot.start()
     logger.info("Bot has started.")
     logger.info("**Bot Started**\n\n**Pyrogram Version:** %s \n**Layer:** %s", __version__, layer)
     logger.info("Developed by github.com/kalanakt Sponsored by www.netronk.com")
 
-    # Run HTTP server and bot idle concurrently
-    await run_webserver()
-    await idle()
+    # Run webserver and keep bot idle concurrently
+    await asyncio.gather(run_webserver(), idle())
 
     await bot.stop()
     logger.info("Bot Stopped ;)")
+
 
 if __name__ == "__main__":
     asyncio.run(main())
