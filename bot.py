@@ -3,6 +3,8 @@ import logging
 import asyncio
 from pyrogram.raw.all import layer
 from pyrogram import Client, idle, __version__
+from pyrogram import filters
+
 from config import Config
 from aiohttp import web
 
