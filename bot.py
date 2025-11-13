@@ -135,7 +135,15 @@ async def main():
         workers=50,
         plugins=dict(root="plugins"),
     )
+# START COMMAND 
 
+@bot.on_message(filters.command("start") & filters.private)
+async def start_handler(client, message):
+    await message.reply_text(
+        "👋 Hello! I am your file uploader bot.
+"
+        "Use /help to see available commands."
+    )
     # LOGIN COMMAND
     @bot.on_message(filters.command("login") & filters.private)
     async def login_handler(client, message):
