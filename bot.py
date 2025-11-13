@@ -104,16 +104,12 @@ async def process_batch_download(client: Client, user_id: int, chat_id: int, sta
         eta = f"{int(remain * (elapsed / completed))} seconds" if completed > 0 else "Unknown"
 
         status_text = (
-            f"📌 Batch download in progress:
-"
-            f"✅ Completed: {completed}
-"
-            f"⏭ Skipped: {skipped}
-"
-            f"📥 Remaining: {remain}
-"
-            f"⏳ ETA: {eta}"
-        )
+    f"📌 Batch download in progress:\n"
+    f"✅ Completed: {completed}\n"
+    f"⏭ Skipped: {skipped}\n"
+    f"📥 Remaining: {remain}\n"
+    f"⏳ ETA: {eta}"
+)
         try:
             await pinned_msg.edit(status_text)
         except Exception:
