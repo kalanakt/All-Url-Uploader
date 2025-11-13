@@ -101,7 +101,7 @@ async def process_batch_download(client: Client, user_id: int, chat_id: int, sta
         eta = f"{int(remain * (elapsed / completed))} seconds" if completed > 0 else "Unknown"
 
         status_text = (
-            f"📌 Batch download in progress:
+            f"Batch download in progress:
 "
             f"✅ Completed: {completed}
 "
