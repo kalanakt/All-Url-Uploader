@@ -104,12 +104,12 @@ async def process_batch_download(client: Client, user_id: int, chat_id: int, sta
         eta = f"{int(remain * (elapsed / completed))} seconds" if completed > 0 else "Unknown"
 
         status_text = (
-    f"📌 Batch download in progress:\n"
-    f"✅ Completed: {completed}\n"
-    f"⏭ Skipped: {skipped}\n"
-    f"📥 Remaining: {remain}\n"
-    f"⏳ ETA: {eta}"
-)
+            f"📌 Batch download in progress:\n"
+            f"✅ Completed: {completed}\n"
+            f"⏭ Skipped: {skipped}\n"
+            f"📥 Remaining: {remain}\n"
+            f"⏳ ETA: {eta}"
+        )
         try:
             await pinned_msg.edit(status_text)
         except Exception:
@@ -122,8 +122,7 @@ async def process_batch_download(client: Client, user_id: int, chat_id: int, sta
 
     await client.send_message(
         user_id,
-        f"✅ Batch download completed.
-Total: {count}, Completed: {completed}, Skipped: {skipped}"
+        f"✅ Batch download completed.\nTotal: {count}, Completed: {completed}, Skipped: {skipped}"
     )
 
 
@@ -136,7 +135,6 @@ async def main():
         workers=50,
         plugins=dict(root="plugins"),
     )
-
 
     # LOGIN COMMAND
     @bot.on_message(filters.command("login") & filters.private)
@@ -209,18 +207,13 @@ async def main():
             await message.reply_text("You need to /login first to access private groups.")
             return
         dialogs = await user_client.get_dialogs()
-        groups = [
-            d.chat.title for d in dialogs if d.chat.type in ["group", "supergroup"]
-        ]
+        groups = [d.chat.title for d in dialogs if d.chat.type in ["group", "supergroup"]]
         if not groups:
             await message.reply_text("You have no accessible groups.")
             return
-        await message.reply_text("Your groups:
-" + "
-".join(groups))
+        await message.reply_text("Your groups:\n" + "\n".join(groups))
 
-
-    # /batch command start and handler (as in your previous code)...
+    # /batch command start and handler
 
     @bot.on_message(filters.command("batch") & filters.private)
     async def batch_start(client, message):
@@ -236,22 +229,17 @@ async def main():
 
         if state["step"] == "await_start_link":
             text = message.text.strip()
-            m = re.match(r"https://t.me/c/(d+)/d+/(d+)", text)
+            m = re.match(r"https://t.me/c/(\d+)/(\d+)", text)
             if not m:
                 await message.reply_text(
-                    "⚠️ Invalid link format. Please send a link like:
-https://t.me/c/2793359066/2/48"
+                    "⚠️ Invalid link format. Please send a link like:\nhttps://t.me/c/2793359066/48"
                 )
                 return
 
             chat_id = int("-100" + m.group(1))
             start_msg_id = int(m.group(2))
             user_batch_state[user_id].update(
-                {
-                    "chat_id": chat_id,
-                    "start_msg_id": start_msg_id,
-                    "step": "await_count",
-                }
+                {"chat_id": chat_id, "start_msg_id": start_msg_id, "step": "await_count"}
             )
             await message.reply_text("📥 How many files do you want to download? (max 10000)")
             return
@@ -284,9 +272,7 @@ https://t.me/c/2793359066/2/48"
     @bot.on_message(filters.command("queue") & filters.private)
     async def queue_command_handler(client, message):
         user_link_input_state[message.from_user.id] = True
-        await message.reply_text(
-            "📥 Send me one or more URLs separated by spaces or new lines."
-        )
+        await message.reply_text("📥 Send me one or more URLs separated by spaces or new lines.")
 
     # Collect links for /queue
     @bot.on_message(filters.private)
@@ -334,34 +320,26 @@ https://t.me/c/2793359066/2/48"
         uptime = datetime.utcnow() - start_time
         hours, remainder = divmod(int(uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
-        await message.reply_text(f"""🤖 Bot is running.
-🕒 Uptime: {hours}h {minutes}m {seconds}s""")
+        await message.reply_text(f"🤖 Bot is running.\n🕒 Uptime: {hours}h {minutes}m {seconds}s")
 
     @bot.on_message(filters.command("help") & filters.private)
     async def help_handler(client, message):
-        help_text = """🤖 **Bot Command List:**
-
-➕ /addtotask <url> - Add a new upload task
-📋 /queue - Add multiple URLs to queue (bot will ask for input)
-⏭ /skip - Skip the current running task
-🚀 /batch - Start batch sequential download from a Telegram link
-🔐 /login - Login to access private groups
-🔓 /logout - Logout of user session
-📂 /mygroups - List your accessible groups
-🏓 /ping - Check bot status and uptime
-❓ /help - Show this help message
-"""
+        help_text = (
+            "🤖 **Bot Command List:**\n\n"
+            "➕ /addtotask <url> - Add a new upload task\n"
+            "📋 /queue - Add multiple URLs to queue (bot will ask for input)\n"
+            "⏭ /skip - Skip the current running task\n"
+            "🚀 /batch - Start batch sequential download from a Telegram link\n"
+            "🔐 /login - Login to access private groups\n"
+            "🔓 /logout - Logout of user session\n"
+            "📂 /mygroups - List your accessible groups\n"
+            "🏓 /ping - Check bot status and uptime\n"
+            "❓ /help - Show this help message"
+        )
         await message.reply_text(help_text)
 
     await bot.start()
-    logger.info(
-        "**Bot Started**
-
-**Pyrogram Version:** %s 
-**Layer:** %s",
-        __version__,
-        layer,
-    )
+    logger.info(f"**Bot Started**\n\n**Pyrogram Version:** {__version__}\n**Layer:** {layer}")
     logger.info("Developed by github.com/kalanakt Sponsored by www.netronk.com")
 
     await asyncio.gather(run_webserver(), idle())
