@@ -2,13 +2,15 @@ import os
 import logging
 import asyncio
 from datetime import datetime
+import re
 from pyrogram.raw.all import layer
 from pyrogram import Client, idle, __version__, filters
 from config import Config
 from aiohttp import web
 
 logging.basicConfig(
-    level=logging.DEBUG, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
@@ -16,26 +18,22 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 if not os.path.isdir(Config.DOWNLOAD_LOCATION):
     os.makedirs(Config.DOWNLOAD_LOCATION)
 
-if not Config.BOT_TOKEN:
-    logger.error("Please set BOT_TOKEN in config.py or as env var")
-    quit(1)
-
-if not Config.API_ID:
-    logger.error("Please set API_ID in config.py or as env var")
-    quit(1)
-
-if not Config.API_HASH:
-    logger.error("Please set API_HASH in config.py or as env var")
+if not Config.BOT_TOKEN or not Config.API_ID or not Config.API_HASH:
+    logger.error("Please set BOT_TOKEN, API_ID and API_HASH in config.py or as env vars")
     quit(1)
 
 start_time = datetime.utcnow()
+
 task_queue = asyncio.Queue()
 current_task = None
 
-user_link_input_state = {}
+user_link_input_state = {}  # Tracks users waiting for queue URLs input
+user_batch_state = {}  # Tracks users current batch state for /batch command
+
 
 async def handle(request):
     return web.Response(text="Bot is running")
+
 
 async def run_webserver():
     app = web.Application()
@@ -47,6 +45,7 @@ async def run_webserver():
     await site.start()
     logger.info(f"HTTP server running on port {port}")
 
+
 async def process_next_task(bot: Client):
     global current_task
     if current_task is not None:
@@ -57,7 +56,7 @@ async def process_next_task(bot: Client):
         try:
             logger.info(f"Starting task #{task_id}: {url}")
             await bot.send_message(user_id, f"Starting task #{task_id}: {url}")
-            # Replace sleep with your actual download/upload logic
+            # Simulate upload/download here - replace with your actual process logic
             await asyncio.sleep(10)
             await bot.send_message(user_id, f"Finished task #{task_id}")
             logger.info(f"Finished task #{task_id}")
@@ -65,6 +64,66 @@ async def process_next_task(bot: Client):
             await bot.send_message(user_id, f"Error in task #{task_id}: {str(e)}")
             logger.error(f"Error in task #{task_id}: {str(e)}")
         current_task = None
+
+
+async def process_batch_download(client: Client, user_id: int, chat_id: int, start_msg_id: int, count: int):
+    pinned_msg = await client.send_message(user_id, f"📌 Batch download started: 0 / {count}")
+
+    try:
+        await pinned_msg.pin()
+    except Exception as e:
+        logger.warning(f"Could not pin message: {e}")
+
+    completed = 0
+    skipped = 0
+    start_time_batch = datetime.utcnow()
+
+    for offset in range(count):
+        msg_id = start_msg_id + offset
+        try:
+            msg = await client.get_messages(chat_id, msg_id)
+            if not msg or not msg.media:
+                skipped += 1
+                continue
+
+            file_path = await client.download_media(msg)
+            # Example: send file back to user (customize as needed)
+            await client.send_document(user_id, file_path)
+            os.remove(file_path)
+
+            completed += 1
+        except Exception as e:
+            skipped += 1
+            logger.error(f"Error processing message {msg_id}: {e}")
+
+        elapsed = (datetime.utcnow() - start_time_batch).total_seconds()
+        remain = count - (completed + skipped)
+        eta = f"{int(remain * (elapsed / completed))} seconds" if completed > 0 else "Unknown"
+
+        status_text = (
+            f"📌 Batch download in progress:
+"
+            f"✅ Completed: {completed}
+"
+            f"⏭ Skipped: {skipped}
+"
+            f"📥 Remaining: {remain}
+"
+            f"⏳ ETA: {eta}"
+        )
+        try:
+            await pinned_msg.edit(status_text)
+        except Exception:
+            pass
+
+    try:
+        await pinned_msg.unpin()
+    except Exception:
+        pass
+
+    await client.send_message(user_id, f"✅ Batch download completed.
+Total: {count}, Completed: {completed}, Skipped: {skipped}")
+
 
 async def main():
     bot = Client(
@@ -75,6 +134,94 @@ async def main():
         workers=50,
         plugins=dict(root="plugins"),
     )
+
+    # /batch command start
+    @bot.on_message(filters.command("batch") & filters.private)
+    async def batch_start(client, message):
+        user_batch_state[message.from_user.id] = {"step": "await_start_link"}
+        await message.reply_text("🚀 Send me the starting Telegram message link from where you want to download.")
+
+    # Batch command multi-step handler
+    @bot.on_message(filters.private)
+    async def batch_handler(client, message):
+        user_id = message.from_user.id
+        state = user_batch_state.get(user_id)
+        if not state:
+            return
+
+        if state["step"] == "await_start_link":
+            text = message.text.strip()
+            m = re.match(r"https://t.me/c/(d+)/d+/(d+)", text)
+            if not m:
+                await message.reply_text(
+                    "⚠️ Invalid link format. Please send a link like:
+https://t.me/c/2793359066/2/48"
+                )
+                return
+
+            chat_id = int("-100" + m.group(1))
+            start_msg_id = int(m.group(2))
+            user_batch_state[user_id].update(
+                {
+                    "chat_id": chat_id,
+                    "start_msg_id": start_msg_id,
+                    "step": "await_count",
+                }
+            )
+            await message.reply_text("📥 How many files do you want to download? (max 10000)")
+
+            return
+
+        if state["step"] == "await_count":
+            try:
+                count = int(message.text.strip())
+                if count < 1 or count > 10000:
+                    raise ValueError()
+            except ValueError:
+                await message.reply_text("⚠️ Please send a valid number between 1 and 10000.")
+                return
+
+            user_batch_state[user_id]["count"] = count
+            user_batch_state[user_id]["step"] = "downloading"
+
+            await message.reply_text(f"⏳ Starting batch download of {count} files...")
+            asyncio.create_task(
+                process_batch_download(
+                    client,
+                    user_id,
+                    user_batch_state[user_id]["chat_id"],
+                    user_batch_state[user_id]["start_msg_id"],
+                    user_batch_state[user_id]["count"],
+                )
+            )
+            user_batch_state.pop(user_id, None)
+
+    # /queue command start for collecting multiple URLs
+    @bot.on_message(filters.command("queue") & filters.private)
+    async def queue_command_handler(client, message):
+        user_link_input_state[message.from_user.id] = True
+        await message.reply_text(
+            "📥 Send me one or more URLs separated by spaces or new lines."
+        )
+
+    # Collect URLs after /queue and put into task queue
+    @bot.on_message(filters.private)
+    async def collect_links_handler(client, message):
+        user_id = message.from_user.id
+        if user_link_input_state.get(user_id):
+            text = message.text.strip()
+            links = [link.strip() for link in text.split() if link.strip()]
+            if not links:
+                await message.reply_text("No valid links detected. Please send at least one link.")
+                return
+
+            count = len(links)
+            user_link_input_state[user_id] = False
+
+            for idx, url in enumerate(links, start=task_queue.qsize() + 1):
+                await task_queue.put((idx, url, user_id))
+            await message.reply_text(f"✅ Added {count} link(s) to the queue.")
+            await process_next_task(bot)
 
     @bot.on_message(filters.command("addtotask") & filters.private)
     async def addtotask_handler(client, message):
@@ -87,33 +234,6 @@ async def main():
         await task_queue.put((task_id, url, user_id))
         await message.reply_text(f"Task #{task_id} added to queue.")
         await process_next_task(bot)
-
-    # Modified /queue command to trigger link input state
-    @bot.on_message(filters.command("queue") & filters.private)
-    async def queue_command_handler(client, message):
-        user_id = message.from_user.id
-        user_link_input_state[user_id] = True
-        await message.reply_text("Send me one or more links separated by spaces or new lines.")
-
-    # Handler to collect multiple links after /queue command
-    @bot.on_message(filters.private)
-    async def collect_links_handler(client, message):
-        user_id = message.from_user.id
-        if user_link_input_state.get(user_id):
-            text = message.text.strip()
-            # Split by any whitespace to get links
-            links = [link.strip() for link in text.split() if link.strip()]
-            if not links:
-                await message.reply_text("No valid links detected. Please send at least one link.")
-                return
-            
-            count = len(links)
-            user_link_input_state[user_id] = False  # Reset state after input
-
-            for idx, url in enumerate(links, start=task_queue.qsize() + 1):
-                await task_queue.put((idx, url, user_id))
-            await message.reply_text(f"Added {count} link(s) to the queue.")
-            await process_next_task(bot)
 
     @bot.on_message(filters.command("skip") & filters.private)
     async def skip_task_handler(client, message):
@@ -135,29 +255,26 @@ async def main():
 
     @bot.on_message(filters.command("help") & filters.private)
     async def help_handler(client, message):
-        help_text = (
-            "🤖 **Bot Command List:**
+        help_text = """🤖 **Bot Command List:**
 
-"
-            "➕ /addtotask `<url>` - Add a new upload task
-"
-            "📋 /queue - Add multiple URLs to queue (bot will ask for input)
-"
-            "⏭ /skip - Skip the current running task
-"
-            "🏓 /ping - Check bot status and uptime
-"
-            "❓ /help - Show this help message
-"
-        )
+➕ /addtotask <url> - Add a new upload task
+📋 /queue - Add multiple URLs to queue (bot will ask for input)
+⏭ /skip - Skip the current running task
+🚀 /batch - Start batch sequential download from a Telegram link
+🏓 /ping - Check bot status and uptime
+❓ /help - Show this help message
+"""
         await message.reply_text(help_text)
 
     await bot.start()
-    logger.info("Bot has started.")
-    logger.info("**Bot Started**
+    logger.info(
+        "**Bot Started**
 
 **Pyrogram Version:** %s 
-**Layer:** %s", __version__, layer)
+**Layer:** %s",
+        __version__,
+        layer,
+    )
     logger.info("Developed by github.com/kalanakt Sponsored by www.netronk.com")
 
     await asyncio.gather(run_webserver(), idle())
