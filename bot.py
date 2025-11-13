@@ -130,8 +130,8 @@ async def main():
         uptime = datetime.utcnow() - start_time
         hours, remainder = divmod(int(uptime.total_seconds()), 3600)
         minutes, seconds = divmod(remainder, 60)
-        await message.reply_text(f"🤖 Bot is running.
-🕒 Uptime: {hours}h {minutes}m {seconds}s")
+        await message.reply_text(f"""🤖 Bot is running.
+🕒 Uptime: {hours}h {minutes}m {seconds}s""")
 
     @bot.on_message(filters.command("help") & filters.private)
     async def help_handler(client, message):
