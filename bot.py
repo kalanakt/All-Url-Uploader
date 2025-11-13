@@ -6,16 +6,18 @@ from pyrogram import Client, idle, __version__
 from config import Config
 from aiohttp import web
 
+# ---------------- Logging ----------------
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    level=logging.INFO,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
-# Ensure download directory exists
-os.makedirs(Config.DOWNLOAD_LOCATION, exist_ok=True)
+# ---------------- Config Checks ----------------
+if not os.path.isdir(Config.DOWNLOAD_LOCATION):
+    os.makedirs(Config.DOWNLOAD_LOCATION)
 
-# Validate env vars
 for var, name in [
     (Config.BOT_TOKEN, "BOT_TOKEN"),
     (Config.API_ID, "API_ID"),
@@ -25,21 +27,21 @@ for var, name in [
         logger.error(f"Please set {name} in config.py or as env var")
         quit(1)
 
-# --- Web Server ---
+# ---------------- Web Server ----------------
 async def handle(request):
-    return web.Response(text="Bot is running ✅")
+    return web.Response(text="✅ Bot is running!")
 
 async def run_webserver():
     app = web.Application()
     app.router.add_get('/', handle)
-    port = int(os.environ.get("PORT", 8080))
+    port = int(os.environ.get("PORT", 8080))  # Default 8080
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, '0.0.0.0', port)
     await site.start()
-    logger.info(f"🌐 Web server running on port {port}")
+    logger.info(f"🌐 HTTP server running on port {port}")
 
-# --- Main Bot ---
+# ---------------- Main Logic ----------------
 async def main():
     bot = Client(
         "All-Url-Uploader",
@@ -52,14 +54,19 @@ async def main():
 
     await bot.start()
     logger.info("🤖 Bot started successfully!")
-    logger.info(f"Pyrogram v{__version__} | Layer {layer}")
+    logger.info("**Bot Started**\n\n**Pyrogram Version:** %s \n**Layer:** %s", __version__, layer)
+    logger.info("Developed by github.com/kalanakt | Sponsored by www.netronk.com")
 
-    # Run webserver in the background
+    # Run HTTP server in the background (non-blocking)
     asyncio.create_task(run_webserver())
 
+    # Keep the bot running
     await idle()
-    await bot.stop()
-    logger.info("Bot stopped gracefully.")
 
+    # Stop bot on exit
+    await bot.stop()
+    logger.info("Bot stopped gracefully. 👋")
+
+# ---------------- Entry Point ----------------
 if __name__ == "__main__":
     asyncio.run(main())
