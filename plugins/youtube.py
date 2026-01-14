@@ -16,10 +16,12 @@ async def callback_query_ytdl_audio(_, callback_query):
     try:
         url = callback_query.message.reply_to_message.text
         ydl_opts = {
-            "format": "bestaudio",
-            "outtmpl": "%(title)s - %(extractor)s-%(id)s.%(ext)s",
-            "writethumbnail": True,
-        }
+    "format": "bestaudio",  # or "best[ext=mp4]" for video
+    "outtmpl": f"{Config.DOWNLOAD_LOCATION}/%(title)s - %(extractor)s-%(id)s.%(ext)s",
+    "writethumbnail": True,
+}
+
+
         with YoutubeDL(ydl_opts) as ydl:
             message = callback_query.message
             await message.reply_chat_action(enums.ChatAction.TYPING)
