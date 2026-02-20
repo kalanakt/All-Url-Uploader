@@ -9,6 +9,6 @@ loggers
 yt-dlp
 wget
 youtube_dl
-Flask==2.3.2
+Flask==3.1.3
 gunicorn==22.0.0
 sent
