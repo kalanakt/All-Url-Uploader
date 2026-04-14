@@ -115,4 +115,82 @@ cd docs && npm run build
 ```
 
 <!-- readme: contributors -start -->
+<table>
+	<tbody>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/kalanakt">
+                    <img src="https://avatars.githubusercontent.com/u/86665964?v=4" width="100;" alt="kalanakt"/>
+                    <br />
+                    <sub><b>kalana kt</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/tromcho">
+                    <img src="https://avatars.githubusercontent.com/u/113139586?v=4" width="100;" alt="tromcho"/>
+                    <br />
+                    <sub><b>tromcho</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/fzsouser">
+                    <img src="https://avatars.githubusercontent.com/u/108298343?v=4" width="100;" alt="fzsouser"/>
+                    <br />
+                    <sub><b>Fzso</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/hybridvamp">
+                    <img src="https://avatars.githubusercontent.com/u/48980248?v=4" width="100;" alt="hybridvamp"/>
+                    <br />
+                    <sub><b>HYBRID</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/Divarion-D">
+                    <img src="https://avatars.githubusercontent.com/u/42798043?v=4" width="100;" alt="Divarion-D"/>
+                    <br />
+                    <sub><b>Danil</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/AvikaTrivedi">
+                    <img src="https://avatars.githubusercontent.com/u/84050503?v=4" width="100;" alt="AvikaTrivedi"/>
+                    <br />
+                    <sub><b>Avika Trivedi</b></sub>
+                </a>
+            </td>
+		</tr>
+		<tr>
+            <td align="center">
+                <a href="https://github.com/libresoul">
+                    <img src="https://avatars.githubusercontent.com/u/69932259?v=4" width="100;" alt="libresoul"/>
+                    <br />
+                    <sub><b>Damindu Dhananjitha</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/ImgBotApp">
+                    <img src="https://avatars.githubusercontent.com/u/31427850?v=4" width="100;" alt="ImgBotApp"/>
+                    <br />
+                    <sub><b>Imgbot</b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/satyanandatripathi">
+                    <img src="https://avatars.githubusercontent.com/u/83153745?v=4" width="100;" alt="satyanandatripathi"/>
+                    <br />
+                    <sub><b>Parthiv Katapara </b></sub>
+                </a>
+            </td>
+            <td align="center">
+                <a href="https://github.com/IndrajeethY">
+                    <img src="https://avatars.githubusercontent.com/u/79161058?v=4" width="100;" alt="IndrajeethY"/>
+                    <br />
+                    <sub><b>Indrajeeth</b></sub>
+                </a>
+            </td>
+		</tr>
+	<tbody>
+</table>
 <!-- readme: contributors -end -->
