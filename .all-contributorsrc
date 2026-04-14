@@ -11,5 +11,20 @@
   "commitConvention": "angular",
   "contributorsPerLine": 7,
   "skipCi": true,
-  "commitType": "docs"
+  "commitType": "docs",
+  "contributors": [
+    {
+      "login": "kalanakt",
+      "name": "kalana kt",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86665964?v=4",
+      "profile": "http://telegraph.us.com",
+      "contributions": [
+        "code",
+        "ideas",
+        "infra",
+        "maintenance",
+        "test"
+      ]
+    }
+  ]
 }
