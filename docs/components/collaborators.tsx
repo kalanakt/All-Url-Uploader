@@ -1,55 +1,64 @@
-// Example from https://beta.reactjs.org/learn
-
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react'
 import styles from './collaborators.module.css'
 
+type Collaborator = {
+  html_url: string
+  login: string
+  avatar_url: string
+}
+
 function Collaborators() {
-  const [books, setBooks] = useState(null);
+  const [collaborators, setCollaborators] = useState<Collaborator[] | null>(null)
 
   useEffect(() => {
-    getData();
-
     async function getData() {
       try {
         const response = await fetch(
-          "https://api.github.com/repos/kalanakt/All-Url-Uploader/contributors"
-        );
-        const data = await response.json();
-  
-        setBooks(data);      
+          'https://api.github.com/repos/kalanakt/All-Url-Uploader/contributors'
+        )
+        const data = (await response.json()) as Collaborator[]
+        setCollaborators(data)
       } catch (error) {
-        console.log(error);       
+        console.error(error)
+        setCollaborators([])
       }
     }
-  }, []);
+
+    void getData()
+  }, [])
+
+  if (collaborators === null) {
+    return <span>Loading contributors...</span>
+  }
+
+  if (collaborators.length === 0) {
+    return <span>No contributor data is available right now.</span>
+  }
+
   return (
     <div className={styles.container}>
-      {books? (
-        <div className={styles.avatars}>
-          {books.map((book: {
-            [x: string]: any; commit: { message: string; author: { date: string; };  verification: { verified: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; }; }; html_url: string; comments_url: string; author: {
-            [x: string]: string; login: string; avatar_url: string; 
-}; }, index: React.Key) => {
-            return (
-                  <div className={styles.avatars__item}>
-                      <a href={book.html_url} target="_blank">
-                        <img className={styles.avatars__image} src={book.avatar_url} alt={book.login} width={40} height={40} />
-                      </a>
-                  </div>
-            );
-          })}
-          <a href="https://github.com/kalanakt/All-Url-Uploader" target="_blank"><div className={styles.more}>+</div></a>
-        </div>
-      ) :
-      (
-        <div>
-          <span>404 Page Not Found.</span>
-        </div>
-      )}
+      <div className={styles.avatars}>
+        {collaborators.map((collaborator) => (
+          <div key={collaborator.login} className={styles.avatars__item}>
+            <a href={collaborator.html_url} target="_blank" rel="noreferrer">
+              <img
+                className={styles.avatars__image}
+                src={collaborator.avatar_url}
+                alt={collaborator.login}
+                width={40}
+                height={40}
+              />
+            </a>
+          </div>
+        ))}
+        <a href="https://github.com/kalanakt/All-Url-Uploader" target="_blank" rel="noreferrer">
+          <div className={styles.more}>+</div>
+        </a>
+      </div>
     </div>
   )
 }
 
-export default function MyApp() {
+export default function CollaboratorsWidget() {
   return <Collaborators />
 }

@@ -1,28 +1,33 @@
-// Example from https://beta.reactjs.org/learn
-
-import { useState } from 'react'
 import styles from './extratox.module.css'
 
 function ExtraTox() {
   return (
-    <>
     <div className={styles.container}>
-      <span className={styles.h}>Sponsors</span>
+      <span className={styles.h}>Project Links</span>
       <div className={styles.sponsors}>
         <div className={styles.bg}>
-          <a href="https://t.me/TMWAD" className={styles.text}>
-            <img src='./tmwad.png' alt='TMWAD IMG' width={200} height={50}/>
+          <a
+            href="https://github.com/kalanakt/All-Url-Uploader"
+            className={styles.text}
+            target="_blank"
+            rel="noreferrer"
+          >
+            Repository
           </a>
         </div>
       </div>
-    <div className={styles.bgt}>
-      <a href="https://www.buymeacoffee.com/kalanakt" className={styles.text}>
-        Become Sponsor +
-      </a>
+      <div className={styles.bgt}>
+        <a
+          href="https://github.com/kalanakt/All-Url-Uploader/discussions"
+          className={styles.text}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Discussions
+        </a>
+      </div>
     </div>
-    </div>
-    </>
   )
 }
 
-export default ExtraTox;
+export default ExtraTox

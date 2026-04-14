@@ -1,55 +1,62 @@
-// Example from https://beta.reactjs.org/learn
-
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react'
 import styles from './followers.module.css'
 
+type Follower = {
+  html_url: string
+  login: string
+  avatar_url: string
+}
+
 function Followers() {
-  const [books, setBooks] = useState(null);
+  const [followers, setFollowers] = useState<Follower[] | null>(null)
 
   useEffect(() => {
-    getData();
-
     async function getData() {
       try {
-        const response = await fetch(
-          "https://api.github.com/users/kalanakt/followers"
-        );
-        const data = await response.json();
-  
-        setBooks(data);      
+        const response = await fetch('https://api.github.com/users/kalanakt/followers')
+        const data = (await response.json()) as Follower[]
+        setFollowers(data)
       } catch (error) {
-        console.log(error);       
+        console.error(error)
+        setFollowers([])
       }
     }
-  }, []);
+
+    void getData()
+  }, [])
+
+  if (followers === null) {
+    return <span>Loading followers...</span>
+  }
+
+  if (followers.length === 0) {
+    return <span>No follower data is available right now.</span>
+  }
+
   return (
     <div className={styles.container}>
-      {books ? (
-        <div className={styles.avatars}>
-          {books.map((book: {
-            [x: string]: any; commit: { message: string; author: { date: string; };  verification: { verified: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | React.ReactFragment | React.ReactPortal; }; }; html_url: string; comments_url: string; author: {
-            [x: string]: string; login: string; avatar_url: string; 
-}; }, index: React.Key) => {
-            return (
-                  <div className={styles.avatars__item}>
-                  <a href={book.html_url} target="_blank">
-                      <img className={styles.avatars__image} src={book.avatar_url} alt={book.login} width={40} height={40} />
-                  </a>
-                  </div>
-            );
-          })}
-          <a href="https://github.com/kalanakt" target="_blank"><div className={styles.more}>+</div></a>
-        </div>
-      ) :
-      (
-        <div>
-          <span>404 Page Not Found.</span>
-        </div>
-      )} 
+      <div className={styles.avatars}>
+        {followers.map((follower) => (
+          <div key={follower.login} className={styles.avatars__item}>
+            <a href={follower.html_url} target="_blank" rel="noreferrer">
+              <img
+                className={styles.avatars__image}
+                src={follower.avatar_url}
+                alt={follower.login}
+                width={40}
+                height={40}
+              />
+            </a>
+          </div>
+        ))}
+        <a href="https://github.com/kalanakt" target="_blank" rel="noreferrer">
+          <div className={styles.more}>+</div>
+        </a>
+      </div>
     </div>
   )
 }
 
-export default function MyApp() {
+export default function FollowersWidget() {
   return <Followers />
 }
