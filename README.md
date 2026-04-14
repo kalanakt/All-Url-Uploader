@@ -18,7 +18,7 @@ Built with `aiogram`, `yt-dlp`, and `uv` for a cleaner local workflow.
 [![License](https://img.shields.io/github/license/kalanakt/All-Url-Uploader)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?style=flat)](https://github.com/kalanakt/All-Url-Uploader/stargazers)
 
-[Docs](docs/README.md) · [Contributing](CONTRIBUTING.md) · [Docker](Dockerfile) · [Issues](https://github.com/kalanakt/All-Url-Uploader/issues)
+[Docs](docs/README.md) · [Contributing](CONTRIBUTING.md) · [Docker](Dockerfile) · [Issues](https://github.com/kalanakt/All-Url-Uploader/issues) · [Discussions](https://github.com/kalanakt/All-Url-Uploader/discussions) 
 
 </div>
 
