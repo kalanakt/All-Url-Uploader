@@ -44,7 +44,14 @@ All Url Uploader is a Telegram bot that accepts direct file URLs and supported m
 
 ## Quick Start
 
-1. Create a `.env` file in the project root:
+1. Clone the repository and move into it:
+
+```bash
+git clone https://github.com/kalanakt/All-Url-Uploader.git
+cd All-Url-Uploader
+```
+
+2. Create a `.env` file in the project root:
 
 ```dotenv
 BOT_TOKEN=
@@ -56,13 +63,13 @@ HTTP_PROXY=
 PROCESS_MAX_TIMEOUT=3700
 ```
 
-2. Install dependencies:
+3. Install dependencies:
 
 ```bash
 uv sync --group dev
 ```
 
-3. Start the bot:
+4. Start the bot:
 
 ```bash
 uv run python bot.py
