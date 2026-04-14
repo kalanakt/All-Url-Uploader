@@ -1,34 +1,50 @@
 <p align="center">
-  <a href="https://www.fiverr.com/share/kpLBoo"><img src="https://fiverr-res.cloudinary.com/images/t_main1,q_auto,f_auto,q_auto,f_auto/gigs/310030332/original/dea9a8cecd633a38d59659d455e8a7f46e914505/develop-a-telegram-bot-and-deployed-on-vercel-at-no-cost.jpg"/></a>
+  <img src="docs/public/tmwad.png" alt="All Url Uploader banner" width="100%">
 </p>
+
+<div align="center">
 
 # All Url Uploader
 
-All Url Uploader is a Telegram bot built with `aiogram` and `yt-dlp`. Send it a direct file URL or a supported media link, choose a format when needed, and the bot uploads the result back to Telegram.
+**Upload direct links and supported media sources back to Telegram.**
 
-## Features
+Built with `aiogram`, `yt-dlp`, and `uv` for a cleaner local workflow.
 
-- direct download links
+[![CI](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/ci.yml/badge.svg)](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/codeql.yml/badge.svg)](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/codeql.yml)
+[![Python 3.11](https://img.shields.io/badge/python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3110/)
+[![License](https://img.shields.io/github/license/kalanakt/All-Url-Uploader)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?style=flat)](https://github.com/kalanakt/All-Url-Uploader/stargazers)
+
+[Docs](docs/README.md) · [Contributing](CONTRIBUTING.md) · [Docker](Dockerfile) · [Issues](https://github.com/kalanakt/All-Url-Uploader/issues)
+
+</div>
+
+All Url Uploader is a Telegram bot that accepts direct file URLs and supported media links, downloads them with the right tool for the job, and sends the result back to Telegram with the correct media type, metadata, and optional custom thumbnail.
+
+## What It Handles
+
+- direct file links
 - `url|filename`
 - `url|filename|username|password`
 - `url * filename`
-- YouTube quick audio and video downloads
+- YouTube quick audio and quick video downloads
 - format selection for supported `yt-dlp` sources
 - custom per-user thumbnails with `/thumb` and `/delthumb`
 
-## Project Layout
+## Bot Commands
 
-- root app runtime: `bot.py`, `app.py`, `config.py`
-- request handlers: `routers/`
-- shared services: `services/`
-- shared helpers and UI text: `utils/`
-- external documentation site: `docs/`
+- `/start` - welcome message, shortcuts, and usage guidance
+- `/help` - supported link formats and flow overview
+- `/about` - runtime details, repo link, and project notes
+- `/thumb` - show the currently saved custom thumbnail
+- `/delthumb` - remove the saved custom thumbnail
 
-## Local Run
+## Quick Start
 
-1. Create a `.env` file:
+1. Create a `.env` file in the project root:
 
-```env
+```dotenv
 BOT_TOKEN=
 OWNER_ID=
 AUTH_USERS=
@@ -38,32 +54,52 @@ HTTP_PROXY=
 PROCESS_MAX_TIMEOUT=3700
 ```
 
-2. Install dependencies and start the bot:
+2. Install dependencies:
 
 ```bash
 uv sync --group dev
+```
+
+3. Start the bot:
+
+```bash
 uv run python bot.py
 ```
 
-## Configuration Notes
+## Environment
 
-- `BOT_TOKEN` and `OWNER_ID` are required.
-- `AUTH_USERS` is optional. Authorized users bypass the per-request cooldown.
-- `CHUNK_SIZE` values below `1024` are treated as kilobytes for compatibility with the older config style.
+- `BOT_TOKEN` - required Telegram bot token
+- `OWNER_ID` - required Telegram user ID for the bot owner
+- `AUTH_USERS` - optional comma-separated list of user IDs that bypass the cooldown
+- `DOWNLOAD_LOCATION` - optional base directory for temporary downloads and uploads
+- `CHUNK_SIZE` - optional direct-download chunk size; values below `1024` are treated as kilobytes for backward compatibility
+- `HTTP_PROXY` - optional proxy URL passed to network requests and `yt-dlp`
+- `PROCESS_MAX_TIMEOUT` - optional process timeout in seconds for external tools
+
+## Project Layout
+
+- root runtime entrypoints: `bot.py`, `app.py`, `config.py`
+- routers: `routers/`
+- services: `services/`
+- shared helpers and models: `utils/`
+- tests: `tests/`
+- external documentation site: `docs/`
 
 ## Docker
 
-Build and run:
+Build and run the container with your existing `.env` file:
 
 ```bash
 docker build -t all-url-uploader .
 docker run --env-file .env all-url-uploader
 ```
 
-## Tests
+## Checks
 
-Run the test suite with:
+Run the same core checks used in GitHub Actions:
 
 ```bash
 uv run pytest
+uv run pylint $(git ls-files '*.py')
+cd docs && npm run build
 ```
