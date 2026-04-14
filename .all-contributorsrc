@@ -11,5 +11,16 @@
   "commitConvention": "angular",
   "contributorsPerLine": 7,
   "skipCi": true,
-  "commitType": "docs"
+  "commitType": "docs",
+  "contributors": [
+    {
+      "login": "Divarion-D",
+      "name": "Danil",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42798043?v=4",
+      "profile": "https://github.com/Divarion-D",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
 }
