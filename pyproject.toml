@@ -1,3 +1,41 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "all-url-uploader"
+version = "3.0.0"
+description = "Telegram bot that uploads direct links and yt-dlp supported media with aiogram."
+readme = "README.md"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+    "aiogram>=3.21.0,<4",
+    "aiohttp>=3.10.0,<4",
+    "hachoir>=3.3.0,<4",
+    "python-dotenv>=1.0.1,<2",
+    "yt-dlp>=2025.3.31",
+]
+
+[dependency-groups]
+dev = [
+    "pylint>=3.3.0,<4",
+    "pytest>=8.3.0,<9",
+    "pytest-asyncio>=0.24.0,<1",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.setuptools]
+py-modules = [
+    "app",
+    "config",
+]
+
+[tool.setuptools.packages.find]
+include = ["routers*", "services*", "utils*"]
+
 [tool.autopep8]
 max_line_length = 150
 ignore = "E402,W503,C0116,C0114"

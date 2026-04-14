@@ -1,6 +1,11 @@
-__pycache__
+__pycache__/
 *.pyc
-.git
+.git/
 .env
-*.md
+.venv/
+.pytest_cache/
+DOWNLOADS/
+All-Url-Uploader.session
+docs/
+tests/
   

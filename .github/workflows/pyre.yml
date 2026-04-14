@@ -33,9 +33,20 @@ jobs:
       security-events: write
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Sync project dependencies
+        run: uv sync --group dev
 
       - name: Run Pyre
         uses: facebook/pyre-action@60697a7858f7cc8470d8cc494a3cf2ad6b06560d
@@ -43,4 +54,3 @@ jobs:
           # To customize these inputs:
           # See https://github.com/facebook/pyre-action#inputs
           repo-directory: './'
-          requirements-path: 'requirements.txt'
