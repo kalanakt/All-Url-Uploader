@@ -119,6 +119,13 @@ cd docs && npm run build
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
 <!-- markdownlint-disable -->
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="http://telegraph.us.com"><img src="https://avatars.githubusercontent.com/u/86665964?v=4?s=100" width="100px;" alt="kalana kt"/><br /><sub><b>kalana kt</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Code">💻</a> <a href="#ideas-kalanakt" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-kalanakt" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-kalanakt" title="Maintenance">🚧</a> <a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=kalanakt" title="Tests">⚠️</a></td>
+    </tr>
+  </tbody>
+</table>
 
 <!-- markdownlint-restore -->
 <!-- prettier-ignore-end -->
