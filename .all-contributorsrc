@@ -11,5 +11,16 @@
   "commitConvention": "angular",
   "contributorsPerLine": 7,
   "skipCi": true,
-  "commitType": "docs"
+  "commitType": "docs",
+  "contributors": [
+    {
+      "login": "hybridvamp",
+      "name": "HYBRID",
+      "avatar_url": "https://avatars.githubusercontent.com/u/48980248?v=4",
+      "profile": "https://github.com/hybridvamp",
+      "contributions": [
+        "code"
+      ]
+    }
+  ]
 }
