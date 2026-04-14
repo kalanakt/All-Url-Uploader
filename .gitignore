@@ -1,6 +1,10 @@
 __pycache__/
 dist/
 downloads/
+DOWNLOADS/
+.venv/
+.pytest_cache/
+*.egg-info/
 .vscode
 *.log
 
