@@ -114,6 +114,8 @@ uv run pylint $(git ls-files '*.py')
 cd docs && npm run build
 ```
 
+## Contributors
+
 <!-- readme: contributors -start -->
 <table>
 	<tbody>
