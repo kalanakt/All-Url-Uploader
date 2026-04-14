@@ -1,31 +1,97 @@
-## Contributing to All-Url-Uploader
+# Contributing
 
-Thank you for considering contributing to All-Url-Uploader! We appreciate any help that you can provide, whether it's reporting a bug, proposing a feature, or submitting code changes.
+Thanks for helping improve All Url Uploader.
 
-### Reporting Issues
+This project is a Telegram bot built with `aiogram`, `yt-dlp`, and `uv`. Contributions are welcome for bug fixes, tests, docs improvements, cleanup, and new features that fit the bot's current scope.
 
-If you encounter a problem while using All-Url-Uploader, please create a new issue in our GitHub repository. Please be as descriptive as possible when reporting the issue, including steps to reproduce the problem, screenshots if applicable, and any error messages that you received.
+## Before You Start
 
-### Proposing Features
+- search existing [issues](https://github.com/kalanakt/All-Url-Uploader/issues) and [discussions](https://github.com/kalanakt/All-Url-Uploader/discussions) first
+- open an issue or discussion before large changes so the direction is clear
+- keep changes focused; avoid mixing refactors, docs edits, and feature work unless they are directly related
 
-If you have an idea for a new feature that you would like to see added to All-Url-Uploader, please create a new issue in our GitHub repository. Please describe the feature in as much detail as possible, including any relevant use cases or examples.
+## Local Setup
 
-### Contributing Code
+1. Clone the repository:
 
-We welcome contributions of code to All-Url-Uploader! If you would like to submit a code change, please follow these steps:
+```bash
+git clone https://github.com/kalanakt/All-Url-Uploader.git
+cd All-Url-Uploader
+```
 
-- > Fork the repository on GitHub
-- > Clone your fork to your local machine
-- > Create a new branch for your changes
-- > Make your changes and commit them
-- > Push your changes to your fork on GitHub
-- > Create a pull request in our repository
-- > Please ensure that your code follows our code style guidelines and that you have added appropriate tests for any new functionality.
+2. Create a `.env` file:
 
-### Code of Conduct
+```dotenv
+BOT_TOKEN=
+OWNER_ID=
+AUTH_USERS=
+DOWNLOAD_LOCATION=./DOWNLOADS
+CHUNK_SIZE=128
+HTTP_PROXY=
+PROCESS_MAX_TIMEOUT=3700
+```
 
-All contributors to All-Url-Uploader are expected to follow our code of conduct. Please review it before contributing.
+3. Install dependencies:
 
-### Conclusion
+```bash
+uv sync --group dev
+```
 
-We hope that you find contributing to All-Url-Uploader to be a positive experience! If you have any questions or concerns, please don't hesitate to reach out to us.
+4. Run the bot locally:
+
+```bash
+uv run python bot.py
+```
+
+## Project Layout
+
+- root runtime entrypoints: `bot.py`, `app.py`, `config.py`
+- Telegram routers: `routers/`
+- services and integrations: `services/`
+- shared helpers, models, keyboards, and text: `utils/`
+- automated tests: `tests/`
+- external documentation site: `docs/`
+
+## Development Guidelines
+
+- follow the current `aiogram` 3.x structure and existing project patterns
+- prefer small, reviewable pull requests
+- add or update tests when behavior changes
+- keep user-facing copy clear and consistent
+- avoid reintroducing removed legacy runtime files or deployment assumptions
+
+## Checks
+
+Run these before opening a pull request:
+
+```bash
+uv run pytest
+uv run pylint $(git ls-files '*.py')
+cd docs && npm run build
+```
+
+If your change only touches Python code, the docs build is still a good final sanity check before you open the PR.
+
+## Pull Requests
+
+When opening a pull request:
+
+- use a clear title and summary
+- explain the user-facing impact
+- mention any environment or deployment implications
+- include screenshots only when the docs site or rendered output changed
+- link the related issue or discussion when there is one
+
+## Reporting Bugs
+
+Bug reports are most useful when they include:
+
+- what you tried to do
+- what happened instead
+- steps to reproduce
+- logs or traceback output
+- relevant environment details such as Python version, host platform, or proxy setup
+
+## Code of Conduct
+
+By participating in this project, you agree to follow the guidelines in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).

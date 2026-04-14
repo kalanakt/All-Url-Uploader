@@ -1,94 +1,57 @@
-# Citizen Code of Conduct
+# Code of Conduct
 
-## 1. Purpose
+## Our Commitment
 
-A primary goal of All Url Uploader is to be inclusive to the largest number of contributors, with the most varied and diverse backgrounds possible. As such, we are committed to providing a friendly, safe and welcoming environment for all, regardless of gender, sexual orientation, ability, ethnicity, socioeconomic status, and religion (or lack thereof).
+We want All Url Uploader to be a respectful, welcoming project for contributors, users, and maintainers. Everyone participating in the repository, issues, discussions, and pull requests is expected to help keep the community constructive and safe.
 
-This code of conduct outlines our expectations for all those who participate in our community, as well as the consequences for unacceptable behavior.
+## Expected Behavior
 
-We invite all those who participate in All Url Uploader to help us create safe and positive experiences for everyone.
+Examples of behavior that help this project:
 
-## 2. Open [Source/Culture/Tech] Citizenship
+- being respectful in disagreement
+- giving technical feedback without personal attacks
+- assuming good intent while staying clear and direct
+- being thoughtful with language, especially in public threads
+- focusing on what improves the project and the experience of other contributors
 
-A supplemental goal of this Code of Conduct is to increase open [source/culture/tech] citizenship by encouraging participants to recognize and strengthen the relationships between our actions and their effects on our community.
+## Unacceptable Behavior
 
-Communities mirror the societies in which they exist and positive action is essential to counteract the many forms of inequality and abuses of power that exist in society.
+The following behavior is not acceptable in this project:
 
-If you see someone who is making an extra effort to ensure our community is welcoming, friendly, and encourages all participants to contribute to the fullest extent, we want to know.
+- harassment, threats, or intimidation
+- hateful, discriminatory, or degrading language
+- personal attacks, dogpiling, or repeated hostile conduct
+- sharing private information without permission
+- trolling, derailing discussions, or deliberately making collaboration harder
+- sexualized language or unwanted advances in project spaces
 
-## 3. Expected Behavior
+## Scope
 
-The following behaviors are expected and requested of all community members:
+This Code of Conduct applies to:
 
- * Participate in an authentic and active way. In doing so, you contribute to the health and longevity of this community.
- * Exercise consideration and respect in your speech and actions.
- * Attempt collaboration before conflict.
- * Refrain from demeaning, discriminatory, or harassing behavior and speech.
- * Be mindful of your surroundings and of your fellow participants. Alert community leaders if you notice a dangerous situation, someone in distress, or violations of this Code of Conduct, even if they seem inconsequential.
- * Remember that community event venues may be shared with members of the public; please be respectful to all patrons of these locations.
+- GitHub issues
+- pull requests and review comments
+- discussions
+- project-related chats and direct communication connected to the repository
 
-## 4. Unacceptable Behavior
+## Reporting
 
-The following behaviors are considered harassment and are unacceptable within our community:
+If you experience or witness behavior that violates this Code of Conduct, report it privately to the maintainer at `e19198@eng.pdn.ac.lk`.
 
- * Violence, threats of violence or violent language directed against another person.
- * Sexist, racist, homophobic, transphobic, ableist or otherwise discriminatory jokes and language.
- * Posting or displaying sexually explicit or violent material.
- * Posting or threatening to post other people's personally identifying information ("doxing").
- * Personal insults, particularly those related to gender, sexual orientation, race, religion, or disability.
- * Inappropriate photography or recording.
- * Inappropriate physical contact. You should have someone's consent before touching them.
- * Unwelcome sexual attention. This includes, sexualized comments or jokes; inappropriate touching, groping, and unwelcomed sexual advances.
- * Deliberate intimidation, stalking or following (online or in person).
- * Advocating for, or encouraging, any of the above behavior.
- * Sustained disruption of community events, including talks and presentations.
+Please include any relevant links, screenshots, or context that can help with review.
 
-## 5. Weapons Policy
+## Enforcement
 
-No weapons will be allowed at All Url Uploader events, community spaces, or in other spaces covered by the scope of this Code of Conduct. Weapons include but are not limited to guns, explosives (including fireworks), and large knives such as those used for hunting or display, as well as any other item used for the purpose of causing injury or harm to others. Anyone seen in possession of one of these items will be asked to leave immediately, and will only be allowed to return without the weapon. Community members are further expected to comply with all state and local laws on this matter.
+The maintainer may take any action considered appropriate for the situation, including:
 
-## 6. Consequences of Unacceptable Behavior
+- a warning
+- comment removal
+- locking a conversation
+- temporary restriction from project spaces
+- permanent ban from participation
 
-Unacceptable behavior from any community member, including sponsors and those with decision-making authority, will not be tolerated.
+Reports will be reviewed as fairly and promptly as possible. Retaliation against someone for making a report in good faith is not acceptable.
 
-Anyone asked to stop unacceptable behavior is expected to comply immediately.
+## Attribution
 
-If a community member engages in unacceptable behavior, the community organizers may take any action they deem appropriate, up to and including a temporary ban or permanent expulsion from the community without warning (and without refund in the case of a paid event).
-
-## 7. Reporting Guidelines
-
-If you are subject to or witness unacceptable behavior, or have any other concerns, please notify a community organizer as soon as possible. e19198@eng.pdn.ac.lk.
-
-e19198@eng.pdn.ac.lk
-
-Additionally, community organizers are available to help community members engage with local law enforcement or to otherwise help those experiencing unacceptable behavior feel safe. In the context of in-person events, organizers will also provide escorts as desired by the person experiencing distress.
-
-## 8. Addressing Grievances
-
-If you feel you have been falsely or unfairly accused of violating this Code of Conduct, you should notify codecrush with a concise description of your grievance. Your grievance will be handled in accordance with our existing governing policies. [Policy](https://urluploader.vercel.app/policy)
-
-https://urluploader.vercel.app/
-
-## 9. Scope
-
-We expect all community participants (contributors, paid or otherwise; sponsors; and other guests) to abide by this Code of Conduct in all community venues--online and in-person--as well as in all one-on-one communications pertaining to community business.
-
-This code of conduct and its related procedures also applies to unacceptable behavior occurring outside the scope of community activities when such behavior has the potential to adversely affect the safety and well-being of community members.
-
-## 10. Contact info
-
-e19198@eng.pdn.ac.lk
-
-## 11. License and attribution
-
-The Citizen Code of Conduct is distributed by [Stumptown Syndicate](http://stumptownsyndicate.org) under a [Creative Commons Attribution-ShareAlike license](http://creativecommons.org/licenses/by-sa/3.0/). 
-
-Portions of text derived from the [Django Code of Conduct](https://www.djangoproject.com/conduct/) and the [Geek Feminism Anti-Harassment Policy](http://geekfeminism.wikia.com/wiki/Conference_anti-harassment/Policy).
-
-_Revision 2.3. Posted 6 March 2017._
-
-_Revision 2.2. Posted 4 February 2016._
-
-_Revision 2.1. Posted 23 June 2014._
-
-_Revision 2.0, adopted by the [Stumptown Syndicate](http://stumptownsyndicate.org) board on 10 January 2013. Posted 17 March 2013._
+This document is adapted from the spirit of the Contributor Covenant and simplified for this repository's current collaboration model.
