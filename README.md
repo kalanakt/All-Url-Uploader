@@ -114,20 +114,5 @@ uv run pylint $(git ls-files '*.py')
 cd docs && npm run build
 ```
 
-## Contributors
-
-<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
-<!-- prettier-ignore-start -->
-<!-- markdownlint-disable -->
-<table>
-  <tbody>
-    <tr>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/hybridvamp"><img src="https://avatars.githubusercontent.com/u/48980248?v=4?s=100" width="100px;" alt="HYBRID"/><br /><sub><b>HYBRID</b></sub></a><br /><a href="https://github.com/kalanakt/All-Url-Uploader/commits?author=hybridvamp" title="Code">💻</a></td>
-    </tr>
-  </tbody>
-</table>
-
-<!-- markdownlint-restore -->
-<!-- prettier-ignore-end -->
-
-<!-- ALL-CONTRIBUTORS-LIST:END -->
+<!-- readme: contributors -start -->
+<!-- readme: contributors -end -->
