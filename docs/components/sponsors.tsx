@@ -1,6 +1,3 @@
-// Example from https://beta.reactjs.org/learn
-
-import React, { useState, useEffect } from "react";
 import styles from './sponsors.module.css'
 
 function Sponsors() {
@@ -8,11 +5,14 @@ function Sponsors() {
     <div className={styles.container}>
       <div className={styles.sponsor_card}>
         <div className={styles.sponsor_cardh}>
-          <div className={styles.sponsor_img}>
-            <img className={styles.simg} src='./tmwad.png' alt='TMWAD IMG' width={200} height={50}/>
-          </div>
           <div className={styles.sponsor_links}>
-            <a href="/" target="_blank">TMWAD Telegram ↗</a>
+            <a
+              href="https://github.com/kalanakt/All-Url-Uploader"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Project repository ↗
+            </a>
           </div>
         </div>
       </div>
@@ -20,6 +20,6 @@ function Sponsors() {
   )
 }
 
-export default function MyApp() {
+export default function SponsorsWidget() {
   return <Sponsors />
 }

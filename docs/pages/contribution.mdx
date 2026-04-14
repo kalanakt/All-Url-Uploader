@@ -1,16 +1,31 @@
-import Collaborators from '../components/collaborators'
-import Followers from '../components/followers'
-import Sponsors from '../components/sponsors'
+# Contributing
 
-## Sponsors
-_Thank To Sponsors Who Suport Our Works._
-<Sponsors />
+Thanks for helping improve All Url Uploader.
 
-__[Buy Me A Coffie](https://www.buymeacoffee.com/kalanakt)__ : __[Patron](https://www.patron.com/codexo)__
+## Before You Open a Pull Request
 
+- read the root `README.md`
+- check open issues and pull requests first
+- keep changes focused on one concern when possible
+- run the local checks before publishing
 
-## Collaborators
-<Collaborators />
+## Local Checks
 
-## Followers
-<Followers />
+```bash
+uv run pytest
+uv run pylint $(git ls-files '*.py')
+```
+
+## Good Contribution Areas
+
+- bot behavior fixes
+- download and upload edge cases
+- docs updates
+- deployment docs for current platforms
+- test coverage for request parsing and callback flows
+
+## Community Links
+
+- [Repository](https://github.com/kalanakt/All-Url-Uploader)
+- [Issues](https://github.com/kalanakt/All-Url-Uploader/issues)
+- [Discussions](https://github.com/kalanakt/All-Url-Uploader/discussions)
