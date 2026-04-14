@@ -49,5 +49,10 @@ def parse_user_input(
 
 
 def is_probable_youtube_url(url: str) -> bool:
-    hostname = urlparse(url).netloc.lower()
-    return "youtube.com" in hostname or "youtu.be" in hostname
+    hostname = (urlparse(url).hostname or "").lower()
+    return (
+        hostname == "youtube.com"
+        or hostname.endswith(".youtube.com")
+        or hostname == "youtu.be"
+        or hostname.endswith(".youtu.be")
+    )
