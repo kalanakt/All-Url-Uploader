@@ -6,10 +6,10 @@ import logging
 from pathlib import Path
 from urllib.parse import urlparse
 
-from utils.models import DownloadArtifact, DownloadOption, ParsedInput
 from config import Settings
 from services.progress import humanbytes
 from utils.logging_config import redact_command, safe_url_label
+from utils.models import DownloadArtifact, DownloadOption, ParsedInput
 
 
 VIDEO_EXTENSIONS = {"mp4", "mkv", "webm", "mov"}
@@ -53,8 +53,12 @@ def _is_audio_only(format_note: str | None) -> bool:
     return bool(format_note and "audio only" in format_note.lower())
 
 
-def _label_for_format(info: dict, format_data: dict, index: int) -> str:
-    format_note = format_data.get("format_note") or format_data.get("format") or f"Format {index + 1}"
+def _label_for_format(format_data: dict, index: int) -> str:
+    format_note = (
+        format_data.get("format_note")
+        or format_data.get("format")
+        or f"Format {index + 1}"
+    )
     size = format_data.get("filesize") or format_data.get("filesize_approx") or 0
     ext = format_data.get("ext", "")
     return f"Video {format_note} {ext} {humanbytes(size)}".strip()
@@ -119,7 +123,7 @@ def build_ytdlp_options(info: dict) -> list[DownloadOption]:
         options.append(
             DownloadOption(
                 option_id=_option_id("fmt", len(options)),
-                label=_label_for_format(info, format_data, index),
+                label=_label_for_format(format_data, index),
                 send_type="video",
                 mode="ytdlp_format",
                 format_id=str(format_id),

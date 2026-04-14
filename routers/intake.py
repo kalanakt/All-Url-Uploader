@@ -3,11 +3,9 @@ from __future__ import annotations
 import logging
 
 from aiogram import F, Router
-from aiogram.types import CallbackQuery, Message
+from aiogram.types import Message
 
-from utils import text
-from utils.keyboards import format_keyboard
-from utils.models import DownloadOption, StoredRequest
+from config import Settings
 from services.cooldown import CooldownManager
 from services.parsing import extract_link_text, is_probable_youtube_url, parse_user_input
 from services.request_store import RequestStore
@@ -17,8 +15,10 @@ from services.ytdlp import (
     build_ytdlp_options,
     probe_url,
 )
-from config import Settings
+from utils import text
+from utils.keyboards import format_keyboard
 from utils.logging_config import safe_url_label
+from utils.models import StoredRequest
 
 router = Router(name="intake")
 logger = logging.getLogger(__name__)
@@ -83,7 +83,7 @@ async def intake_message(
 
     try:
         info = await probe_url(parsed, settings)
-    except Exception as exc:  # pragma: no cover - network/tool error path
+    except RuntimeError as exc:  # pragma: no cover - network/tool error path
         logger.warning(
             "yt-dlp probe failed | user=%s source=%s error=%s",
             message.from_user.id,

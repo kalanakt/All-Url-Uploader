@@ -2,20 +2,17 @@ from __future__ import annotations
 
 import logging
 import mimetypes
-import os
 import time
 from pathlib import Path
 from urllib.parse import urlparse
 
 import aiohttp
-from aiogram import Bot
 from aiogram.types import Message
 
-from utils import text
 from config import Settings
-from utils.models import DownloadArtifact, DownloadOption, ParsedInput
 from services.progress import format_download_progress
 from utils.logging_config import safe_url_label
+from utils.models import DownloadArtifact, DownloadOption, ParsedInput
 
 
 logger = logging.getLogger(__name__)
@@ -35,8 +32,15 @@ def _normalize_file_name(file_name: str, ext: str | None) -> str:
     return f"{file_name}.{ext}"
 
 
+def _progress_milestone(downloaded: int, total: int) -> int | None:
+    if not total:
+        return None
+    milestone = int((downloaded / total) * 4) * 25
+    return milestone if milestone in {25, 50, 75, 100} else None
+
+
 async def download_direct_file(
-    bot: Bot,
+    *,
     status_message: Message,
     parsed_input: ParsedInput,
     option: DownloadOption,
@@ -45,7 +49,9 @@ async def download_direct_file(
     suggested_ext: str | None = None,
 ) -> DownloadArtifact:
     work_dir.mkdir(parents=True, exist_ok=True)
-    file_name = parsed_input.custom_file_name or _filename_from_url(parsed_input.source_url)
+    file_name = parsed_input.custom_file_name or _filename_from_url(
+        parsed_input.source_url
+    )
     logger.info(
         "Direct download starting | source=%s send_type=%s work_dir=%s",
         safe_url_label(parsed_input.source_url),
@@ -64,7 +70,9 @@ async def download_direct_file(
             content_type = response.headers.get("Content-Type", "")
             ext = option.file_ext or suggested_ext
             if not ext:
-                guessed_ext = mimetypes.guess_extension(content_type.split(";")[0].strip())
+                guessed_ext = mimetypes.guess_extension(
+                    content_type.split(";")[0].strip()
+                )
                 ext = guessed_ext.lstrip(".") if guessed_ext else None
 
             file_name = _normalize_file_name(file_name, ext)
@@ -81,17 +89,16 @@ async def download_direct_file(
                     handle.write(chunk)
                     downloaded += len(chunk)
                     now = time.time()
-                    if total:
-                        milestone = int((downloaded / total) * 4) * 25
-                        if milestone in {25, 50, 75, 100} and milestone not in logged_milestones:
-                            logged_milestones.add(milestone)
-                            logger.info(
-                                "Direct download progress | file=%s progress=%s%% downloaded=%s total=%s",
-                                file_name,
-                                milestone,
-                                downloaded,
-                                total,
-                            )
+                    milestone = _progress_milestone(downloaded, total)
+                    if milestone and milestone not in logged_milestones:
+                        logged_milestones.add(milestone)
+                        logger.info(
+                            "Direct download progress | file=%s progress=%s%% downloaded=%s total=%s",
+                            file_name,
+                            milestone,
+                            downloaded,
+                            total,
+                        )
                     if total and (now - last_update >= 2 or downloaded >= total):
                         await status_message.edit_text(
                             format_download_progress(

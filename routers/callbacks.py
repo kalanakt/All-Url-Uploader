@@ -6,17 +6,17 @@ from datetime import datetime
 from aiogram import Router
 from aiogram.types import CallbackQuery
 
+from config import Settings
+from routers.commands import handle_ui_callback
+from services.direct_downloads import download_direct_file
+from services.request_store import RequestStore
+from services.thumbnail_store import ThumbnailStore
+from services.telegram_uploads import upload_artifact
+from services.ytdlp import download_quick_youtube, download_selected_format
 from utils import text
 from utils.callbacks import RequestCallback, UiCallback
-from utils.models import DownloadOption, StoredRequest
-from routers.commands import handle_ui_callback
-from services.request_store import RequestStore
-from services.telegram_uploads import upload_artifact
-from services.thumbnail_store import ThumbnailStore
-from services.direct_downloads import download_direct_file
-from services.ytdlp import download_quick_youtube, download_selected_format
-from config import Settings
 from utils.logging_config import safe_url_label
+from utils.models import DownloadOption, StoredRequest
 
 router = Router(name="callbacks")
 logger = logging.getLogger(__name__)
@@ -88,7 +88,6 @@ async def request_callback(
     try:
         if stored.request_type == "direct_download":
             artifact = await download_direct_file(
-                bot=query.bot,
                 status_message=query.message,
                 parsed_input=stored.parsed_input,
                 option=option,
@@ -127,7 +126,7 @@ async def request_callback(
             artifact.file_name,
             artifact.send_type,
         )
-    except Exception as exc:  # pragma: no cover - network/tool error path
+    except Exception as exc:  # pylint: disable=broad-exception-caught  # pragma: no cover - user-facing safety boundary
         logger.exception(
             "Request action failed | user=%s token=%s type=%s option=%s",
             query.from_user.id,

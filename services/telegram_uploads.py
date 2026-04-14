@@ -3,15 +3,14 @@ from __future__ import annotations
 import logging
 import os
 from datetime import datetime
-from pathlib import Path
 
 from aiogram import Bot
 from aiogram.types import FSInputFile, Message
 from aiogram.utils.chat_action import ChatActionSender
 
+from services.media import audio_duration, video_metadata, video_note_metadata
 from utils import text
 from utils.models import DownloadArtifact
-from services.media import audio_duration, video_metadata, video_note_metadata
 
 
 logger = logging.getLogger(__name__)
@@ -24,6 +23,7 @@ def _thumb_file(path: str | None) -> FSInputFile | None:
 
 
 async def upload_artifact(
+    *,
     bot: Bot,
     status_message: Message,
     source_message: Message,

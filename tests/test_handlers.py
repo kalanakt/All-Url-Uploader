@@ -3,7 +3,6 @@ from unittest.mock import AsyncMock
 
 import pytest
 
-from utils.models import DownloadOption, ParsedInput, StoredRequest
 from routers.callbacks import request_callback
 from routers.commands import about_command, help_command, start_command
 from routers.intake import intake_message
@@ -12,8 +11,9 @@ from services.cooldown import CooldownManager
 from services.request_store import RequestStore
 from services.thumbnail_store import ThumbnailStore
 from services.ytdlp import _pick_downloaded_file
-from utils.callbacks import RequestCallback
 from tests.conftest import make_message, make_settings
+from utils.callbacks import RequestCallback
+from utils.models import DownloadOption, ParsedInput, StoredRequest
 
 
 @pytest.mark.asyncio
