@@ -1,21 +1,30 @@
-import { Tab, Tabs } from 'nextra-theme-docs'
-
 # Railway Deploy
-_Railway is Free. You'll Get 500 Hr_
 
-__Use method one or two to deploy your bot.__
+Railway is one of the cleanest hosted options for the current bot.
 
-<Tabs items={['Method One : Esay', 'Method Two : Deploy Your Own For Pro']}>
-  <Tab>
-    [![Deploy on Railway](https://railway.app/button.svg)](/)
-  </Tab>
-  <Tab>
-    - Fork The Repositery On [GitHub](https://github.com/kalanakt/All-Url-Uploader)
-    - Create [Railway](https://railway.app) Account. if Already Have? Go to [Dashboard](https://railway.app/dashboard)
-    - Start [ + New Project ] & Select `Deploy From Github`
-    - Connect Your Github Account with railway & Select forked repo then Deploy
-    - This Should Fail. Next Add .env Variables in Variables Tab.
-    - Railway will Auto deploy Your App.
-    - Start the Bot On Telegram : Boom!!! Enjoy Your Bot
-  </Tab>
-</Tabs>
+## Steps
+
+1. Fork the repository on GitHub.
+2. Create a new Railway project and choose **Deploy from GitHub**.
+3. Select your forked repository.
+4. Let Railway detect the Docker build from the repository root.
+5. Add the required environment variables in the Railway variables panel.
+6. Redeploy after saving the variables.
+
+## Environment Variables
+
+```
+BOT_TOKEN=
+OWNER_ID=
+AUTH_USERS=
+DOWNLOAD_LOCATION=./DOWNLOADS
+CHUNK_SIZE=128
+HTTP_PROXY=
+PROCESS_MAX_TIMEOUT=3700
+```
+
+## Notes
+
+- Railway should build from the root `Dockerfile`
+- the service should run the default container command
+- if the first deploy starts before variables are set, just redeploy once the values are in place

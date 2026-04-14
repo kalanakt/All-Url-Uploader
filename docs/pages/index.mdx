@@ -1,28 +1,61 @@
 # All Url Uploader
 
-A simple Telegram bot, upload media file | video to Telegram using the direct download link.
+All Url Uploader is a Telegram bot built with `aiogram` and `yt-dlp`. Send it a direct file URL or a supported media link, choose a format when needed, and the bot uploads the result back to Telegram.
 
-## Introduction
+## What It Supports
 
-- Youtube, Google Drive, Apple Music, Spotify, Resso, & Direct Links support.
-- Bot Can upload document, video & audio types.
-- Deploy To Heroku | locally | VPS | Digital Ocean | Koyeb | Render.
-- Custom thumbnail support.
+- direct download links
+- `url|filename`
+- `url|filename|username|password`
+- `url * filename`
+- YouTube quick audio and video downloads
+- format selection for supported `yt-dlp` sources
+- custom per-user thumbnails
 
 ## Commands
 
-- /start - Start the Bot
-- /help - Introduction to use url uploader bot
-- /about - About the Bot
-- /thumb - view your custom thumbnail
-- /delthumb - delete your custom thumbnail
-- /thumb - Add custom thumbnail to your uploaded file ( send thumbnail and reply /thumb to it)
-- /delthumb - To Delete your custom thumbnail
+- `/start` starts the bot and shows the quick navigation buttons
+- `/help` shows supported input formats and usage examples
+- `/about` shows project details and the repository link
+- `/thumb` shows your saved thumbnail
+- `/delthumb` removes your saved thumbnail
 
-## Ask Questions
+## Quick Start
 
-For questions and support please use [Discussions](https://github.com/kalanakt/All-Url-Uploader/discussions). The issue list of this repo is exclusively for bug reports and feature requests.
+1. Create a `.env` file in the repository root:
 
-## Found Bug ?
+```
+BOT_TOKEN=
+OWNER_ID=
+AUTH_USERS=
+DOWNLOAD_LOCATION=./DOWNLOADS
+CHUNK_SIZE=128
+HTTP_PROXY=
+PROCESS_MAX_TIMEOUT=3700
+```
 
-Make sure to read the Issue Reporting [Checklist](https://github.com/kalanakt/All-Url-Uploader/discussions/categories/issue-reporting-checklist). before opening an [issue](https://github.com/kalanakt/All-Url-Uploader/issues). Issues not conforming to the guidelines may be closed immediately.
+2. Install dependencies:
+
+```bash
+uv sync --group dev
+```
+
+3. Start the bot:
+
+```bash
+uv run python bot.py
+```
+
+## Project Layout
+
+- root runtime: `bot.py`, `app.py`, `config.py`
+- handlers: `routers/`
+- shared logic: `services/`
+- shared UI/callback helpers: `utils/`
+- external docs app: `docs/`
+
+## Support
+
+Use [GitHub Discussions](https://github.com/kalanakt/All-Url-Uploader/discussions) for questions and support.
+
+Use [GitHub Issues](https://github.com/kalanakt/All-Url-Uploader/issues) for bug reports and feature requests.

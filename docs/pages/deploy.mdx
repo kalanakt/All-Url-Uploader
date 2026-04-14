@@ -1,10 +1,32 @@
 # Deploy Bot
 
+Use the platform pages in this section when you want to run the bot outside your local machine.
 
-| Host                                     | Website                                           | Introduction                                                        |
-| :---                                     | :----                                             | ---:                                                                |
-| [Digital Ocean ↗](/deploy/digital-ocean) | [digitalocean.com](https://www.digitalocean.com/) | Esay, free trail, Credit Card Requre                                |
-| [Heroku ↗](/deploy/heroku)               | [heroku.com](https://www.heroku.com/)             | 100% Deploy Efficiency, 5$ per month `recomend`                     |
-| [Koyeb ↗](/deploy/koyeb)                 | [koyeb.com](https://www.koyeb.com/)               | Host 2 Apps free, Esay, Credit Card Requre                          |
-| [Railway ↗](/deploy/railway)             | [railway.app](https://www.railway.app/)           | User Friendly, Esay & free trail No Credit Card Requre `recomend`   |
-| [Render ↗](/deploy/render)               | [render.com](https://www.render.com/)             | Good Ui & Ux, Free Trail, No Credit Card Requre                     |
+## Current Runtime Assumptions
+
+- the project uses Python `3.11`
+- dependency management is handled with `uv`
+- the repository root is the runtime entrypoint
+- Docker is the recommended deployment path
+
+## Shared Environment Variables
+
+```
+BOT_TOKEN=
+OWNER_ID=
+AUTH_USERS=
+DOWNLOAD_LOCATION=./DOWNLOADS
+CHUNK_SIZE=128
+HTTP_PROXY=
+PROCESS_MAX_TIMEOUT=3700
+```
+
+## Deployment Notes
+
+| Host                                     | Website                                           | Notes                                                                  |
+| :---                                     | :----                                             | :---                                                                   |
+| [Railway ↗](/deploy/railway)             | [railway.app](https://www.railway.app/)           | Good fit for a Docker-based deployment with environment variables       |
+| [Render ↗](/deploy/render)               | [render.com](https://www.render.com/)             | Good fit for Docker deployments and simple service configuration        |
+| [Digital Ocean ↗](/deploy/digital-ocean) | [digitalocean.com](https://www.digitalocean.com/) | Use App Platform or a VM if you want more control over the runtime      |
+| [Koyeb ↗](/deploy/koyeb)                 | [koyeb.com](https://www.koyeb.com/)               | Legacy docs only. Update the steps to match the current Docker runtime. |
+| [Heroku ↗](/deploy/heroku)               | [heroku.com](https://www.heroku.com/)             | Legacy docs only. The repo no longer ships Heroku-specific runtime files. |

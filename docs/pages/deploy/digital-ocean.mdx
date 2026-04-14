@@ -1,4 +1,21 @@
 # Digital Ocean Deploy
 
-- Not Started Yet
-- Your P.R. Highly Appreciate
+DigitalOcean is best for this project when you want either:
+
+- an App Platform deployment from the repository
+- a VM where you control Docker, storage, and updates yourself
+
+## Recommended Approach
+
+Use Docker with the repository root.
+
+1. Fork or clone the repository.
+2. Add the required environment variables.
+3. Build the Docker image from the root `Dockerfile`.
+4. Run the container with a mounted volume if you want persistent downloads or thumbnails.
+
+## Notes
+
+- use Python `3.11`
+- keep `DOWNLOAD_LOCATION` writable inside the container
+- if you use a VM, `uv run python bot.py` is still the simplest manual start command

@@ -1,13 +1,13 @@
 {
-  "index": "Introduction",
-  "changelog": "Change Logs",
+  "index": "Overview",
+  "changelog": "Changelog",
   "releases": "Releases",
-  "deploy": "Deploy Bot",
-  "contribution": "Thanks To",
-  "contact": {
-    "title": "Contact ↗",
+  "deploy": "Deploy",
+  "contribution": "Contributing",
+  "repository": {
+    "title": "Repository ↗",
     "type": "page",
-    "href": "https://t.me/kinu6",
+    "href": "https://github.com/kalanakt/All-Url-Uploader",
     "newWindow": true
   }
 }
