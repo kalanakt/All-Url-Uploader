@@ -17,7 +17,6 @@ Built with `aiogram`, `yt-dlp`, and `uv` for a cleaner local workflow.
 [![Python 3.11](https://img.shields.io/badge/python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3110/)
 [![License](https://img.shields.io/github/license/kalanakt/All-Url-Uploader)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?style=flat)](https://github.com/kalanakt/All-Url-Uploader/stargazers)
-[![All Contributors](https://img.shields.io/github/all-contributors/kalanakt/All-Url-Uploader?color=ee8449&style=flat-square)](#contributors)
 
 [Docs](docs/README.md) · [Contributing](CONTRIBUTING.md) · [Docker](Dockerfile) · [Issues](https://github.com/kalanakt/All-Url-Uploader/issues) · [Discussions](https://github.com/kalanakt/All-Url-Uploader/discussions) 
 
