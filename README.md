@@ -113,6 +113,12 @@ uv run pylint $(git ls-files '*.py')
 cd docs && npm run build
 ```
 
+## Deploy
+
+| Deploy on Railway | Deploy on Koyeb | Deploy on Heroku |
+|------------------|-----------------|------------------|
+| [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/all-url-uploader?referralCode=monthfree&utm_medium=integration&utm_source=template&utm_campaign=generic) | [![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/kalanakt/All-Url-Uploader&branch=main&name=all-url-uploader) | [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/kalanakt/All-Url-Uploader) |
+
 ## Contributors
 
 <!-- readme: contributors -start -->
