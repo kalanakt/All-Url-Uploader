@@ -1,0 +1,45 @@
+{
+  "name": "All Url Uploader",
+  "description": "Telegram bot that downloads direct URLs and supported yt-dlp media, then uploads the result back to Telegram.",
+  "repository": "https://github.com/kalanakt/All-Url-Uploader",
+  "keywords": [
+    "telegram",
+    "bot",
+    "python",
+    "aiogram",
+    "yt-dlp",
+    "heroku"
+  ],
+  "stack": "container",
+  "env": {
+    "BOT_TOKEN": {
+      "description": "Telegram bot token from BotFather."
+    },
+    "OWNER_ID": {
+      "description": "Telegram user ID that owns and administers the bot."
+    },
+    "AUTH_USERS": {
+      "description": "Optional comma-separated Telegram user IDs that can bypass the cooldown.",
+      "required": false
+    },
+    "DOWNLOAD_LOCATION": {
+      "description": "Writable path used for temporary downloads, uploads, requests, and thumbnails.",
+      "required": false,
+      "value": "./DOWNLOADS"
+    },
+    "CHUNK_SIZE": {
+      "description": "Optional direct-download chunk size; values below 1024 are treated as kilobytes.",
+      "required": false,
+      "value": "128"
+    },
+    "HTTP_PROXY": {
+      "description": "Optional proxy URL used for network requests and yt-dlp.",
+      "required": false
+    },
+    "PROCESS_MAX_TIMEOUT": {
+      "description": "Optional timeout in seconds for external tool processes.",
+      "required": false,
+      "value": "3700"
+    }
+  }
+}
