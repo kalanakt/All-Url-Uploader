@@ -11,7 +11,7 @@ function Sponsors() {
               target="_blank"
               rel="noreferrer"
             >
-              Project repository ↗
+              Project repository
             </a>
           </div>
         </div>

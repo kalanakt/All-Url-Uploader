@@ -126,7 +126,7 @@ async def request_callback(
             artifact.file_name,
             artifact.send_type,
         )
-    except Exception as exc:  # pylint: disable=broad-exception-caught  # pragma: no cover - user-facing safety boundary
+    except Exception:  # pylint: disable=broad-exception-caught  # pragma: no cover - user-facing safety boundary
         logger.exception(
             "Request action failed | user=%s token=%s type=%s option=%s",
             query.from_user.id,
@@ -134,7 +134,7 @@ async def request_callback(
             stored.request_type,
             option.option_id,
         )
-        await query.message.edit_text(f"{text.DOWNLOAD_FAILED}\n<code>{exc}</code>")
+        await query.message.edit_text(text.DOWNLOAD_FAILED)
     finally:
         request_store.delete(stored.token)
         logger.info("Cleaned request state | token=%s", stored.token)
