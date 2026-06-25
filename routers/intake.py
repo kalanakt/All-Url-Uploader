@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import logging
+import aiohttp
 
 from aiogram import F, Router
 from aiogram.types import Message
@@ -58,6 +59,42 @@ async def intake_message(
 
     parsed = parse_user_input(raw_text, message.entities)
     status_message = await message.reply(text.PROCESSING)
+        # === TERABOX EXPERIMENTAL BYPASS API ===
+    if any(domain in parsed.source_url for domain in ["terabox", "1024tera", "teraboxapp"]):
+        logger.info(f"TeraBox link detected! Intercepting pipeline for bypass...")
+        async with aiohttp.ClientSession() as session:
+            api_url = f"https://terabox-dl-arman.vercel.get-video.workers.dev/api?url={parsed.source_url}"
+            try:
+                async with session.get(api_url, timeout=15) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        # Extract the high-speed direct download link from the API array
+                        if data and isinstance(data, list) and "download_url" in data[0]:
+                            direct_link = data[0]["download_url"]
+                            parsed.source_url = direct_link
+                            logger.info("Successfully cracked TeraBox link! Forcing direct download pipeline...")
+                            
+                            token = request_store.create_token()
+                            options = build_direct_options(parsed, info=None)
+                            request_type = "direct_download"
+                            
+                            stored = StoredRequest(
+                                token=token,
+                                request_type=request_type,
+                                parsed_input=parsed,
+                                options=options,
+                                info={}
+                            )
+                            request_store.save(stored)
+                            await status_message.edit_text(
+                                text.FORMAT_SELECTION,
+                                reply_markup=format_keyboard(token, options),
+                            )
+                            return
+            except Exception as e:
+                logger.error(f"TeraBox bypass API failed: {e}")
+    # =======================================
+    
 
     if is_probable_youtube_url(parsed.source_url):
         token = request_store.create_token()
