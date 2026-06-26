@@ -22,26 +22,21 @@ async def intake_message(
         raw_text = message.text or ""
         raw_text_lower = raw_text.lower()
         
-        # Retrieve state storage context
         request_store = kwargs.get("request_store")
         if not request_store:
             await message.reply("❌ Error: Internal storage layer context is missing.")
             return
 
-        # BROAD LINK MATCH: Make sure it's an actual link before moving forward
         is_link = any(marker in raw_text_lower for marker in ["http://", "https://", "www.", ".com", ".be", "tera"])
         if not is_link:
             return
 
-        # Attempt link parsing safely
         try:
             parsed = parse_user_input(raw_text, message.entities)
             url = parsed.source_url
         except Exception as parse_err:
-            # Fallback configuration if parse_user_input demands formal entities
             if "http" in raw_text:
                 url = raw_text.strip()
-                # Create a minimal fallback container matching your StoredRequest expectations
                 from unittest.mock import Mock
                 parsed = Mock()
                 parsed.source_url = url
@@ -64,10 +59,11 @@ async def intake_message(
             display_text = "🎬 **YouTube Link Detected:**\nChoose your preferred format to download directly:"
             token = uuid.uuid4().hex[:8]
             
+            # FIXED SCHEMA: Added the missing 'mode' argument required by DownloadOption
             options = [
-                DownloadOption(option_id="720p", label="📺 720p Video", send_type="video", format_id="bestvideo[height<=720]+bestaudio/best[height<=720]"),
-                DownloadOption(option_id="480p", label="📺 480p Video", send_type="video", format_id="bestvideo[height<=480]+bestaudio/best[height<=480]"),
-                DownloadOption(option_id="mp3", label="🎵 MP3 Audio", send_type="audio", format_id="bestaudio/best")
+                DownloadOption(option_id="720p", label="📺 720p Video", send_type="video", mode="video", format_id="bestvideo[height<=720]+bestaudio/best[height<=720]"),
+                DownloadOption(option_id="480p", label="📺 480p Video", send_type="video", mode="video", format_id="bestvideo[height<=480]+bestaudio/best[height<=480]"),
+                DownloadOption(option_id="mp3", label="🎵 MP3 Audio", send_type="audio", mode="audio", format_id="bestaudio/best")
             ]
             
             stored_request = StoredRequest(
@@ -97,4 +93,4 @@ async def intake_message(
     except Exception as global_err:
         logger.exception("Intake processing crashed completely")
         await message.reply(f"❌ System Error: <code>{global_err}</code>")
-        
+            
