@@ -20,37 +20,28 @@ async def intake_message(
 ) -> None:
     raw_text = message.text or ""
     
-    # FORCED DEBUG LOG: See if the message even reaches the handler
-    logger.info("DEBUG: Received incoming message: %s", raw_text)
-
-    # Extract request store from context
+    # Retrieve the state storage context
     request_store = kwargs.get("request_store")
     if not request_store:
         logger.error("DEBUG: request_store object was NOT found in kwargs context!")
         return
 
-    # Check link validation filter safely
-    try:
-        has_link = extract_link_text(raw_text, message.entities)
-        logger.info("DEBUG: extract_link_text evaluation result: %s", has_link)
-        if not has_link:
-            return
-    except Exception as e:
-        logger.exception("DEBUG: extract_link_text crashed: %s", e)
+    # Extract and clean up link text layout
+    if not extract_link_text(raw_text, message.entities):
         return
 
-    # Process input values
     try:
         parsed = parse_user_input(raw_text, message.entities)
         url = parsed.source_url
-        logger.info("DEBUG: Parsed destination target URL: %s", url)
     except Exception as e:
         logger.exception("DEBUG: parse_user_input crashed: %s", e)
         return
     
-    is_tb = any(domain in url.lower() for domain in ["terabox", "1024tera", "tera", "box"])
-    is_yt = is_probable_youtube_url(url)
-    logger.info("DEBUG: Evaluated states - is_tb: %s | is_yt: %s", is_tb, is_yt)
+    url_lower = url.lower()
+    is_tb = any(domain in url_lower for domain in ["terabox", "1024tera", "tera", "box"])
+    
+    # BROAD MATCH FIX: Match standard or short-code formats seamlessly
+    is_yt = is_probable_youtube_url(url) or "youtube.com" in url_lower or "youtu.be" in url_lower
 
     if is_tb:
         display_text = "📦 **TeraBox Link Detected:**"
@@ -68,19 +59,14 @@ async def intake_message(
             DownloadOption(option_id="mp3", label="🎵 MP3 Audio", send_type="audio", format_id="bestaudio/best")
         ]
         
-        try:
-            stored_request = StoredRequest(
-                token=token,
-                request_type="youtube_quick",
-                parsed_input=parsed,
-                options=options,
-                info={}
-            )
-            request_store.save(stored_request)
-            logger.info("DEBUG: StoredRequest successfully written to queue storage.")
-        except Exception as e:
-            logger.exception("DEBUG: Writing to request_store failed: %s", e)
-            return
+        stored_request = StoredRequest(
+            token=token,
+            request_type="youtube_quick",
+            parsed_input=parsed,
+            options=options,
+            info={}
+        )
+        request_store.save(stored_request)
         
         inline_keyboard = [
             [
@@ -93,8 +79,7 @@ async def intake_message(
         ]
         
         await message.reply(display_text, reply_markup=InlineKeyboardMarkup(inline_keyboard=inline_keyboard))
-        logger.info("DEBUG: Selection button interface sent to client channel successfully.")
         
     else:
         await message.reply("Link recognized but no direct handler available.")
-    
+        
