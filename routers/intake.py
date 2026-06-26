@@ -59,11 +59,10 @@ async def intake_message(
 
     parsed = parse_user_input(raw_text, message.entities)
     status_message = await message.reply(text.PROCESSING)
-                    # === TERABOX PREMIUM BYPASS ===
+            # === TERABOX PREMIUM BYPASS ===
     if any(domain in parsed.source_url.lower() for domain in ["terabox", "1024tera", "tera", "box"]):
         logger.info("TeraBox link detected! Routing to managed premium bypass...")
         async with aiohttp.ClientSession() as session:
-            # Reconfigured to use your active RapidAPI key and endpoint parameters
             api_url = "https://terabox-downloader-online-viewer-player-api.p.rapidapi.com/rapidapi"
             headers = {
                 "X-RapidAPI-Key": "50688fe890msh68c46cce63373cap1de36bjsn05f574274ec5",
@@ -78,7 +77,7 @@ async def intake_message(
                         # High-quality extraction processing
                         if data and "download_link" in data:
                             parsed.source_url = data["download_link"]
-                            logger.info("Premium extraction complete!")
+                            logger.info("Premium extraction complete! Generating button layout...")
                             
                             token = request_store.create_token()
                             options = build_direct_options(parsed, info=None)
@@ -96,9 +95,13 @@ async def intake_message(
                                 text.FORMAT_SELECTION,
                                 reply_markup=format_keyboard(token, options),
                             )
-                            return
+                            return  # <--- CRITICAL: Kills execution so it never falls into yt-dlp fallback loops!
             except Exception as e:
                 logger.error(f"Premium extraction encounter: {e}")
+                
+        # If premium data retrieval fails, we hard-stop the script instead of processing corrupted HTML dumps
+        await status_message.edit_text("Error: Premium TeraBox extraction link could not be generated.")
+        return
     # ==============================
     
     
