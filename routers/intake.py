@@ -76,21 +76,22 @@ async def intake_message(
                         data = await response.json()
                         logger.info(f"RapidAPI Raw Payload Data: {data}")
                         
-                        # --- SMART DYNAMIC KEY PARSING ---
+                                                # --- SMART DYNAMIC KEY PARSING ---
                         download_url = None
                         if isinstance(data, dict):
                             nested_data = data.get("data") or data.get("downloader")
                             if isinstance(nested_data, dict):
-                                download_url = nested_data.get("download_link") or nested_data.get("downloadUrl") or nested_data.get("url")
+                                download_url = nested_data.get("download_link") or nested_data.get("downloadUrl") or nested_data.get("url") or nested_data.get("download_url")
                             elif isinstance(nested_data, list) and len(nested_data) > 0 and isinstance(nested_data[0], dict):
-                                download_url = nested_data[0].get("download_link") or nested_data[0].get("url")
+                                download_url = nested_data[0].get("download_link") or nested_data[0].get("url") or nested_data[0].get("download_url")
                             
                             if not download_url:
-                                download_url = data.get("download_link") or data.get("downloadUrl") or data.get("url") or data.get("direct_link")
+                                download_url = data.get("download_link") or data.get("downloadUrl") or data.get("url") or data.get("direct_link") or data.get("download_url")
                         
                         elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
-                            download_url = data[0].get("download_link") or data[0].get("url")
+                            download_url = data[0].get("download_link") or data[0].get("url") or data[0].get("download_url")
                         # ----------------------------------
+                        
 
                         if download_url:
                             parsed.source_url = download_url
