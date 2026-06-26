@@ -25,8 +25,7 @@ threading.Thread(target=run_dummy_server, daemon=True).start()
 # =========================================
 
 # Now let your original bot execution code load seamlessly below this line:
-from main import main # (Or whatever command your setup uses to start long polling)
+from app import run
 
 if __name__ == "__main__":
-    asyncio.run(main())
-    
+    asyncio.run(run())
