@@ -1,31 +1,53 @@
+from __future__ import annotations
+
 import logging
-import threading
-import os
-import asyncio
-from http.server import HTTPServer, BaseHTTPRequestHandler
 
-# === FORCE RENDER PORT BINDING ON BOOT ===
-class DummyHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        self.send_response(200)
-        self.end_headers()
-        self.wfile.write(b"Bot is alive!")
+from aiogram import Bot, Dispatcher
+from aiogram.client.default import DefaultBotProperties
+from aiogram.enums import ParseMode
 
-def run_dummy_server():
-    port = int(os.environ.get("PORT", 10000))
-    try:
-        server = HTTPServer(("0.0.0.0", port), DummyHandler)
-        logging.info(f"Dummy HTTP server listening on port {port}")
-        server.serve_forever()
-    except Exception as e:
-        logging.error(f"Failed to start dummy server: {e}")
+from config import Settings
+from utils.logging_config import setup_logging
+from routers.callbacks import router as callbacks_router
+from routers.commands import router as commands_router
+from routers.intake import router as intake_router
+from routers.thumbnails import router as thumbnails_router
+from services.cooldown import CooldownManager
+from services.request_store import RequestStore
+from services.thumbnail_store import ThumbnailStore
 
-# Run the port binding server on a dedicated background thread instantly
-threading.Thread(target=run_dummy_server, daemon=True).start()
-# =========================================
 
-# Now let your original bot execution code load seamlessly below this line:
-from main import main # (Or whatever command your setup uses to start long polling)
+def create_dispatcher(settings: Settings) -> Dispatcher:
+    dispatcher = Dispatcher()
+    dispatcher.include_router(commands_router)
+    dispatcher.include_router(thumbnails_router)
+    dispatcher.include_router(intake_router)
+    dispatcher.include_router(callbacks_router)
+    dispatcher.workflow_data.update(
+        settings=settings,
+        cooldown=CooldownManager(timeout_seconds=settings.process_max_timeout),
+        request_store=RequestStore(settings.requests_dir, settings.work_dir),
+        thumbnail_store=ThumbnailStore(settings.thumbnails_dir),
+    )
+    return dispatcher
 
-if __name__ == "__main__":
-    asyncio.run(main())
+
+async def run() -> None:
+    setup_logging()
+    settings = Settings.from_env()
+    settings.ensure_directories()
+
+    bot = Bot(
+        token=settings.bot_token,
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML),
+    )
+    dispatcher = create_dispatcher(settings)
+
+    logging.getLogger(__name__).info(
+        "Bot is starting | download_dir=%s requests_dir=%s proxy=%s cooldown=%ss",
+        settings.download_location,
+        settings.requests_dir,
+        "enabled" if settings.http_proxy else "disabled",
+        settings.process_max_timeout,
+    )
+    await dispatcher.start_polling(bot)
