@@ -60,7 +60,7 @@ async def intake_message(
     parsed = parse_user_input(raw_text, message.entities)
     status_message = await message.reply(text.PROCESSING)
         # === TERABOX EXPERIMENTAL BYPASS API ===
-    if any(domain in parsed.source_url for domain in ["terabox", "1024tera", "teraboxapp"]):
+    if any(domain in parsed.source_url.lower() for domain in ["terabox", "1024tera", "tera", "box"]):
         logger.info(f"TeraBox link detected! Intercepting pipeline for bypass...")
         async with aiohttp.ClientSession() as session:
             api_url = f"https://terabox-dl-arman.vercel.get-video.workers.dev/api?url={parsed.source_url}"
