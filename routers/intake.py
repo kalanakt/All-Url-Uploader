@@ -4,6 +4,8 @@ import logging
 import aiohttp
 import threading
 import os
+import json
+import asyncio
 from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # === PERMANENT RENDER TIMEOUT HACK ===
@@ -33,7 +35,6 @@ from services.parsing import extract_link_text, is_probable_youtube_url, parse_u
 from services.request_store import RequestStore
 from services.ytdlp import (
     build_direct_options,
-    build_quick_youtube_options,
     build_ytdlp_options,
     probe_url,
 )
@@ -92,37 +93,47 @@ async def intake_message(
             }
             params = {"url": parsed.source_url}
             try:
-                async with session.get(api_url, headers=headers, params=params, timeout=15) as response:
+                async with session.get(api_url, headers=headers, params=params, timeout=12) as response:
                     if response.status == 200:
                         data = await response.json()
                         logger.info(f"RapidAPI Raw Payload Data: {data}")
 
-                                                # --- ULTIMATE FAILSAFE TEXT PARSING ---
-                        import json
-                        raw_str = json.dumps(data)
                         download_url = None
                         
-                        # Just grab whichever key actually exists anywhere in the message!
-                        for key in ["stream_url", "download_url", "download_link", "url", "downloadUrl", "direct_link"]:
-                            if f'"{key}":' in raw_str:
-                                # Quick fallback extract
-                                if isinstance(data, dict):
-                                    nested = data.get("data") or data.get("downloader") or data
-                                    if isinstance(nested, list) and len(nested) > 0: nested = nested[0]
-                                    if isinstance(nested, dict) and nested.get(key):
-                                        download_url = nested.get(key)
-                                        break
-                                if isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
-                                    download_url = data[0].get(key)
-                                    break
-                                if isinstance(data, dict) and data.get(key):
+                        # Deep-scan keys safely
+                        keys_to_check = ["stream_url", "download_url", "download_link", "url", "downloadUrl", "direct_link"]
+                        
+                        if isinstance(data, dict):
+                            # Check root level
+                            for key in keys_to_check:
+                                if data.get(key):
                                     download_url = data.get(key)
                                     break
+                            
+                            # Check common array structures
+                            if not download_url:
+                                for nested_key in ["data", "downloader", "list", "files"]:
+                                    nested = data.get(nested_key)
+                                    if isinstance(nested, list) and len(nested) > 0 and isinstance(nested[0], dict):
+                                        for key in keys_to_check:
+                                            if nested[0].get(key):
+                                                download_url = nested[0].get(key)
+                                                break
+                                    elif isinstance(nested, dict):
+                                        for key in keys_to_check:
+                                            if nested.get(key):
+                                                download_url = nested.get(key)
+                                                break
                         
+                        elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
+                            for key in keys_to_check:
+                                if data[0].get(key):
+                                    download_url = data[0].get(key)
+                                    break
 
                         if download_url:
                             parsed.source_url = download_url
-                            logger.info("Premium parsing successful! Building buttons...")
+                            logger.info("Premium parsing successful! Building options object mapping...")
                             
                             token = request_store.create_token()
                             options = build_direct_options(parsed, info=None)
@@ -144,23 +155,17 @@ async def intake_message(
             except Exception as e:
                 logger.error(f"Premium extraction encounter: {e}")
                 
-                
         await status_message.edit_text("Error: Premium TeraBox extraction link could not be generated.")
         return
-    # ==============================
-    
-                    # === FAILSAFE DYNAMIC YOUTUBE & GENERAL PROBER ===
+
+    # === FAILSAFE DYNAMIC YOUTUBE & GENERAL PROBER ===
     info = None
     is_yt = is_probable_youtube_url(parsed.source_url)
     
     if is_yt:
-        logger.info("YouTube link detected! Attempting extractor with strict timeout...")
-        try:
-            import asyncio
-            info = await asyncio.wait_for(probe_url(parsed, settings), timeout=5.0)
-        except Exception as exc:
-            logger.warning("YouTube probe blocked or timed out, engaging premium fallback menu.")
-            info = None
+        logger.info("YouTube link detected! Activating instant menu generation...")
+        # Skip blocking cloud probing entirely to guarantee lightning-fast button loading
+        info = None
     else:
         try:
             info = await probe_url(parsed, settings)
@@ -170,7 +175,6 @@ async def intake_message(
 
     token = request_store.create_token()
     
-    # Process options safely based on extraction results
     if info:
         options = build_ytdlp_options(info)
         request_type = "ytdlp_selection"
@@ -178,17 +182,9 @@ async def intake_message(
             options = build_direct_options(parsed, info=info)
             request_type = "direct_download"
     else:
-        # If blocked or extraction failed, build clean manual stream options!
-        if is_yt:
-            options = [
-                {"id": "yt_720p", "name": "🎬 Video [720p]", "url": parsed.source_url},
-                {"id": "yt_360p", "name": "🎬 Video [360p]", "url": parsed.source_url},
-                {"id": "yt_audio", "name": "🎵 Audio MP3", "url": parsed.source_url}
-            ]
-            request_type = "youtube_fallback"
-        else:
-            options = build_direct_options(parsed, info=None)
-            request_type = "direct_download"
+        # Build options safely using standard platform utility options
+        options = build_direct_options(parsed, info=None)
+        request_type = "direct_download"
 
     # Display configuration
     display_text = text.FORMAT_SELECTION
@@ -211,5 +207,5 @@ async def intake_message(
     await status_message.edit_text(
         display_text,
         reply_markup=format_keyboard(token, options),
-)
-        
+                            )
+                                                              
