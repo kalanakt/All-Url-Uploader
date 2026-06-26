@@ -149,10 +149,11 @@ async def intake_message(
         return
     # ==============================
     
-            # === FAILSAFE DYNAMIC YOUTUBE & GENERAL PROBER ===
+                # === FAILSAFE DYNAMIC YOUTUBE & GENERAL PROBER ===
     info = None
     is_yt = is_probable_youtube_url(parsed.source_url)
-        if is_yt:
+    
+    if is_yt:
         logger.info("YouTube link detected! Attempting extractor with strict timeout...")
         try:
             import asyncio
@@ -160,13 +161,13 @@ async def intake_message(
         except Exception as exc:
             logger.warning("YouTube probe blocked or timed out, engaging premium fallback menu.")
             info = None
-
     else:
         try:
             info = await probe_url(parsed, settings)
         except Exception as exc:
             logger.warning("General probe failed, using direct mode: %s", exc)
             info = None
+        
 
     token = request_store.create_token()
     
