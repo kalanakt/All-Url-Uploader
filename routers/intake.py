@@ -144,42 +144,26 @@ async def intake_message(
             except Exception as e:
                 logger.error(f"Premium extraction encounter: {e}")
                 
+                
         await status_message.edit_text("Error: Premium TeraBox extraction link could not be generated.")
         return
     # ==============================
     
+        # === UPGRADED DYNAMIC YOUTUBE & GENERAL PROBER ===
+    info = None
     if is_probable_youtube_url(parsed.source_url):
-        token = request_store.create_token()
-        stored = StoredRequest(
-            token=token,
-            request_type="youtube_quick",
-            parsed_input=parsed,
-            options=build_quick_youtube_options(),
-        )
-        request_store.save(stored)
-        logger.info(
-            "Prepared quick YouTube request | user=%s token=%s source=%s options=%s",
-            message.from_user.id,
-            token,
-            safe_url_label(parsed.source_url),
-            len(stored.options),
-        )
-        await status_message.edit_text(
-            text.QUICK_CHOICE,
-            reply_markup=format_keyboard(token, stored.options),
-        )
-        return
-
-    try:
-        info = await probe_url(parsed, settings)
-    except RuntimeError as exc:  # pragma: no cover - network/tool error path
-        logger.warning(
-            "yt-dlp probe failed | user=%s source=%s error=%s",
-            message.from_user.id,
-            safe_url_label(parsed.source_url),
-            exc,
-        )
-        info = None
+        logger.info("YouTube link detected! Running deep probe extractor...")
+        try:
+            info = await probe_url(parsed, settings)
+        except RuntimeError as exc:
+            logger.warning("YouTube probe failed, falling back to direct mode: %s", exc)
+            info = None
+    else:
+        try:
+            info = await probe_url(parsed, settings)
+        except RuntimeError as exc:
+            logger.warning("yt-dlp probe failed | error=%s", exc)
+            info = None
 
     token = request_store.create_token()
     if info:
@@ -192,6 +176,11 @@ async def intake_message(
         options = build_direct_options(parsed, info=None)
         request_type = "direct_download"
 
+    # Clean up title formatting for text display
+    display_text = text.FORMAT_SELECTION
+    if info and info.get("title"):
+        display_text = f"🎬 **{info.get('title')}**\n\n{text.FORMAT_SELECTION}"
+
     stored = StoredRequest(
         token=token,
         request_type=request_type,
@@ -200,17 +189,13 @@ async def intake_message(
         info=info or {},
     )
     request_store.save(stored)
+    
     logger.info(
-        "Prepared request | user=%s token=%s type=%s source=%s options=%s title=%s",
-        message.from_user.id,
-        token,
-        request_type,
-        safe_url_label(parsed.source_url),
-        len(options),
-        (info or {}).get("title", "-"),
+        "Prepared request | user=%s token=%s type=%s options=%s",
+        message.from_user.id, token, request_type, len(options)
     )
+    
     await status_message.edit_text(
-        text.FORMAT_SELECTION,
+        display_text,
         reply_markup=format_keyboard(token, options),
-                                                              )
-                                                              
+    )
