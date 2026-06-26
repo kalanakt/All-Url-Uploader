@@ -149,25 +149,24 @@ async def intake_message(
         return
     # ==============================
     
-                # === FAILSAFE DYNAMIC YOUTUBE & GENERAL PROBER ===
-     info = None
-is_yt = is_probable_youtube_url(parsed.source_url)
-
-if is_yt:
-    logger.info("YouTube link detected! Attempting extractor with strict timeout...")
-    try:
-        import asyncio
-        info = await asyncio.wait_for(probe_url(parsed, settings), timeout=5.0)
-    except Exception as exc:
-        logger.warning("YouTube probe blocked or timed out, engaging premium fallback menu.")
-        info = None
-else:
-    try:
+                    # === FAILSAFE DYNAMIC YOUTUBE & GENERAL PROBER ===
+    info = None
+    is_yt = is_probable_youtube_url(parsed.source_url)
+    
+    if is_yt:
+        logger.info("YouTube link detected! Attempting extractor with strict timeout...")
+        try:
+            import asyncio
+            info = await asyncio.wait_for(probe_url(parsed, settings), timeout=5.0)
+        except Exception as exc:
+            logger.warning("YouTube probe blocked or timed out, engaging premium fallback menu.")
+            info = None
+    else:
+        try:
             info = await probe_url(parsed, settings)
         except Exception as exc:
             logger.warning("General probe failed, using direct mode: %s", exc)
             info = None
-        
 
     token = request_store.create_token()
     
@@ -181,7 +180,6 @@ else:
     else:
         # If blocked or extraction failed, build clean manual stream options!
         if is_yt:
-            # Inject beautiful functional stream options using external gateway processors
             options = [
                 {"id": "yt_720p", "name": "🎬 Video [720p]", "url": parsed.source_url},
                 {"id": "yt_360p", "name": "🎬 Video [360p]", "url": parsed.source_url},
@@ -213,4 +211,5 @@ else:
     await status_message.edit_text(
         display_text,
         reply_markup=format_keyboard(token, options),
-    )
+)
+        
