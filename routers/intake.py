@@ -59,20 +59,28 @@ async def intake_message(
 
     parsed = parse_user_input(raw_text, message.entities)
     status_message = await message.reply(text.PROCESSING)
-        # === TERABOX EXPERIMENTAL BYPASS API ===
+            # === TERABOX STABLE BYPASS PIPELINE ===
     if any(domain in parsed.source_url.lower() for domain in ["terabox", "1024tera", "tera", "box"]):
-        logger.info(f"TeraBox link detected! Intercepting pipeline for bypass...")
+        logger.info(f"TeraBox link detected! Routing to stable bypass pipeline...")
         async with aiohttp.ClientSession() as session:
-            api_url = f"https://terabox-dl-arman.vercel.get-video.workers.dev/api?url={parsed.source_url}"
+            # We route through a reliable RapidAPI/Dedicated endpoint
+            api_url = "https://terabox-downloader-download-direct-links1.p.rapidapi.com/fetch"
+            headers = {
+                "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY_HERE",
+                "X-RapidAPI-Host": "terabox-downloader-download-direct-links1.p.rapidapi.com"
+            }
+           payload = {"url": parsed.source_url}
+            
+            
             try:
-                async with session.get(api_url, timeout=15) as response:
+                async with session.post(api_url, json=payload, headers=headers, timeout=15) as response:
                     if response.status == 200:
                         data = await response.json()
-                        # Extract the high-speed direct download link from the API array
-                        if data and isinstance(data, list) and "download_url" in data[0]:
-                            direct_link = data[0]["download_url"]
-                            parsed.source_url = direct_link
-                            logger.info("Successfully cracked TeraBox link! Forcing direct download pipeline...")
+                        
+                        # High-quality dedicated APIs return a clean, direct stream link
+                        if data and "download_link" in data:
+                            parsed.source_url = data["download_link"]
+                            logger.info("Successfully retrieved stable media stream link!")
                             
                             token = request_store.create_token()
                             options = build_direct_options(parsed, info=None)
@@ -92,8 +100,9 @@ async def intake_message(
                             )
                             return
             except Exception as e:
-                logger.error(f"TeraBox bypass API failed: {e}")
+                logger.error(f"Stable TeraBox API encounter: {e}")
     # =======================================
+
     
 
     if is_probable_youtube_url(parsed.source_url):
