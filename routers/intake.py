@@ -96,42 +96,28 @@ async def intake_message(
                     if response.status == 200:
                         data = await response.json()
                         logger.info(f"RapidAPI Raw Payload Data: {data}")
-                                                # --- SMART DYNAMIC KEY PARSING ---
+
+                                                # --- ULTIMATE FAILSAFE TEXT PARSING ---
+                        import json
+                        raw_str = json.dumps(data)
                         download_url = None
-                        if isinstance(data, dict):
-                            nested = data.get("data") or data.get("downloader") or {}
-                            if isinstance(nested, list) and len(nested) > 0:
-                                nested = nested[0]
-                            
-                            if isinstance(nested, dict):
-                                download_url = (
-                                    nested.get("download_link") or 
-                                    nested.get("downloadUrl") or 
-                                    nested.get("url") or 
-                                    nested.get("download_url") or 
-                                    nested.get("stream_url")
-                                )
-                            
-                            if not download_url:
-                                download_url = (
-                                    data.get("download_link") or 
-                                    data.get("downloadUrl") or 
-                                    data.get("url") or 
-                                    data.get("direct_link") or 
-                                    data.get("download_url") or 
-                                    data.get("stream_url")
-                                )
                         
-                        elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
-                            download_url = (
-                                data[0].get("download_link") or 
-                                data[0].get("url") or 
-                                data[0].get("download_url") or 
-                                data[0].get("stream_url")
-                            )
-                        # ----------------------------------
-                        
-                        
+                        # Just grab whichever key actually exists anywhere in the message!
+                        for key in ["stream_url", "download_url", "download_link", "url", "downloadUrl", "direct_link"]:
+                            if f'"{key}":' in raw_str:
+                                # Quick fallback extract
+                                if isinstance(data, dict):
+                                    nested = data.get("data") or data.get("downloader") or data
+                                    if isinstance(nested, list) and len(nested) > 0: nested = nested[0]
+                                    if isinstance(nested, dict) and nested.get(key):
+                                        download_url = nested.get(key)
+                                        break
+                                if isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
+                                    download_url = data[0].get(key)
+                                    break
+                                if isinstance(data, dict) and data.get(key):
+                                    download_url = data.get(key)
+                                    break
                         
 
                         if download_url:
