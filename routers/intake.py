@@ -58,66 +58,67 @@ async def intake_message(
         return
 
     parsed = parse_user_input(raw_text, message.entities)
-status_message = await message.reply(text.PROCESSING)
-
-# === TERABOX PREMIUM BYPASS ===
-if any(domain in parsed.source_url.lower() for domain in ["terabox", "1024tera", "tera", "box"]):
-    logger.info("TeraBox link detected! Routing to managed premium bypass...")
-    async with aiohttp.ClientSession() as session:
-        api_url = "https://terabox-downloader-online-viewer-player-api.p.rapidapi.com/rapidapi"
-        headers = {
-            "X-RapidAPI-Key": "50688fe890msh68c46cce63373cap1de36bjsn05f574274ec5",
-            "X-RapidAPI-Host": "terabox-downloader-online-viewer-player-api.p.rapidapi.com"
-        }
-        params = {"url": parsed.source_url}
-        try:
-            async with session.get(api_url, headers=headers, params=params, timeout=15) as response:
-                if response.status == 200:
-                    data = await response.json()
-                    logger.info(f"RapidAPI Raw Payload Data: {data}")
-                    
-                    download_url = None
-                    if isinstance(data, dict):
-                        nested_data = data.get("data") or data.get("downloader")
-                        if isinstance(nested_data, dict):
-                            download_url = nested_data.get("download_link") or nested_data.get("downloadUrl") or nested_data.get("url")
-                        elif isinstance(nested_data, list) and len(nested_data) > 0 and isinstance(nested_data[0], dict):
-                            download_url = nested_data[0].get("download_link") or nested_data[0].get("url")
+    status_message = await message.reply(text.PROCESSING)
+    
+    # === TERABOX PREMIUM BYPASS ===
+    if any(domain in parsed.source_url.lower() for domain in ["terabox", "1024tera", "tera", "box"]):
+        logger.info("TeraBox link detected! Routing to managed premium bypass...")
+        async with aiohttp.ClientSession() as session:
+            api_url = "https://terabox-downloader-online-viewer-player-api.p.rapidapi.com/rapidapi"
+            headers = {
+                "X-RapidAPI-Key": "50688fe890msh68c46cce63373cap1de36bjsn05f574274ec5",
+                "X-RapidAPI-Host": "terabox-downloader-online-viewer-player-api.p.rapidapi.com"
+            }
+            params = {"url": parsed.source_url}
+            try:
+                async with session.get(api_url, headers=headers, params=params, timeout=15) as response:
+                    if response.status == 200:
+                        data = await response.json()
+                        logger.info(f"RapidAPI Raw Payload Data: {data}")
                         
-                        if not download_url:
-                            download_url = data.get("download_link") or data.get("downloadUrl") or data.get("url") or data.get("direct_link")
-                    
-                    elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
-                        download_url = data[0].get("download_link") or data[0].get("url")
-
-                    if download_url:
-                        parsed.source_url = download_url
-                        logger.info("Premium parsing successful! Building buttons...")
+                        # --- SMART DYNAMIC KEY PARSING ---
+                        download_url = None
+                        if isinstance(data, dict):
+                            nested_data = data.get("data") or data.get("downloader")
+                            if isinstance(nested_data, dict):
+                                download_url = nested_data.get("download_link") or nested_data.get("downloadUrl") or nested_data.get("url")
+                            elif isinstance(nested_data, list) and len(nested_data) > 0 and isinstance(nested_data[0], dict):
+                                download_url = nested_data[0].get("download_link") or nested_data[0].get("url")
+                            
+                            if not download_url:
+                                download_url = data.get("download_link") or data.get("downloadUrl") or data.get("url") or data.get("direct_link")
                         
-                        token = request_store.create_token()
-                        options = build_direct_options(parsed, info=None)
-                        request_type = "direct_download"
-                        
-                        stored = StoredRequest(
-                            token=token,
-                            request_type=request_type,
-                            parsed_input=parsed,
-                            options=options,
-                            info={}
-                        )
-                        request_store.save(stored)
-                        await status_message.edit_text(
-                            text.FORMAT_SELECTION,
-                            reply_markup=format_keyboard(token, options),
-                        )
-                        return
-        except Exception as e:
-            logger.error(f"Premium extraction encounter: {e}")
-            
-    await status_message.edit_text("Error: Premium TeraBox extraction link could not be generated.")
-    return
-# ==============================
+                        elif isinstance(data, list) and len(data) > 0 and isinstance(data[0], dict):
+                            download_url = data[0].get("download_link") or data[0].get("url")
+                        # ----------------------------------
 
+                        if download_url:
+                            parsed.source_url = download_url
+                            logger.info("Premium parsing successful! Building buttons...")
+                            
+                            token = request_store.create_token()
+                            options = build_direct_options(parsed, info=None)
+                            request_type = "direct_download"
+                            
+                            stored = StoredRequest(
+                                token=token,
+                                request_type=request_type,
+                                parsed_input=parsed,
+                                options=options,
+                                info={}
+                            )
+                            request_store.save(stored)
+                            await status_message.edit_text(
+                                text.FORMAT_SELECTION,
+                                reply_markup=format_keyboard(token, options),
+                            )
+                            return
+            except Exception as e:
+                logger.error(f"Premium extraction encounter: {e}")
+                
+        await status_message.edit_text("Error: Premium TeraBox extraction link could not be generated.")
+        return
+    # ==============================
     
     if is_probable_youtube_url(parsed.source_url):
         token = request_store.create_token()
@@ -183,4 +184,5 @@ if any(domain in parsed.source_url.lower() for domain in ["terabox", "1024tera",
     await status_message.edit_text(
         text.FORMAT_SELECTION,
         reply_markup=format_keyboard(token, options),
-    )
+                                                              )
+                                                              
