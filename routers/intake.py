@@ -1,4 +1,5 @@
 import uuid
+import logging
 from aiogram import F, Router
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
 from services.parsing import extract_link_text, is_probable_youtube_url, parse_user_input
@@ -8,28 +9,48 @@ from utils.callbacks import RequestCallback
 from utils.models import StoredRequest, DownloadOption
 
 router = Router(name="intake")
+logger = logging.getLogger(__name__)
 
 @router.message(F.chat.type == "private", F.text)
 async def intake_message(
     message: Message, 
     settings: Settings, 
     cooldown: CooldownManager,
-    **kwargs  # Safely absorbs hidden context arguments to prevent validation failures
+    **kwargs
 ) -> None:
     raw_text = message.text or ""
-    if not extract_link_text(raw_text, message.entities):
-        return
+    
+    # FORCED DEBUG LOG: See if the message even reaches the handler
+    logger.info("DEBUG: Received incoming message: %s", raw_text)
 
-    # Safely pull the active request_store object from middleware components
+    # Extract request store from context
     request_store = kwargs.get("request_store")
     if not request_store:
+        logger.error("DEBUG: request_store object was NOT found in kwargs context!")
         return
 
-    parsed = parse_user_input(raw_text, message.entities)
-    url = parsed.source_url
+    # Check link validation filter safely
+    try:
+        has_link = extract_link_text(raw_text, message.entities)
+        logger.info("DEBUG: extract_link_text evaluation result: %s", has_link)
+        if not has_link:
+            return
+    except Exception as e:
+        logger.exception("DEBUG: extract_link_text crashed: %s", e)
+        return
+
+    # Process input values
+    try:
+        parsed = parse_user_input(raw_text, message.entities)
+        url = parsed.source_url
+        logger.info("DEBUG: Parsed destination target URL: %s", url)
+    except Exception as e:
+        logger.exception("DEBUG: parse_user_input crashed: %s", e)
+        return
     
     is_tb = any(domain in url.lower() for domain in ["terabox", "1024tera", "tera", "box"])
     is_yt = is_probable_youtube_url(url)
+    logger.info("DEBUG: Evaluated states - is_tb: %s | is_yt: %s", is_tb, is_yt)
 
     if is_tb:
         display_text = "📦 **TeraBox Link Detected:**"
@@ -39,28 +60,28 @@ async def intake_message(
         
     elif is_yt:
         display_text = "🎬 **YouTube Link Detected:**\nChoose your preferred format to download directly:"
-        
-        # Initialize an unique registration tracking key
         token = uuid.uuid4().hex[:8]
         
-        # Align selection models with download engines structural arguments
         options = [
             DownloadOption(option_id="720p", label="📺 720p Video", send_type="video", format_id="bestvideo[height<=720]+bestaudio/best[height<=720]"),
             DownloadOption(option_id="480p", label="📺 480p Video", send_type="video", format_id="bestvideo[height<=480]+bestaudio/best[height<=480]"),
             DownloadOption(option_id="mp3", label="🎵 MP3 Audio", send_type="audio", format_id="bestaudio/best")
         ]
         
-        # Save request state safely inside storage layer queues
-        stored_request = StoredRequest(
-            token=token,
-            request_type="youtube_quick",
-            parsed_input=parsed,
-            options=options,
-            info={}
-        )
-        request_store.save(stored_request)
+        try:
+            stored_request = StoredRequest(
+                token=token,
+                request_type="youtube_quick",
+                parsed_input=parsed,
+                options=options,
+                info={}
+            )
+            request_store.save(stored_request)
+            logger.info("DEBUG: StoredRequest successfully written to queue storage.")
+        except Exception as e:
+            logger.exception("DEBUG: Writing to request_store failed: %s", e)
+            return
         
-        # Pack cryptographic RequestCallback objects matching the backend filter
         inline_keyboard = [
             [
                 InlineKeyboardButton(text="📺 720p Video", callback_data=RequestCallback(token=token, action="720p").pack()),
@@ -72,7 +93,8 @@ async def intake_message(
         ]
         
         await message.reply(display_text, reply_markup=InlineKeyboardMarkup(inline_keyboard=inline_keyboard))
+        logger.info("DEBUG: Selection button interface sent to client channel successfully.")
         
     else:
         await message.reply("Link recognized but no direct handler available.")
-        
+    
