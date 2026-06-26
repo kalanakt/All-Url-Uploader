@@ -81,44 +81,31 @@ async def intake_message(
     token = request_store.create_token()
     options = []
 
+    # === HELPER CLASS TO PREVENT TO_DICT CRASH ===
+    class BypassOption:
+        def __init__(self, opt_id, name, url):
+            self.id = opt_id
+            self.name = name
+            self.url = url
+        
+        def to_dict(self):
+            return {"id": self.id, "name": self.name, "url": self.url}
+
     if is_tb:
         # === BULLETPROOF HIGH-SPEED TERABOX GATEWAYS ===
-        # Generates immediate working external client-side mirror downloads to bypass data errors
-        clean_url = parsed.source_url.replace("https://", "").replace("http://", "")
         options = [
-            {
-                "id": "tb_mirror1",
-                "name": "⚡ Fast Download (Mirror 1)",
-                "url": f"https://www.terabox.tech/download?url={parsed.source_url}"
-            },
-            {
-                "id": "tb_mirror2",
-                "name": "🔗 Direct Link (Mirror 2)",
-                "url": f"https://terabox.kiwi/api/bypass?url={parsed.source_url}"
-            }
+            BypassOption("tb_mirror1", "⚡ Fast Download (Mirror 1)", f"https://www.terabox.tech/download?url={parsed.source_url}"),
+            BypassOption("tb_mirror2", "🔗 Direct Link (Mirror 2)", f"https://terabox.kiwi/api/bypass?url={parsed.source_url}")
         ]
         display_text = "📦 **TeraBox Premium File Link Generated**\n\nSelect a high-speed bypass mirror to download:"
         request_type = "direct_download"
 
     elif is_yt:
         # === HIGH-SPEED CLIENT-SIDE YOUTUBE STREAM ENGINE ===
-        # Routes links straight to processors to avoid receiving raw HTML text files
         options = [
-            {
-                "id": "yt_720p",
-                "name": "🎬 Video [720p HD]",
-                "url": f"https://en.savefrom.net/#url={parsed.source_url}"
-            },
-            {
-                "id": "yt_360p",
-                "name": "🎬 Video [360p SD]",
-                "url": f"https://en.savefrom.net/#url={parsed.source_url}"
-            },
-            {
-                "id": "yt_mp3",
-                "name": "🎵 Audio Stream [MP3]",
-                "url": f"https://320ytmp3.com/en37/#url={parsed.source_url}"
-            }
+            BypassOption("yt_720p", "🎬 Video [720p HD]", f"https://en.savefrom.net/#url={parsed.source_url}"),
+            BypassOption("yt_360p", "🎬 Video [360p SD]", f"https://en.savefrom.net/#url={parsed.source_url}"),
+            BypassOption("yt_mp3", "🎵 Audio Stream [MP3]", f"https://320ytmp3.com/en37/#url={parsed.source_url}")
         ]
         display_text = "🎬 **YouTube Stream Links Ready**\n\nSelect your desired media download format:"
         request_type = "direct_download"
@@ -145,5 +132,5 @@ async def intake_message(
     await status_message.edit_text(
         display_text,
         reply_markup=format_keyboard(token, options),
-)
-                
+    )
+    
