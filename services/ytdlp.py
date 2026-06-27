@@ -311,8 +311,13 @@ async def download_selected_format(
         send_type = "audio"
     else:
         format_selector = option.format_id or "best"
+        
+        # SMART FALLBACK SYSTEM: Handles Shorts, old videos, and missing audio tracks flawlessly
         if "youtube" in parsed_input.source_url or "youtu.be" in parsed_input.source_url:
-            format_selector = f"{format_selector}+bestaudio"
+            if "+" not in format_selector and "bestvideo" in format_selector:
+                fallback = format_selector.replace("bestvideo", "best")
+                format_selector = f"{format_selector}[ext=mp4]+bestaudio[ext=m4a]/{format_selector}+bestaudio/{fallback}/best"
+                
         command.extend(
             [
                 "-f",
@@ -346,5 +351,5 @@ async def download_selected_format(
         file_name=file_path.name,
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
-        )
-        
+    )
+    
