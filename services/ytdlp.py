@@ -90,7 +90,6 @@ async def probe_url(parsed_input: ParsedInput, settings: Settings) -> dict:
         payload = json.loads(stdout)
         return payload
     except Exception as e:
-        # If the bot fails to get the title, ignore the error and force it to keep going
         logger.warning("Failed to get video title, ignoring error. Details: %s", e)
         return {"title": "YouTube Video", "extractor": "youtube"}
 
@@ -237,7 +236,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "ba/best",
+                "bestaudio",
                 "--extract-audio",
                 "--audio-format",
                 "mp3",
@@ -248,10 +247,11 @@ async def download_quick_youtube(
         )
         send_type = "audio"
     else:
+        # ABSOLUTE SIMPLEST VIDEO DOWNLOAD COMMAND
         command.extend(
             [
                 "-f",
-                "bv*+ba/b/best",
+                "best",
                 "-o",
                 output_template,
                 parsed_input.source_url,
@@ -302,15 +302,11 @@ async def download_selected_format(
         )
         send_type = "audio"
     else:
-        command.extend(["-f", "bv*+ba/b/best"])
-        
-        if "720" in (option.format_id or ""):
-            command.extend(["-S", "res:720"])
-        elif "480" in (option.format_id or ""):
-            command.extend(["-S", "res:480"])
-            
+        # ABSOLUTE SIMPLEST VIDEO DOWNLOAD COMMAND
         command.extend(
             [
+                "-f",
+                "best",
                 "--embed-subs",
                 "-o",
                 output_template,
@@ -334,5 +330,5 @@ async def download_selected_format(
         file_name=file_path.name,
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
-    )
-        
+        )
+            
