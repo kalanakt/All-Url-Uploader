@@ -2,11 +2,12 @@ import uuid
 import logging
 from aiogram import F, Router
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+
 from services.parsing import is_probable_youtube_url, parse_user_input
 from config import Settings
 from services.cooldown import CooldownManager
 from utils.callbacks import RequestCallback
-from utils.models import StoredRequest, DownloadOption
+from utils.models import StoredRequest, DownloadOption, ParsedInput
 
 router = Router(name="intake")
 logger = logging.getLogger(__name__)
@@ -18,25 +19,86 @@ async def intake_message(
     cooldown: CooldownManager,
     **kwargs
 ) -> None:
+    
+    request_store = kwargs.get("request_store")
+    if not request_store:
+        await message.reply("❌ Error: Internal storage layer context is missing.")
+        return
+
+    raw_text = message.text or ""
+    url = raw_text.strip()
+    url_lower = url.lower()
+
+    is_link = any(marker in url_lower for marker in ["http://", "https://", "www.", ".com", ".be", "tera"])
+    if not is_link:
+        return
+
     try:
-        raw_text = message.text or ""
-        raw_text_lower = raw_text.lower()
+        parsed = parse_user_input(raw_text, message.entities)
+        url = parsed.source_url
+    except Exception:
+        parsed = ParsedInput(source_url=url, custom_file_name=None)
         
-        request_store = kwargs.get("request_store")
-        if not request_store:
-            await message.reply("❌ Error: Internal storage layer context is missing.")
-            return
+    is_tb = any(domain in url_lower for domain in ["terabox", "1024tera", "tera", "box"])
+    is_yt = is_probable_youtube_url(url) or "youtube.com" in url_lower or "youtu.be" in url_lower
 
-        is_link = any(marker in raw_text_lower for marker in ["http://", "https://", "www.", ".com", ".be", "tera"])
-        if not is_link:
-            return
+    if is_tb:
+        display_text = "📦 **TeraBox Link Detected:**"
+        surl = url.split('/')[-1]
+        buttons = [[InlineKeyboardButton(text="📥 Download TeraBox File", url=f"https://terabox.com/sharing/link?surl={surl}")]]
+        await message.reply(display_text, reply_markup=InlineKeyboardMarkup(inline_keyboard=buttons))
+        return
+        
+    if is_yt:
+        display_text = "🎬 **YouTube Link Detected:**\nChoose your preferred format to download directly:"
+        token = uuid.uuid4().hex[:8]
+        
+        options = [
+            DownloadOption(
+                option_id="720p", 
+                label="📺 720p Video", 
+                send_type="video", 
+                mode="ytdlp_format", 
+                format_id="bestvideo[height<=720]"
+            ),
+            DownloadOption(
+                option_id="480p", 
+                label="📺 480p Video", 
+                send_type="video", 
+                mode="ytdlp_format", 
+                format_id="bestvideo[height<=480]"
+            ),
+            DownloadOption(
+                option_id="mp3", 
+                label="🎵 MP3 Audio", 
+                send_type="audio", 
+                mode="ytdlp_audio", 
+                file_ext="mp3",
+                audio_quality="128k"
+            )
+        ]
+        
+        stored_request = StoredRequest(
+            token=token,
+            request_type="youtube_quick",
+            parsed_input=parsed,
+            options=options,
+            info={}
+        )
+        request_store.save(stored_request)
+        
+        inline_keyboard = [
+            [
+                InlineKeyboardButton(text="📺 720p Video", callback_data=RequestCallback(token=token, action="720p").pack()),
+                InlineKeyboardButton(text="📺 480p Video", callback_data=RequestCallback(token=token, action="480p").pack())
+            ],
+            [
+                InlineKeyboardButton(text="🎵 MP3 Audio", callback_data=RequestCallback(token=token, action="mp3").pack())
+            ]
+        ]
+        
+        await message.reply(display_text, reply_markup=InlineKeyboardMarkup(inline_keyboard=inline_keyboard))
+        return
 
-        try:
-            parsed = parse_user_input(raw_text, message.entities)
-            url = parsed.source_url
-        except Exception as parse_err:
-            if "http" in raw_text:
-                url = raw_text.strip()
-                from unittest.mock import Mock
-                parsed = Mock()
+    await message.reply("Link recognized but no direct handler available.")
                 
