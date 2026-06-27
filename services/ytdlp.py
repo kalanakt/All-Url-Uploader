@@ -253,7 +253,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "best[ext=mp4]/best",
+                "bv*+ba/b",
                 "-o",
                 output_template,
                 parsed_input.source_url,
@@ -310,14 +310,14 @@ async def download_selected_format(
         )
         send_type = "audio"
     else:
-        format_selector = option.format_id or "best"
-        
-        # SMART FALLBACK SYSTEM: Handles Shorts, old videos, and missing audio tracks flawlessly
-        if "youtube" in parsed_input.source_url or "youtu.be" in parsed_input.source_url:
-            if "+" not in format_selector and "bestvideo" in format_selector:
-                fallback = format_selector.replace("bestvideo", "best")
-                format_selector = f"{format_selector}[ext=mp4]+bestaudio[ext=m4a]/{format_selector}+bestaudio/{fallback}/best"
-                
+        # ULTIMATE FORMAT SELECTOR: Uses the versatile 'bv*' to never fail on merged tracks
+        if "720" in (option.format_id or ""):
+            format_selector = "bv*[height<=720]+ba/b[height<=720]/b"
+        elif "480" in (option.format_id or ""):
+            format_selector = "bv*[height<=480]+ba/b[height<=480]/b"
+        else:
+            format_selector = "bv*+ba/b"
+            
         command.extend(
             [
                 "-f",
@@ -351,5 +351,4 @@ async def download_selected_format(
         file_name=file_path.name,
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
-    )
-    
+        )
