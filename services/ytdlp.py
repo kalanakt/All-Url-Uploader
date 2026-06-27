@@ -16,14 +16,12 @@ VIDEO_EXTENSIONS = {"mp4", "mkv", "webm", "mov"}
 AUDIO_EXTENSIONS = {"mp3", "m4a", "aac", "wav", "flac", "opus", "weba"}
 logger = logging.getLogger(__name__)
 
-# SYSTEM FIX: Calculate the absolute path to cookies.txt in the root directory
+# System core absolute pathing for your authenticated sessions
 COOKIE_PATH = str(Path(__file__).parent.parent / "cookies.txt")
 
 
 def _command_base(parsed_input: ParsedInput, settings: Settings) -> list[str]:
     command = ["yt-dlp", "--no-warnings"]
-    
-    # SYSTEM FIX: Keep the validated passport cookies flag active
     command.extend(["--cookies", COOKIE_PATH])
     
     if settings.http_proxy:
@@ -82,7 +80,16 @@ def _option_id(prefix: str, index: int) -> str:
 
 async def probe_url(parsed_input: ParsedInput, settings: Settings) -> dict:
     command = _command_base(parsed_input, settings)
-    command.extend(["--allow-dynamic-mpd", "--dump-single-json", parsed_input.source_url])
+    
+    # THE TRUE FIX: Force yt-dlp to extract text metadata only, skipping format evaluation crashes completely
+    command.extend([
+        "--dump-single-json", 
+        "--flat-playlist", 
+        "--skip-download", 
+        "--no-check-certificates",
+        parsed_input.source_url
+    ])
+    
     logger.info("Probing source with yt-dlp | source=%s", safe_url_label(parsed_input.source_url))
     stdout, _ = await _run_command(command)
     if "\n" in stdout:
@@ -239,7 +246,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "bestaudio/best",
+                "ba/b",
                 "--extract-audio",
                 "--audio-format",
                 "mp3",
@@ -253,7 +260,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "bestvideo+bestaudio/best",
+                "bv*+ba/b/best",
                 "-o",
                 output_template,
                 parsed_input.source_url,
@@ -310,8 +317,7 @@ async def download_selected_format(
         )
         send_type = "audio"
     else:
-        # FAULT-TOLERANT ENGINE STRATEGY: Direct catch-all format combined with explicit sizing parameters
-        command.extend(["-f", "bestvideo+bestaudio/best"])
+        command.extend(["-f", "bv*+ba/b/best"])
         
         if "720" in (option.format_id or ""):
             command.extend(["-S", "res:720"])
