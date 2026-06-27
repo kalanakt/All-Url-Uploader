@@ -19,6 +19,10 @@ logger = logging.getLogger(__name__)
 
 def _command_base(parsed_input: ParsedInput, settings: Settings) -> list[str]:
     command = ["yt-dlp", "--no-warnings"]
+    
+    # SYSTEM FIX: Authenticate using the newly uploaded cookies database
+    command.extend(["--cookiefile", "cookies.txt"])
+    
     if settings.http_proxy:
         command.extend(["--proxy", settings.http_proxy])
     if parsed_input.username:
@@ -340,3 +344,4 @@ async def download_selected_format(
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
     )
+    
