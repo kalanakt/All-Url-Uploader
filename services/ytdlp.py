@@ -239,7 +239,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "bestaudio",
+                "bestaudio/best",
                 "--extract-audio",
                 "--audio-format",
                 "mp3",
@@ -253,7 +253,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "bv*+ba/best",
+                "bestvideo+bestaudio/best",
                 "-o",
                 output_template,
                 parsed_input.source_url,
@@ -310,18 +310,16 @@ async def download_selected_format(
         )
         send_type = "audio"
     else:
-        # BULLETPROOF FORMAT SELECTOR: Ultimate resolution fallback cascade
+        # FAULT-TOLERANT ENGINE STRATEGY: Direct catch-all format combined with explicit sizing parameters
+        command.extend(["-f", "bestvideo+bestaudio/best"])
+        
         if "720" in (option.format_id or ""):
-            format_selector = "bv*[height<=720]+ba/b[height<=720]/best"
+            command.extend(["-S", "res:720"])
         elif "480" in (option.format_id or ""):
-            format_selector = "bv*[height<=480]+ba/b[height<=480]/best"
-        else:
-            format_selector = "bv*+ba/best"
+            command.extend(["-S", "res:480"])
             
         command.extend(
             [
-                "-f",
-                format_selector,
                 "--embed-subs",
                 "-o",
                 output_template,
