@@ -23,7 +23,7 @@ COOKIE_PATH = str(Path(__file__).parent.parent / "cookies.txt")
 def _command_base(parsed_input: ParsedInput, settings: Settings) -> list[str]:
     command = ["yt-dlp", "--no-warnings"]
     
-    # CORRECTED FLAG: --cookies instead of --cookiefile
+    # SYSTEM FIX: Keep the validated passport cookies flag active
     command.extend(["--cookies", COOKIE_PATH])
     
     if settings.http_proxy:
@@ -253,7 +253,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "bv*+ba/b",
+                "bv*+ba/best",
                 "-o",
                 output_template,
                 parsed_input.source_url,
@@ -310,13 +310,13 @@ async def download_selected_format(
         )
         send_type = "audio"
     else:
-        # ULTIMATE FORMAT SELECTOR: Uses the versatile 'bv*' to never fail on merged tracks
+        # BULLETPROOF FORMAT SELECTOR: Ultimate resolution fallback cascade
         if "720" in (option.format_id or ""):
-            format_selector = "bv*[height<=720]+ba/b[height<=720]/b"
+            format_selector = "bv*[height<=720]+ba/b[height<=720]/best"
         elif "480" in (option.format_id or ""):
-            format_selector = "bv*[height<=480]+ba/b[height<=480]/b"
+            format_selector = "bv*[height<=480]+ba/b[height<=480]/best"
         else:
-            format_selector = "bv*+ba/b"
+            format_selector = "bv*+ba/best"
             
         command.extend(
             [
@@ -351,4 +351,5 @@ async def download_selected_format(
         file_name=file_path.name,
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
-        )
+    )
+    
