@@ -16,7 +16,6 @@ VIDEO_EXTENSIONS = {"mp4", "mkv", "webm", "mov"}
 AUDIO_EXTENSIONS = {"mp3", "m4a", "aac", "wav", "flac", "opus", "weba"}
 logger = logging.getLogger(__name__)
 
-# System core absolute pathing for your authenticated sessions
 COOKIE_PATH = str(Path(__file__).parent.parent / "cookies.txt")
 
 
@@ -80,28 +79,20 @@ def _option_id(prefix: str, index: int) -> str:
 
 async def probe_url(parsed_input: ParsedInput, settings: Settings) -> dict:
     command = _command_base(parsed_input, settings)
-    
-    # THE TRUE FIX: Force yt-dlp to extract text metadata only, skipping format evaluation crashes completely
-    command.extend([
-        "--dump-single-json", 
-        "--flat-playlist", 
-        "--skip-download", 
-        "--no-check-certificates",
-        parsed_input.source_url
-    ])
+    command.extend(["--dump-single-json", "--ignore-no-formats-error", parsed_input.source_url])
     
     logger.info("Probing source with yt-dlp | source=%s", safe_url_label(parsed_input.source_url))
-    stdout, _ = await _run_command(command)
-    if "\n" in stdout:
-        stdout = stdout.splitlines()[0]
-    payload = json.loads(stdout)
-    logger.info(
-        "Probe complete | source=%s title=%s extractor=%s",
-        safe_url_label(parsed_input.source_url),
-        payload.get("title", "-"),
-        payload.get("extractor_key", payload.get("extractor", "-")),
-    )
-    return payload
+    
+    try:
+        stdout, _ = await _run_command(command)
+        if "\n" in stdout:
+            stdout = stdout.splitlines()[0]
+        payload = json.loads(stdout)
+        return payload
+    except Exception as e:
+        # If the bot fails to get the title, ignore the error and force it to keep going
+        logger.warning("Failed to get video title, ignoring error. Details: %s", e)
+        return {"title": "YouTube Video", "extractor": "youtube"}
 
 
 def build_quick_youtube_options() -> list[DownloadOption]:
@@ -246,7 +237,7 @@ async def download_quick_youtube(
         command.extend(
             [
                 "-f",
-                "ba/b",
+                "ba/best",
                 "--extract-audio",
                 "--audio-format",
                 "mp3",
@@ -276,12 +267,6 @@ async def download_quick_youtube(
     )
     await _run_command(command, cwd=work_dir)
     file_path = _pick_downloaded_file(work_dir)
-    logger.info(
-        "Quick YouTube download complete | file=%s bytes=%s send_type=%s",
-        file_path.name,
-        file_path.stat().st_size,
-        send_type,
-    )
     return DownloadArtifact(
         path=file_path,
         file_name=file_path.name,
@@ -344,16 +329,10 @@ async def download_selected_format(
     )
     await _run_command(command, cwd=work_dir)
     file_path = _pick_downloaded_file(work_dir)
-    logger.info(
-        "yt-dlp format download complete | file=%s bytes=%s send_type=%s",
-        file_path.name,
-        file_path.stat().st_size,
-        send_type,
-    )
     return DownloadArtifact(
         path=file_path,
         file_name=file_path.name,
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
     )
-    
+        
