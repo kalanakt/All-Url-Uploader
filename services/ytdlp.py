@@ -16,12 +16,15 @@ VIDEO_EXTENSIONS = {"mp4", "mkv", "webm", "mov"}
 AUDIO_EXTENSIONS = {"mp3", "m4a", "aac", "wav", "flac", "opus", "weba"}
 logger = logging.getLogger(__name__)
 
+# SYSTEM FIX: Calculate the absolute path to cookies.txt in the root directory
+COOKIE_PATH = str(Path(__file__).parent.parent / "cookies.txt")
+
 
 def _command_base(parsed_input: ParsedInput, settings: Settings) -> list[str]:
     command = ["yt-dlp", "--no-warnings"]
     
-    # SYSTEM FIX: Authenticate using the newly uploaded cookies database
-    command.extend(["--cookiefile", "cookies.txt"])
+    # Use the absolute path so it is accessible from any working directory
+    command.extend(["--cookiefile", COOKIE_PATH])
     
     if settings.http_proxy:
         command.extend(["--proxy", settings.http_proxy])
@@ -343,5 +346,5 @@ async def download_selected_format(
         file_name=file_path.name,
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
-    )
-    
+        )
+                    
