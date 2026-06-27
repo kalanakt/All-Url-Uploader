@@ -23,8 +23,8 @@ COOKIE_PATH = str(Path(__file__).parent.parent / "cookies.txt")
 def _command_base(parsed_input: ParsedInput, settings: Settings) -> list[str]:
     command = ["yt-dlp", "--no-warnings"]
     
-    # Use the absolute path so it is accessible from any working directory
-    command.extend(["--cookiefile", COOKIE_PATH])
+    # CORRECTED FLAG: --cookies instead of --cookiefile
+    command.extend(["--cookies", COOKIE_PATH])
     
     if settings.http_proxy:
         command.extend(["--proxy", settings.http_proxy])
@@ -347,4 +347,4 @@ async def download_selected_format(
         send_type=send_type,
         caption=_caption_from_info(info, file_path.stem),
         )
-                    
+        
