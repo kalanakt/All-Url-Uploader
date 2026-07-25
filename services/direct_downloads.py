@@ -64,8 +64,27 @@ async def download_direct_file(
     if settings.http_proxy:
         connector = aiohttp.TCPConnector(ssl=False)
 
-    async with aiohttp.ClientSession(timeout=timeout, connector=connector) as session:
-        async with session.get(parsed_input.source_url, proxy=settings.http_proxy or None) as response:
+    auth = None
+    if parsed_input.username and parsed_input.password:
+        auth = aiohttp.BasicAuth(parsed_input.username, parsed_input.password)
+
+    user_agent = (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/126.0.0.0 Safari/537.36"
+    )
+    headers = {"User-Agent": user_agent}
+
+    async with aiohttp.ClientSession(
+        timeout=timeout,
+        connector=connector,
+        headers=headers,
+    ) as session:
+        async with session.get(
+            parsed_input.source_url,
+            proxy=settings.http_proxy or None,
+            auth=auth,
+        ) as response:
             response.raise_for_status()
             content_type = response.headers.get("Content-Type", "")
             ext = option.file_ext or suggested_ext
@@ -99,7 +118,7 @@ async def download_direct_file(
                             downloaded,
                             total,
                         )
-                    if total and (now - last_update >= 2 or downloaded >= total):
+                    if now - last_update >= 2 or (total and downloaded >= total):
                         await status_message.edit_text(
                             format_download_progress(
                                 file_name=file_name,

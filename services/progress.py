@@ -36,10 +36,18 @@ def format_download_progress(
     started_at: float,
 ) -> str:
     elapsed = max(time.time() - started_at, 1e-6)
-    percentage = min(downloaded / total, 1) if total else 0
-    bars = math.floor(percentage * 20)
     speed = downloaded / elapsed
-    eta = int((total - downloaded) / speed) if speed and total else 0
+    if not total:
+        return (
+            f"Downloading <b>{file_name}</b>\n\n"
+            f"Downloaded: {humanbytes(downloaded)}\n"
+            f"Speed: {humanbytes(speed)}/s\n"
+            f"Elapsed: {format_duration(int(elapsed))}"
+        )
+
+    percentage = min(downloaded / total, 1)
+    bars = math.floor(percentage * 20)
+    eta = int((total - downloaded) / speed) if speed else 0
     return (
         f"Downloading <b>{file_name}</b>\n\n"
         f"[{'#' * bars}{'.' * (20 - bars)}] {percentage * 100:.1f}%\n"
