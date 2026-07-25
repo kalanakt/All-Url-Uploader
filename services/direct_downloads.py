@@ -88,7 +88,8 @@ async def download_direct_file(
             response.raise_for_status()
             content_type = response.headers.get("Content-Type", "")
             ext = option.file_ext or suggested_ext
-            if not ext:
+            has_extension = bool(Path(file_name).suffix)
+            if not ext and not has_extension:
                 guessed_ext = mimetypes.guess_extension(
                     content_type.split(";")[0].strip()
                 )
