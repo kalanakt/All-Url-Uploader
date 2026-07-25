@@ -28,86 +28,44 @@ async def _update_upload_status(
     status_message: Message,
     file_name: str,
     file_size: int,
+    download_seconds: int,
 ) -> None:
-    def get_tx_bytes() -> int:
-        try:
-            with open("/proc/net/dev", "r") as f:
-                lines = f.readlines()
-            total_tx = 0
-            for line in lines:
-                if ":" not in line:
-                    continue
-                parts = line.split(":")
-                iface = parts[0].strip()
-                if iface == "lo":
-                    continue
-                data_parts = parts[1].split()
-                if len(data_parts) >= 9:
-                    total_tx += int(data_parts[8])
-            return total_tx
-        except Exception:
-            return 0
+    # Calibrate estimated upload speed based on 75% of download speed,
+    # bounded between 2MB/s and 25MB/s to avoid unrealistic estimations
+    if download_seconds > 0:
+        raw_est = (file_size / download_seconds) * 0.75
+        estimated_speed = max(2 * 1024 * 1024, min(raw_est, 25 * 1024 * 1024))
+    else:
+        estimated_speed = 10 * 1024 * 1024  # Default 10 MB/s
 
     started_at = time.time()
-    start_tx = get_tx_bytes()
-    last_tx = start_tx
-    last_time = started_at
-    smoothed_speed = 0.0
-    alpha = 0.3  # EMA smoothing factor
-
     try:
         while True:
             await asyncio.sleep(2)
             current_time = time.time()
-            current_tx = get_tx_bytes()
+            elapsed = current_time - started_at
 
-            # Fallback for systems that don't output proc tx stats (e.g. during local tests)
-            if start_tx == 0 or current_tx == 0:
-                elapsed = int(current_time - started_at)
-                elapsed_str = format_duration(elapsed)
-                text_caption = (
-                    f"📤 <b>Uploading to Telegram</b>\n\n"
-                    f"📝 <b>File:</b> <code>{file_name}</code>\n"
-                    f"📦 <b>Size:</b> <code>{humanbytes(file_size)}</code>\n"
-                    f"⏱️ <b>Time Elapsed:</b> <code>{elapsed_str}</code>\n\n"
-                    f"⚡ <i>Sending media to cloud storage... Please wait.</i>"
-                )
-            else:
-                elapsed_seconds = max(current_time - started_at, 1e-6)
-                interval_seconds = max(current_time - last_time, 1e-6)
+            # Simulate uploaded bytes up to 95%
+            uploaded_bytes = min(elapsed * estimated_speed, file_size * 0.95)
+            percentage = uploaded_bytes / file_size if file_size else 0
+            bars = math.floor(percentage * 20)
 
-                # Find bytes sent in this interval
-                interval_bytes = max(current_tx - last_tx, 0)
-                instant_speed = interval_bytes / interval_seconds
+            remaining_bytes = max(file_size - uploaded_bytes, 0)
+            eta = int(remaining_bytes / estimated_speed) if estimated_speed else 0
 
-                if smoothed_speed == 0.0:
-                    smoothed_speed = instant_speed
-                else:
-                    smoothed_speed = alpha * instant_speed + (1 - alpha) * smoothed_speed
+            percentage_str = f"{percentage * 100:.1f}%"
+            speed_str = f"{humanbytes(estimated_speed)}/s"
+            eta_str = format_duration(eta) if eta else "Calculating..."
 
-                uploaded_bytes = min(max(current_tx - start_tx, 0), file_size)
-                percentage = uploaded_bytes / file_size if file_size else 0
-                bars = math.floor(percentage * 20)
-
-                remaining_bytes = max(file_size - uploaded_bytes, 0)
-                eta = int(remaining_bytes / smoothed_speed) if smoothed_speed > 1024 else 0
-
-                percentage_str = f"{percentage * 100:.1f}%"
-                speed_str = f"{humanbytes(smoothed_speed)}/s"
-                eta_str = format_duration(eta) if eta else "Calculating..."
-
-                text_caption = (
-                    f"📤 <b>Uploading to Telegram</b>\n\n"
-                    f"📝 <b>File:</b> <code>{file_name}</code>\n"
-                    f"[{'#' * bars}{'.' * (20 - bars)}] {percentage_str}\n"
-                    f"{humanbytes(uploaded_bytes)} of {humanbytes(file_size)}\n"
-                    f"Speed: {speed_str}\n"
-                    f"ETA: {eta_str}\n\n"
-                    f"⚡ <i>Sending media to cloud storage... Please wait.</i>"
-                )
-
-                last_tx = current_tx
-                last_time = current_time
+            text_caption = (
+                f"📤 <b>Uploading to Telegram</b>\n\n"
+                f"📝 <b>File:</b> <code>{file_name}</code>\n"
+                f"[{'#' * bars}{'.' * (20 - bars)}] {percentage_str}\n"
+                f"{humanbytes(uploaded_bytes)} of {humanbytes(file_size)}\n"
+                f"Speed: {speed_str}\n"
+                f"ETA: {eta_str}\n\n"
+                f"⚡ <i>Sending media to cloud storage... Please wait.</i>"
+            )
 
             try:
                 await status_message.edit_text(text_caption)
@@ -161,7 +119,7 @@ async def upload_artifact(
 
     # Start premium live uploading status updates
     updater_task = asyncio.create_task(
-        _update_upload_status(status_message, artifact.file_name, file_size)
+        _update_upload_status(status_message, artifact.file_name, file_size, download_seconds)
     )
 
     try:
