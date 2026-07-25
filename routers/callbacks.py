@@ -42,8 +42,12 @@ async def request_callback(
     request_store: RequestStore,
     thumbnail_store: ThumbnailStore,
 ) -> None:
-    if not query.message:
+    try:
         await query.answer()
+    except Exception:
+        pass
+
+    if not query.message:
         return
 
     stored = request_store.load(callback_data.token)
@@ -55,7 +59,6 @@ async def request_callback(
             callback_data.action,
         )
         await query.message.edit_text(text.REQUEST_EXPIRED)
-        await query.answer()
         return
 
     option = _find_option(stored, callback_data.action)
@@ -138,4 +141,3 @@ async def request_callback(
     finally:
         request_store.delete(stored.token)
         logger.info("Cleaned request state | token=%s", stored.token)
-        await query.answer()
