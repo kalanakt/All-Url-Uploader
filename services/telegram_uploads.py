@@ -9,6 +9,7 @@ from aiogram.types import FSInputFile, Message
 from aiogram.utils.chat_action import ChatActionSender
 
 from services.media import audio_duration, video_metadata, video_note_metadata
+from services.progress import humanbytes
 from utils import text
 from utils.models import DownloadArtifact
 
@@ -35,13 +36,32 @@ async def upload_artifact(
     thumb = _thumb_file(thumbnail_path)
     file_input = FSInputFile(artifact.path)
     download_seconds = int((datetime.now() - started_at).total_seconds())
+
+    file_size = artifact.path.stat().st_size if artifact.path.exists() else 0
+    max_size = 2000 * 1024 * 1024  # 2GB local Telegram Bot API upload limit
+    if file_size > max_size:
+        logger.warning(
+            "File too large for Telegram upload | file=%s size=%s max=%s",
+            artifact.file_name,
+            file_size,
+            max_size,
+        )
+        await status_message.edit_text(
+            text.FILE_TOO_LARGE.format(
+                seconds=download_seconds,
+                size=humanbytes(file_size),
+            )
+        )
+        artifact.path.unlink(missing_ok=True)
+        return
+
     upload_started = datetime.now()
     logger.info(
         "Upload starting | chat=%s file=%s send_type=%s size=%s thumbnail=%s",
         source_message.chat.id,
         artifact.file_name,
         artifact.send_type,
-        artifact.path.stat().st_size if artifact.path.exists() else 0,
+        file_size,
         "yes" if thumb else "no",
     )
 
