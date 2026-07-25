@@ -40,7 +40,7 @@ async def run() -> None:
     settings.ensure_directories()
 
     session = AiohttpSession(
-        api=TelegramAPIServer.from_base("http://127.0.0.1:8081")
+        api=TelegramAPIServer.from_base("http://127.0.0.1:8081", is_local=True)
     )
     bot = Bot(
         token=settings.bot_token,
