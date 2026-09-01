@@ -1,211 +1,151 @@
 <p align="center">
-  <a href="https://www.fiverr.com/share/kpLBoo">
+  <a href="https://github.com/Seis05640/All-Url-Uploader">
     <img src="https://iili.io/BOeHp5J.jpg" alt="All Url Uploader banner" width="100%"/>
   </a>
 </p>
 
 <div align="center">
 
-# All Url Uploader
+# All Url Uploader (2GB Upload Support)
 
-**Upload direct links and supported media sources back to Telegram.**
+**Download direct links and web media, then upload files up to 2GB to Telegram.**
 
-Built with `aiogram`, `yt-dlp`, and `uv` for a cleaner local workflow.
+Built with `aiogram 3`, `yt-dlp`, `uv`, and an embedded local **Telegram Bot API server** in a single Docker container.
 
-[![CI](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/ci.yml/badge.svg)](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/ci.yml)
-[![CodeQL](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/codeql.yml/badge.svg)](https://github.com/kalanakt/All-Url-Uploader/actions/workflows/codeql.yml)
 [![Python 3.11](https://img.shields.io/badge/python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/downloads/release/python-3110/)
-[![License](https://img.shields.io/github/license/kalanakt/All-Url-Uploader)](LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/kalanakt/All-Url-Uploader?style=flat)](https://github.com/kalanakt/All-Url-Uploader/stargazers)
+[![License](https://img.shields.io/github/license/Seis05640/All-Url-Uploader)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/Seis05640/All-Url-Uploader?style=flat)](https://github.com/Seis05640/All-Url-Uploader/stargazers)
 
-[Docs](docs/README.md) · [Contributing](CONTRIBUTING.md) · [Docker](Dockerfile) · [Issues](https://github.com/kalanakt/All-Url-Uploader/issues) · [Discussions](https://github.com/kalanakt/All-Url-Uploader/discussions) 
+[Features](#key-features) · [Quick Start](#quick-start) · [Environment Variables](#environment-variables) · [Deployment](#docker--render-deployment)
 
 </div>
 
-All Url Uploader is a Telegram bot that accepts direct file URLs and supported media links, downloads them with the right tool for the job, and sends the result back to Telegram with the correct media type, metadata, and optional custom thumbnail.
+---
 
-## What It Handles
+**All Url Uploader** is an advanced Telegram bot designed to fetch files from direct URLs, YouTube, MediaFire, Google Drive, Mega, and other `yt-dlp` compatible sites, sending them back to Telegram with rich metadata, custom thumbnails, and full file-type retention.
 
-- direct file links
-- `url|filename`
-- `url|filename|username|password`
-- `url * filename`
-- YouTube quick audio and quick video downloads
-- format selection for supported `yt-dlp` sources
-- custom per-user thumbnails with `/thumb` and `/delthumb`
+By integrating a **self-hosted Telegram Bot API server** inside the container running alongside the bot via `supervisord`, file upload limits are expanded from the standard 50MB HTTP limit up to **2000MB (2GB)**!
 
-## Bot Commands
+---
 
-- `/start` - welcome message, shortcuts, and usage guidance
-- `/help` - supported link formats and flow overview
-- `/about` - runtime details, repo link, and project notes
-- `/thumb` - show the currently saved custom thumbnail
-- `/delthumb` - remove the saved custom thumbnail
+## ⚡ Key Features
 
-## Quick Start
+- 🚀 **2GB Upload Limit**: Bundles the official `telegram-bot-api` binary in local mode (`is_local=True`), bypassing HTTP payload limits and enabling direct local filesystem transfers.
+- 📊 **Live Download & Upload Progress**: Real-time progress bars for both downloading and uploading operations, displaying speed (MB/s), transferred size, percentage, and dynamic ETA calculation.
+- 🌐 **Robust Direct Downloading**: Preserves native file extensions (e.g., `.bin`, `.mkv`, `.iso`), includes browser-like `User-Agent` headers to prevent server blockades, and supports Basic Authentication.
+- 🎥 **Rich Media Processing**: Automatic extraction of video dimensions, audio duration, and video note length, along with thumbnail generation.
+- 🖼️ **Per-User Thumbnails**: Save and manage custom thumbnails using `/thumb` and `/delthumb`.
+- ⚙️ **Single-Container Deployment**: Orchestrated with `supervisord` for zero-friction deployment on cloud platforms like Render, Railway, or VPS.
 
-1. Clone the repository and move into it:
+---
+
+## 🔗 Supported Link Formats
+
+| Format | Syntax Example | Description |
+| :--- | :--- | :--- |
+| **Standard Link** | `https://example.com/video.mp4` | Downloads with original file name & extension |
+| **Custom File Name** | `https://example.com/file|my_video.mp4` | Saves and uploads with specified name |
+| **Protected Download** | `https://example.com/file|video.mp4|user|pass` | Direct download with HTTP Basic Auth |
+| **Media Links** | `https://youtu.be/...` | Uses `yt-dlp` for quick audio/video or format selection |
+
+---
+
+## 🤖 Bot Commands
+
+- `/start` — Welcome message, status overview, and usage guidance.
+- `/help` — Detailed description of supported link formats and options.
+- `/about` — System information, host details, and repository link.
+- `/thumb` — View your currently saved custom upload thumbnail.
+- `/delthumb` — Delete your saved custom upload thumbnail.
+
+---
+
+## ⚙️ Environment Variables
+
+Set the following environment variables in your `.env` file or cloud platform settings:
+
+| Variable | Required | Default | Description |
+| :--- | :---: | :--- | :--- |
+| `BOT_TOKEN` | **Yes** | — | Telegram Bot API token from [@BotFather](https://t.me/BotFather) |
+| `OWNER_ID` | **Yes** | — | Telegram user ID of the bot administrator |
+| `TELEGRAM_API_ID` | **Yes** | — | Telegram API ID from [my.telegram.org](https://my.telegram.org) (for local API server) |
+| `TELEGRAM_API_HASH` | **Yes** | — | Telegram API Hash from [my.telegram.org](https://my.telegram.org) (for local API server) |
+| `AUTH_USERS` | No | — | Comma-separated user IDs allowed to bypass cooldown restrictions |
+| `DOWNLOAD_LOCATION` | No | `./DOWNLOADS` | Base directory for temporary download storage |
+| `CHUNK_SIZE` | No | `128` | Direct-download chunk size (in KB if `<1024`) |
+| `HTTP_PROXY` | No | — | HTTP/HTTPS proxy URL for downloading requests |
+| `PROCESS_MAX_TIMEOUT` | No | `3700` | Process execution and upload session timeout in seconds |
+
+---
+
+## 🚀 Quick Start (Local Development)
+
+### 1. Clone & Configure
 
 ```bash
-git clone https://github.com/kalanakt/All-Url-Uploader.git
+git clone https://github.com/Seis05640/All-Url-Uploader.git
 cd All-Url-Uploader
 ```
 
-2. Create a `.env` file in the project root:
+Create a `.env` file in the root directory:
 
 ```dotenv
-BOT_TOKEN=
-OWNER_ID=
-AUTH_USERS=
+BOT_TOKEN=123456789:ABCdefGhIJKlmNoPQRstuVWXyz
+OWNER_ID=123456789
+TELEGRAM_API_ID=123456
+TELEGRAM_API_HASH=your_api_hash_here
 DOWNLOAD_LOCATION=./DOWNLOADS
-CHUNK_SIZE=128
-HTTP_PROXY=
 PROCESS_MAX_TIMEOUT=3700
 ```
 
-3. Install dependencies:
+### 2. Install Dependencies
+
+Using `uv` (recommended):
 
 ```bash
 uv sync --group dev
 ```
 
-4. Start the bot:
+### 3. Run the Bot
 
 ```bash
 uv run python bot.py
 ```
 
-## Environment
+*Note: For local testing without supervisor, uploads will be handled via standard Telegram API limits (50MB) unless a local `telegram-bot-api` binary is running on port 8081.*
 
-- `BOT_TOKEN` - required Telegram bot token
-- `OWNER_ID` - required Telegram user ID for the bot owner
-- `AUTH_USERS` - optional comma-separated list of user IDs that bypass the cooldown
-- `DOWNLOAD_LOCATION` - optional base directory for temporary downloads and uploads
-- `CHUNK_SIZE` - optional direct-download chunk size; values below `1024` are treated as kilobytes for backward compatibility
-- `HTTP_PROXY` - optional proxy URL passed to network requests and `yt-dlp`
-- `PROCESS_MAX_TIMEOUT` - optional process timeout in seconds for external tools
+---
 
-## Project Layout
+## 🐳 Docker & Render Deployment
 
-- root runtime entrypoints: `bot.py`, `app.py`, `config.py`
-- routers: `routers/`
-- services: `services/`
-- shared helpers and models: `utils/`
-- tests: `tests/`
-- external documentation site: `docs/`
+The included multi-stage `Dockerfile` combines the official `aiogram/telegram-bot-api` binary with Python 3.11 Alpine, running both the API server and bot concurrently via `supervisord`.
 
-## Docker
-
-Build and run the container with your existing `.env` file:
+### Docker CLI
 
 ```bash
 docker build -t all-url-uploader .
-docker run --env-file .env all-url-uploader
+docker run -d --name url_uploader --env-file .env all-url-uploader
 ```
 
-## Checks
+### Deploying to Render
 
-Run the same core checks used in GitHub Actions:
+1. Create a new **Web Service** or **Background Worker** on [Render](https://render.com).
+2. Connect your GitHub repository (`Seis05640/All-Url-Uploader`).
+3. Select **Docker** as the Environment.
+4. Add the required Environment Variables (`BOT_TOKEN`, `OWNER_ID`, `TELEGRAM_API_ID`, `TELEGRAM_API_HASH`).
+5. Deploy! `supervisord` will automatically launch the local API server on port 8081 and start the bot service.
+
+---
+
+## 🧪 Running Tests
 
 ```bash
 uv run pytest
 uv run pylint $(git ls-files '*.py')
-cd docs && npm run build
 ```
 
-## Deploy
+---
 
-| Deploy on Railway | Deploy on Koyeb | Deploy on Heroku |
-|------------------|-----------------|------------------|
-| [![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/all-url-uploader?referralCode=monthfree&utm_medium=integration&utm_source=template&utm_campaign=generic) | [![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/kalanakt/All-Url-Uploader&branch=main&name=all-url-uploader) | [![Deploy to Heroku](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy?template=https://github.com/kalanakt/All-Url-Uploader) |
+## 📜 License
 
-## Contributors
-
-<!-- readme: contributors -start -->
-<table>
-	<tbody>
-		<tr>
-            <td align="center">
-                <a href="https://github.com/kalanakt">
-                    <img src="https://avatars.githubusercontent.com/u/86665964?v=4" width="100;" alt="kalanakt"/>
-                    <br />
-                    <sub><b>kalana kt</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/tromcho">
-                    <img src="https://avatars.githubusercontent.com/u/113139586?v=4" width="100;" alt="tromcho"/>
-                    <br />
-                    <sub><b>tromcho</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/fzsouser">
-                    <img src="https://avatars.githubusercontent.com/u/108298343?v=4" width="100;" alt="fzsouser"/>
-                    <br />
-                    <sub><b>Fzso</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/hybridvamp">
-                    <img src="https://avatars.githubusercontent.com/u/48980248?v=4" width="100;" alt="hybridvamp"/>
-                    <br />
-                    <sub><b>HYBRID</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/Divarion-D">
-                    <img src="https://avatars.githubusercontent.com/u/42798043?v=4" width="100;" alt="Divarion-D"/>
-                    <br />
-                    <sub><b>Danil</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/AvikaTrivedi">
-                    <img src="https://avatars.githubusercontent.com/u/84050503?v=4" width="100;" alt="AvikaTrivedi"/>
-                    <br />
-                    <sub><b>Avika Trivedi</b></sub>
-                </a>
-            </td>
-		</tr>
-		<tr>
-            <td align="center">
-                <a href="https://github.com/libresoul">
-                    <img src="https://avatars.githubusercontent.com/u/69932259?v=4" width="100;" alt="libresoul"/>
-                    <br />
-                    <sub><b>Damindu Dhananjitha</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/ImgBotApp">
-                    <img src="https://avatars.githubusercontent.com/u/31427850?v=4" width="100;" alt="ImgBotApp"/>
-                    <br />
-                    <sub><b>Imgbot</b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/satyanandatripathi">
-                    <img src="https://avatars.githubusercontent.com/u/83153745?v=4" width="100;" alt="satyanandatripathi"/>
-                    <br />
-                    <sub><b>Parthiv Katapara </b></sub>
-                </a>
-            </td>
-            <td align="center">
-                <a href="https://github.com/IndrajeethY">
-                    <img src="https://avatars.githubusercontent.com/u/79161058?v=4" width="100;" alt="IndrajeethY"/>
-                    <br />
-                    <sub><b>Indrajeeth</b></sub>
-                </a>
-            </td>
-		</tr>
-	<tbody>
-</table>
-<!-- readme: contributors -end -->
-
-## Star History
-
-<picture>
-  <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=kalanakt/All-Url-Uploader&type=date&theme=dark&legend=top-left" />
-  <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=kalanakt/All-Url-Uploader&type=date&legend=top-left" />
-  <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=kalanakt/All-Url-Uploader&type=date&legend=top-left" />
-</picture>
+This project is open-source under the [MIT License](LICENSE).
