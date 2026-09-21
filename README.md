@@ -191,13 +191,6 @@ cd docs && npm run build
                 </a>
             </td>
             <td align="center">
-                <a href="https://github.com/SimonFoobar648">
-                    <img src="https://avatars.githubusercontent.com/u/245426116?v=4" width="100;" alt="SimonFoobar648"/>
-                    <br />
-                    <sub><b>SimonFoobar648</b></sub>
-                </a>
-            </td>
-            <td align="center">
                 <a href="https://github.com/IndrajeethY">
                     <img src="https://avatars.githubusercontent.com/u/79161058?v=4" width="100;" alt="IndrajeethY"/>
                     <br />
