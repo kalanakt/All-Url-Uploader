@@ -1,10 +1,12 @@
 from __future__ import annotations
 
+import ipaddress
 import logging
 import mimetypes
+import socket
 import time
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
 
 import aiohttp
 from aiogram.types import Message
@@ -22,6 +24,57 @@ def _filename_from_url(url: str) -> str:
     parsed = urlparse(url)
     name = Path(parsed.path).name
     return name or "downloaded-file"
+def _safe_file_name(name: str | None) -> str:
+    """Reduce a user- or URL-supplied name to a safe basename.
+
+    ``custom_file_name`` arrives verbatim from the Telegram message
+    ("url | name"), so path separators and ``..`` components in it would
+    otherwise escape the download directory when joined into ``work_dir``.
+    """
+    if not name:
+        return "downloaded-file"
+    base = Path(name.replace("\\", "/")).name
+    if base in ("", ".", ".."):
+        return "downloaded-file"
+    return base
+
+
+def _assert_safe_url(url: str) -> None:
+    """Reject URLs that must not be fetched on behalf of a message sender.
+
+    The bot fetches URLs supplied over Telegram and returns the content as an
+    upload. Without this check a user can read loopback services, link-local
+    hosts, or cloud metadata endpoints (e.g. 169.254.169.254) and exfiltrate
+    the response through the bot.
+    """
+    parsed = urlparse(url)
+    if parsed.scheme not in ("http", "https"):
+        raise ValueError(f"Unsupported URL scheme: {parsed.scheme or '(none)'}")
+    host = parsed.hostname
+    if not host:
+        raise ValueError("URL has no host")
+    try:
+        addresses = [ipaddress.ip_address(host)]
+    except ValueError:
+        addresses = [
+            ipaddress.ip_address(info[4][0])
+            for info in socket.getaddrinfo(host, None)
+        ]
+    for ip in addresses:
+        if (
+            ip.is_private
+            or ip.is_loopback
+            or ip.is_link_local
+            or ip.is_reserved
+            or ip.is_multicast
+            or ip.is_unspecified
+        ):
+            raise ValueError(f"URL resolves to a non-public address: {host}")
+
+
+_MAX_REDIRECTS = 5
+_REDIRECT_STATUSES = {301, 302, 303, 307, 308}
+
 
 
 def _normalize_file_name(file_name: str, ext: str | None) -> str:
@@ -49,8 +102,10 @@ async def download_direct_file(
     suggested_ext: str | None = None,
 ) -> DownloadArtifact:
     work_dir.mkdir(parents=True, exist_ok=True)
-    file_name = parsed_input.custom_file_name or _filename_from_url(
-        parsed_input.source_url
+    file_name = _safe_file_name(
+        parsed_input.custom_file_name or _filename_from_url(
+            parsed_input.source_url
+        )
     )
     logger.info(
         "Direct download starting | source=%s send_type=%s work_dir=%s",
@@ -59,13 +114,33 @@ async def download_direct_file(
         work_dir,
     )
 
+    _assert_safe_url(parsed_input.source_url)
+
     timeout = aiohttp.ClientTimeout(total=settings.process_max_timeout)
-    connector = None
-    if settings.http_proxy:
-        connector = aiohttp.TCPConnector(ssl=False)
+    connector = aiohttp.TCPConnector() if settings.http_proxy else None
 
     async with aiohttp.ClientSession(timeout=timeout, connector=connector) as session:
-        async with session.get(parsed_input.source_url, proxy=settings.http_proxy or None) as response:
+        # Follow redirects manually so each Location target is re-validated;
+        # aiohttp's automatic redirect handling would fetch it unchecked.
+        url = parsed_input.source_url
+        for _ in range(_MAX_REDIRECTS + 1):
+            response = await session.get(
+                url, proxy=settings.http_proxy or None, allow_redirects=False
+            )
+            if (
+                response.status in _REDIRECT_STATUSES
+                and response.headers.get("Location")
+            ):
+                target = urljoin(url, response.headers["Location"])
+                response.release()
+                _assert_safe_url(target)
+                url = target
+                continue
+            break
+        else:
+            raise ValueError("Too many redirects")
+
+        try:
             response.raise_for_status()
             content_type = response.headers.get("Content-Type", "")
             ext = option.file_ext or suggested_ext
@@ -109,6 +184,8 @@ async def download_direct_file(
                             )
                         )
                         last_update = now
+        finally:
+            response.release()
 
     caption = parsed_input.custom_file_name or file_name
     logger.info(
